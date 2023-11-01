@@ -26,15 +26,20 @@ function Produto (){
         .catch(error => console.error('Erro ao buscar produtos:', error));
     }, []);
 
+    //obtendo dados 
+    const aoDigitar = (e) => {
+        console.log(e.target);
+    }
+
 
 return (
 
 
 
     <><React.Fragment>
-        <meta charset="UTF-8" />
+        <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
         <title>Gerência Funcionário</title>
 
         <link
@@ -43,7 +48,7 @@ return (
         <link
             rel="preconnect"
             href="https://fonts.gstatic.com"
-            crossOrigin />
+            crossOrigin="true" />
         <link
             href="https://fonts.googleapis.com/css2?family=Concert+One&display=swap"
             rel="stylesheet" />
@@ -58,7 +63,7 @@ return (
             crossOrigin="anonymous" />
         <link rel="stylesheet" href="/css/gerencia.css" />
 
-    </React.Fragment><body>
+    </React.Fragment>
             <header className="headerGeneric">
                 <div className="logo_name">
                     <p>TemDTudo</p>
@@ -99,10 +104,10 @@ return (
                                 </tr>
                             </thead>
                             <tbody>
-                                {produtos?.map(produto => (
+                                {produtos.map(produto => (
                                     <tr key={produto.id_produto}>
                                         <td>{produto.id_produto}</td>
-                                        <td>{produto.imagem}</td>
+                                        <td><img src={`data:image/jpeg;base64,${produto.imagem}`} alt="Imagem do Produto" /></td>
                                         <td>{produto.nome}</td>
                                         <td>{produto.quantidade}</td>
                                         <td>{produto.valor}</td>
@@ -117,9 +122,14 @@ return (
                             </tbody>
                         </table>
                     </div>
+
+                    <div className="gerencia_btns">
+                        <a href="/funcionarios/new">Adicionar</a>
+                        <button className="right_btn">Relatório</button>
+                    </div>
                 </div>
             </div>
-        </body></> 
+        </> 
 );
 }
 
