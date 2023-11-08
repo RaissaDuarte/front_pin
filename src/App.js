@@ -1,6 +1,7 @@
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Produto from './pages/Produto.js' ;
+import Produto from './pages/produtos/Produto.js' ;
+import CadastrarProduto from './pages/produtos/CadastrarProduto.js';
 
 function App() {
 
@@ -8,7 +9,8 @@ return (
 
 <Router>
     <Routes>
-    <Route path="/produtos" element={<Produto />}/>
+        <Route path="/produtos" element={<Produto />}/>
+        <Route path="/cadprod" element={<CadastrarProduto />}/>
     </Routes>
 </Router>
 );

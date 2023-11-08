@@ -1,6 +1,8 @@
 //import React from 'react';
 import React, { useState, useEffect } from 'react';
-import '../components/css/gerencia.css';
+import '../../components/css/gerencia.css';
+import { useNavigate } from 'react-router-dom';
+
 
 
 function Produto (){
@@ -17,6 +19,10 @@ function Produto (){
 
     const [produtos, setProdutos] = useState([]);
     const [objProduto, setObjProduto] = useState(produto);
+    const navigate = useNavigate();
+
+    const adicionar = () => {
+        navigate("/cadprod");}
 
 
     useEffect(() => {
@@ -26,10 +32,7 @@ function Produto (){
         .catch(error => console.error('Erro ao buscar produtos:', error));
     }, []);
 
-    //obtendo dados 
-    const aoDigitar = (e) => {
-        console.log(e.target);
-    }
+    
 
 
 return (
@@ -124,8 +127,8 @@ return (
                     </div>
 
                     <div className="gerencia_btns">
-                        <a href="/funcionarios/new">Adicionar</a>
-                        <button className="right_btn">Relatório</button>
+                    <button className="right_btn" onClick={adicionar}>Adicionar</button>
+                    <button className="right_btn">Relatório</button>
                     </div>
                 </div>
             </div>
