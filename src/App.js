@@ -8,7 +8,7 @@ function App() {
 return (
 
 <Router>
-    <Routes>
+    <Routes>/*OPA */
         <Route path="/produtos" element={<Produto />}/>
         <Route path="/cadprod" element={<CadastrarProduto />}/>
     </Routes>
