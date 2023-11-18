@@ -1,38 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../../components/css/gerencia.css';
 import { useNavigate } from 'react-router-dom';
 
-
-
-
-function CadastroProduto() {
-
-    const produto = {
-        id_produto: 0,
+function CadastroCliente() {
+    const cliente = {
+        id: 0,
         nome: '',
-        peso: 0.0,
-        dimensao: 0.0,
-        quantidade: 0.0,
-        valor: 0.0,
-        imagem: '',
-    }
+        cpf_cnpj: '',
+        telefone: '',
+        endereco: '',
+        cep: '',
+    };
 
-    const [produtos, setProdutos] = useState([]);
-    const [objProduto, setObjProduto] = useState(produto);
+    const [clientes, setClientes] = useState([]);
+    const [objCliente, setObjCliente] = useState(cliente);
     const navigate = useNavigate();
 
-
     const aoDigitar = (e) => {
-        console.log(e.target);
-        setObjProduto({ ...objProduto, [e.target.name]: e.target.value });
-
+        setObjCliente({ ...objCliente, [e.target.name]: e.target.value });
     }
 
-    //cadastrar 
     const cadastrar = () => {
-        fetch('http://localhost:8080/cadprod', {
+        fetch('http://localhost:8080/cadcliente', {
             method: 'post',
-            body: JSON.stringify(objProduto),
+            body: JSON.stringify(objCliente),
             headers: {
                 'Content-type': 'application/json',
                 'Accept': 'application/json'
@@ -42,10 +33,9 @@ function CadastroProduto() {
             .then(retorno_convertido => {
 
             })
-        navigate("/produtos");
+
+        navigate("/clientes");
     }
-
-
 
     return (
 
@@ -93,7 +83,7 @@ function CadastroProduto() {
 
             <div className="container">
                 <div className="row">
-                    <h1 className="text-center">Cadastrar Novo Produto</h1>
+                    <h1 className="text-center">Cadastrar Novo Cliente</h1>
                     <div className="card-body">
                         <form>
                             <div className="form-row">
@@ -103,37 +93,31 @@ function CadastroProduto() {
                                 </div>
 
                                 <div className="form-group col-md-6">
-                                    <label>Peso:</label>
-                                    <input name="peso" type="text" onChange={aoDigitar} className="form-control" placeholder="Peso(kgs)" />
+                                    <label>CPF/CNPJ:</label>
+                                    <input name="cpf_cnpj" type="text" onChange={aoDigitar} className="form-control" placeholder="CPF/CNPJ" />
                                 </div>
 
                                 <div className="form-group col-md-6">
-                                    <label>Dimensão:</label>
-                                    <input name="dimensao" type="text" onChange={aoDigitar} className="form-control" placeholder="Dimensão(mt3)" />
+                                    <label>Telefone:</label>
+                                    <input name="telefone" type="text" onChange={aoDigitar} className="form-control" placeholder="Telefone" />
                                 </div>
 
                                 <div className="form-group col-md-6">
-                                    <label>Quantidade:</label>
-                                    <input name="quantidade" type="text" onChange={aoDigitar} className="form-control" placeholder="Quantidade" />
+                                    <label>Endereço:</label>
+                                    <input name="endereco" type="text" onChange={aoDigitar} className="form-control" placeholder="Endereço" />
                                 </div>
 
                                 <div className="form-group col-md-6">
-                                    <label>Valor:</label>
-                                    <input name="valor" type="text" onChange={aoDigitar} className="form-control" placeholder="Valor" />
+                                    <label>CEP:</label>
+                                    <input name="cep" type="text" onChange={aoDigitar} className="form-control" placeholder="CEP" />
                                 </div>
-
-                                <div className="form-group col-md-6">
-                                    <label>Imagem:</label>
-                                    <input name="imagem" type="text" onChange={aoDigitar} className="form-control" placeholder="Imagem" />
-                                </div>
-                            </div>
-
-
-                            <div className="box-footer">
-                                <a href="/produtos" className="btn btn-danger">Cancelar</a>
-                                <button type="submit" id="btn-cadastrar" className="btn btn-primary" onClick={cadastrar}>Cadastrar</button>
                             </div>
                         </form>
+
+                        <div className="box-footer">
+                            <a href="/clientes" className="btn btn-danger">Cancelar</a>
+                            <button type="button" id="btn-cadastrar" className="btn btn-primary" onClick={cadastrar}>Cadastrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -141,4 +125,4 @@ function CadastroProduto() {
     );
 }
 
-export default CadastroProduto;
+export default CadastroCliente;

@@ -1,50 +1,37 @@
-//import React from 'react';
 import React, { useState, useEffect } from 'react';
 import '../../components/css/gerencia.css';
 import { useNavigate } from 'react-router-dom';
 
+function Transportadora() {
 
-
-function Produto() {
-
-    const produto = {
-        id_produto: 0,
+    const transportadora = {
+        id: 0,
         nome: '',
-        peso: 0.0,
-        dimensao: 0.0,
-        quantidade: 0.0,
-        valor: 0.0,
-        imagem: '',
-    }
+        cidade: '',
+        precoKM: 0.0,
+    };
 
-    const [produtos, setProdutos] = useState([]);
-    const [objProduto, setObjProduto] = useState(produto);
+    const [transportadoras, setTransportadoras] = useState([]);
+    const [objTransportadora, setObjTransportadora] = useState(transportadora);
     const navigate = useNavigate();
 
     const adicionar = () => {
-        navigate("/cadprod");
-    }
-
+        navigate("/cadtransp");
+    };
 
     useEffect(() => {
-        fetch('http://localhost:8080/produtos')
+        fetch('http://localhost:8080/transportadoras')
             .then(retorno => retorno.json())
-            .then(convertido => setProdutos(convertido))
-            .catch(error => console.error('Erro ao buscar produtos:', error));
+            .then(convertido => setTransportadoras(convertido))
+            .catch(error => console.error('Erro ao buscar transportadoras:', error));
     }, []);
 
-
-
-
     return (
-
-
-
         <><React.Fragment>
             <meta charSet="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
-            <title>Gerência Funcionário</title>
+            <title>Gerência Transportadora</title>
 
             <link
                 rel="preconnect"
@@ -79,7 +66,6 @@ function Produto() {
                     <a href="/buscaFunc">Busca</a>
                     <a href="">Venda</a>
                     <a href="/perfil">Perfil</a>
-
                 </div>
             </header>
 
@@ -87,10 +73,10 @@ function Produto() {
 
                 <div className="menu">
                     <a href="/funcionarios">Funcionários</a>
-                    <a href="/produtos" className="menu_escolhido">Produtos</a>
+                    <a href="/produtos">Produtos</a>
                     <a href="/fornecedores">Fornecedores</a>
                     <a href="/estoques">Estoques</a>
-                    <a href="/transportadoras">Transportadoras</a>
+                    <a href="/transportadoras" className="menu_escolhido">Transportadoras</a>
                     <a href="/clientes">Clientes</a>
                 </div>
 
@@ -99,28 +85,22 @@ function Produto() {
                         <table className="table table-striped table-bordered">
                             <thead className="table-dark">
                                 <tr>
-                                    <th>Imagem</th>
                                     <th>Nome</th>
-                                    <th>Quantidade</th>
-                                    <th>Valor</th>
-                                    <th>Peso</th>
-                                    <th>Dimensao</th>
-                                    <th>Açoes</th>
+                                    <th>Cidade</th>
+                                    <th>precoKM</th>
+                                    <th>Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {produtos.map(produto => (
-                                    <tr key={produto.id_produto}>
-                                        <td><img src={`data:image/jpeg;base64,${produto.imagem}`} alt="Imagem do Produto" /></td>
-                                        <td>{produto.nome}</td>
-                                        <td>{produto.quantidade}</td>
-                                        <td>{produto.valor}</td>
-                                        <td>{produto.peso}</td>
-                                        <td>{produto.dimensao}</td>
+                                {transportadoras.map(transportadora => (
+                                    <tr key={transportadora.id}>
+                                        <td>{transportadora.nome}</td>
+                                        <td>{transportadora.cidade}</td>
+                                        <td>{transportadora.precoKM}</td>
                                         <td>
-                                            <a href={`/produtos/edit/${produto.id_produto}`} className="btn btn-primary">Atualizar</a>
+                                            <a href={`/transportadoras/edit/${transportadora.id}`} className="btn btn-primary">Atualizar</a>
                                             <span style={{ margin: '0 5px' }}></span>
-                                            <a href={`/produtos/${produto.id_produto}`} className="btn btn-danger">Deletar</a>
+                                            <a href={`/transportadoras/${transportadora.id}`} className="btn btn-danger">Deletar</a>
                                         </td>
                                     </tr>
                                 ))}
@@ -138,5 +118,4 @@ function Produto() {
     );
 }
 
-
-export default Produto;
+export default Transportadora;

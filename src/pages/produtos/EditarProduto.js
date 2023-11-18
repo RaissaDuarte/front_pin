@@ -1,8 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import '../../components/css/gerencia.css';
+import { useNavigate } from 'react-router-dom';
 
 function EditarProduto () {
 
+  const produto = {
+    id_produto: 0,
+    nome: '',
+    peso: 0.0,
+    dimensao: 0.0,
+    quantidade: 0.0,
+    valor: 0.0,
+    imagem:'',
+}
 
+const [produtos, setProdutos] = useState([]);
+const [objProduto, setObjProduto] = useState(produto);
+const navigate = useNavigate();
+
+
+const aoDigitar = (e) => {
+    console.log(e.target);
+    setObjProduto({...objProduto, [e.target.name]: e.target.value});
+
+}
 
   return (
     <>
