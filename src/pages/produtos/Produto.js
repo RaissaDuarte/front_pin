@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../components/css/gerencia.css';
 import { useNavigate } from 'react-router-dom';
+import { isIndexSignatureDeclaration } from 'typescript';
 
 
 
@@ -32,8 +33,59 @@ function Produto (){
         .catch(error => console.error('Erro ao buscar produtos:', error));
     }, []);
 
-    
+    const alterar = (indice) => {
+        const produtoAlterar = produtos[indice];
+        navigate('/editprod/'+produtoAlterar.id_produto);
+    }
 
+
+    //excluir 
+    const excluir = (indice) => {
+
+        const produtoExcluir = produtos[indice];
+
+        fetch('http://localhost:8080/delprod/'+produtoExcluir.id_produto, {
+            method:'delete',
+            headers:{
+                'Content-type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+        .then(retorno => retorno.json())
+        .then(retorno_convertido => {
+            // let vetorTemp = [...produtos];
+            // let indice = vetorTemp.findIndex((p)=> {
+            //     return p.id_produto === objProduto.id_produto;
+            // });
+            // vetorTemp.splice(indice, 1);
+            const vetorTemp = [...produtos];
+            vetorTemp.splice(indice, 1);
+            setProdutos(vetorTemp);
+        })
+        .catch(error => console.error('Erro ao excluir produto:', error));
+        //navigate("/produtos");
+    }
+
+    const cancelar =() => {
+        navigate("/produtos");
+    }
+
+    const [ordenacao, setOrdenacao] = useState({
+        campo: null,
+        tipo: 'asc' 
+    });
+    const ordenarProdutos = (campo) => {
+        let ordenacaoAtual = ordenacao.tipo === 'asc' ? 'desc' : 'asc';
+        const produtosOrdenados = [...produtos].sort((a, b) => {
+            if (ordenacaoAtual === 'asc') {
+                    return a[campo] > b[campo] ? 1 : -1;
+                } else {
+                    return a[campo] < b[campo] ? 1 : -1;
+                }
+        });
+        setProdutos(produtosOrdenados);
+    setOrdenacao({ campo, tipo: ordenacaoAtual });
+    };
 
 return (
 
@@ -96,18 +148,18 @@ return (
                         <table className="table table-striped table-bordered">
                             <thead className="table-dark">
                                 <tr>
-                                    <th>Id</th>
-                                    <th>Imagem</th>
-                                    <th>Nome</th>
-                                    <th>Quantidade</th>
-                                    <th>Valor</th>
-                                    <th>Peso</th>
-                                    <th>Dimensao</th>
+                                    <th onClick={() => ordenarProdutos('id_produto')}>Id</th>
+                                    <th onClick={() => ordenarProdutos('imagem')}>Imagem</th>
+                                    <th onClick={() => ordenarProdutos('nome')}>Nome</th>
+                                    <th onClick={() => ordenarProdutos('quantidade')}>Quantidade</th>
+                                    <th onClick={() => ordenarProdutos('valor')}>Valor</th>
+                                    <th onClick={() => ordenarProdutos('peso')}>Peso</th>
+                                    <th onClick={() => ordenarProdutos('dimensao')}>Dimensão</th>
                                     <th>Açoes</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {produtos.map(produto => (
+                                {produtos.map((produto, indice) => (
                                     <tr key={produto.id_produto}>
                                         <td>{produto.id_produto}</td>
                                         <td><img src={`data:image/jpeg;base64,${produto.imagem}`} alt="Imagem do Produto" /></td>
@@ -117,8 +169,8 @@ return (
                                         <td>{produto.peso}</td>
                                         <td>{produto.dimensao}</td>
                                         <td> 
-                                            <a href={`/produtos/edit/${produto.Fragmentid_produto}`} className="btn btn-primary">Atualizar</a>
-                                            <a href={`/produtos/${produto.id_produto}`} className="btn btn-danger">Deletar</a>
+                                            <button className="btn btn-primary"  onClick={() => alterar(indice)} >Editar</button>
+                                            <button className="btn btn-primary"  onClick={() => excluir(indice)} >Deletar</button>
                                         </td>
                                     </tr>
                                 ))}

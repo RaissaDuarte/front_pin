@@ -14,7 +14,7 @@ return (
         {/* produtos */}
         <Route path="/produtos" element={<Produto />}/>
         <Route path="/cadprod" element={<CadastrarProduto />}/>
-        <Route path="/editprod" element={<EditarProduto />}/>
+        <Route path="/editprod/:codigoProduto" element={<EditarProduto />}/>
     </Routes>
 </Router>
 );

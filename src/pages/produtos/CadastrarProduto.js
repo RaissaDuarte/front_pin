@@ -45,6 +45,10 @@ function CadastroProduto () {
         navigate("/produtos");
     }
 
+    const cancelar =() => {
+        navigate("/produtos");
+    }
+
 
 
     return (
@@ -130,7 +134,7 @@ function CadastroProduto () {
     
     
                     <div className="box-footer">
-                    <a href="/produtos" className="btn btn-danger">Cancelar</a>
+                    <button type="submit" id="btn-cancelar" className="btn btn-primary" onClick={cancelar}>Cancelar</button>
                     <button type="submit" id="btn-cadastrar" className="btn btn-primary" onClick={cadastrar}>Cadastrar</button>
                     </div>
                 </form>
