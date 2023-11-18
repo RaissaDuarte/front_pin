@@ -2,37 +2,31 @@ import React, { useState, useEffect } from 'react';
 import '../../components/css/gerencia.css';
 import { useNavigate } from 'react-router-dom';
 
-
-
-
-function CadastroProduto() {
-
-    const produto = {
-        id_produto: 0,
+function CadastroFuncionario() {
+    const funcionarioInicial = {
+        id: 0,
         nome: '',
-        peso: 0.0,
-        dimensao: 0.0,
-        quantidade: 0.0,
-        valor: 0.0,
-        imagem: '',
-    }
+        cpf: '',
+        telefone: '',
+        endereco: '',
+        cep: '',
+        senha: '',
+    };
 
-    const [produtos, setProdutos] = useState([]);
-    const [objProduto, setObjProduto] = useState(produto);
+    const [funcionarios, setFuncionarios] = useState([]);
+    const [objFuncionario, setObjFuncionario] = useState(funcionarioInicial);
     const navigate = useNavigate();
-
 
     const aoDigitar = (e) => {
         console.log(e.target);
-        setObjProduto({ ...objProduto, [e.target.name]: e.target.value });
-
+        setObjFuncionario({ ...objFuncionario, [e.target.name]: e.target.value });
     }
 
-    //cadastrar 
+    //cadastrar
     const cadastrar = () => {
-        fetch('http://localhost:8080/cadprod', {
+        fetch('http://localhost:8080/cadfunc', {
             method: 'post',
-            body: JSON.stringify(objProduto),
+            body: JSON.stringify(objFuncionario),
             headers: {
                 'Content-type': 'application/json',
                 'Accept': 'application/json'
@@ -42,14 +36,8 @@ function CadastroProduto() {
             .then(retorno_convertido => {
 
             })
-        navigate("/produtos");
+        navigate("/funcionarios");
     }
-
-    const cancelar =() => {
-        navigate("/produtos");
-    }
-
-
 
     return (
 
@@ -95,9 +83,10 @@ function CadastroProduto() {
                 </div>
             </header>
 
+
             <div className="container">
                 <div className="row">
-                    <h1 className="text-center">Cadastrar Novo Produto</h1>
+                    <h1 className="text-center">Cadastrar Novo Funcionário</h1>
                     <div className="card-body">
                         <form>
                             <div className="form-row">
@@ -107,34 +96,33 @@ function CadastroProduto() {
                                 </div>
 
                                 <div className="form-group col-md-6">
-                                    <label>Peso:</label>
-                                    <input name="peso" type="text" onChange={aoDigitar} className="form-control" placeholder="Peso(kgs)" />
+                                    <label>CPF:</label>
+                                    <input name="cpf" type="text" onChange={aoDigitar} className="form-control" placeholder="CPF" />
                                 </div>
 
                                 <div className="form-group col-md-6">
-                                    <label>Dimensão:</label>
-                                    <input name="dimensao" type="text" onChange={aoDigitar} className="form-control" placeholder="Dimensão(mt3)" />
+                                    <label>Telefone:</label>
+                                    <input name="telefone" type="text" onChange={aoDigitar} className="form-control" placeholder="Telefone" />
                                 </div>
 
                                 <div className="form-group col-md-6">
-                                    <label>Quantidade:</label>
-                                    <input name="quantidade" type="text" onChange={aoDigitar} className="form-control" placeholder="Quantidade" />
+                                    <label>Endereço:</label>
+                                    <input name="endereco" type="text" onChange={aoDigitar} className="form-control" placeholder="Endereço" />
                                 </div>
 
                                 <div className="form-group col-md-6">
-                                    <label>Valor:</label>
-                                    <input name="valor" type="text" onChange={aoDigitar} className="form-control" placeholder="Valor" />
+                                    <label>CEP:</label>
+                                    <input name="cep" type="text" onChange={aoDigitar} className="form-control" placeholder="CEP" />
                                 </div>
 
                                 <div className="form-group col-md-6">
-                                    <label>Imagem:</label>
-                                    <input name="imagem" type="text" onChange={aoDigitar} className="form-control" placeholder="Imagem" />
+                                    <label>Senha:</label>
+                                    <input name="senha" type="text" onChange={aoDigitar} className="form-control" placeholder="Senha" />
                                 </div>
                             </div>
 
-
                             <div className="box-footer">
-                                <a href="/produtos" className="btn btn-danger">Cancelar</a>
+                                <a href="/funcionarios" className="btn btn-danger">Cancelar</a>
                                 <button type="submit" id="btn-cadastrar" className="btn btn-primary" onClick={cadastrar}>Cadastrar</button>
                             </div>
                         </form>
@@ -145,4 +133,4 @@ function CadastroProduto() {
     );
 }
 
-export default CadastroProduto;
+export default CadastroFuncionario;

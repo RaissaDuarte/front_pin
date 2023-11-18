@@ -6,7 +6,7 @@ import { isIndexSignatureDeclaration } from 'typescript';
 
 
 
-function Produto (){
+function Produto() {
 
     const produto = {
         id_produto: 0,
@@ -15,7 +15,7 @@ function Produto (){
         dimensao: 0.0,
         quantidade: 0.0,
         valor: 0.0,
-        imagem:'',
+        imagem: '',
     }
 
     const [produtos, setProdutos] = useState([]);
@@ -23,14 +23,15 @@ function Produto (){
     const navigate = useNavigate();
 
     const adicionar = () => {
-        navigate("/cadprod");}
+        navigate("/cadprod");
+    }
 
 
     useEffect(() => {
         fetch('http://localhost:8080/produtos')
-        .then(retorno => retorno.json())
-        .then(convertido => setProdutos(convertido))
-        .catch(error => console.error('Erro ao buscar produtos:', error));
+            .then(retorno => retorno.json())
+            .then(convertido => setProdutos(convertido))
+            .catch(error => console.error('Erro ao buscar produtos:', error));
     }, []);
 
     const alterar = (indice) => {
@@ -87,38 +88,40 @@ function Produto (){
     setOrdenacao({ campo, tipo: ordenacaoAtual });
     };
 
-return (
+
+    return (
 
 
 
-    <><React.Fragment>
-        <meta charSet="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
-        <title>Gerência Funcionário</title>
+        <><React.Fragment>
+            <meta charSet="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
+            <title>Gerência Funcionário</title>
 
-        <link
-            rel="preconnect"
-            href="https://fonts.googleapis.com" />
-        <link
-            rel="preconnect"
-            href="https://fonts.gstatic.com"
-            crossOrigin="true" />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Concert+One&display=swap"
-            rel="stylesheet" />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap"
-            rel="stylesheet" />
+            <link
+                rel="preconnect"
+                href="https://fonts.googleapis.com" />
+            <link
+                rel="preconnect"
+                href="https://fonts.gstatic.com"
+                crossOrigin="true" />
+            <link
+                href="https://fonts.googleapis.com/css2?family=Concert+One&display=swap"
+                rel="stylesheet" />
+            <link
+                href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap"
+                rel="stylesheet" />
 
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-            crossOrigin="anonymous" />
-        <link rel="stylesheet" href="/css/gerencia.css" />
+            <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+                integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+                crossOrigin="anonymous" />
+            <link rel="stylesheet" href="/css/gerencia.css" />
 
-    </React.Fragment>
+        </React.Fragment>
+
             <header className="headerGeneric">
                 <div className="logo_name">
                     <p>TemDTudo</p>
@@ -128,7 +131,8 @@ return (
                     <a href="/funcionarios" style={{ textDecoration: 'underline' }}>Gerência</a>
                     <a href="/buscaFunc">Busca</a>
                     <a href="">Venda</a>
-                    <a href="/perfil"><img src="src/components/img/user.svg" alt="Icone Perfil Abstrato" /></a>
+                    <a href="/perfil">Perfil</a>
+
                 </div>
             </header>
 
@@ -136,11 +140,11 @@ return (
 
                 <div className="menu">
                     <a href="/funcionarios">Funcionários</a>
-                    <a href="/gerenciaProd" className="menu_escolhido">Produtos</a>
-                    <a href="/gerenciaFornec">Fornecedores</a>
-                    <a href="/gerenciaEstoq">Estoque</a>
-                    <a href="/transportadoras">Transportadora</a>
-                    <a href="/gerenciaCliente">Cliente</a>
+                    <a href="/produtos" className="menu_escolhido">Produtos</a>
+                    <a href="/fornecedores">Fornecedores</a>
+                    <a href="/estoques">Estoques</a>
+                    <a href="/transportadoras">Transportadoras</a>
+                    <a href="/clientes">Clientes</a>
                 </div>
 
                 <div className="main">
@@ -161,7 +165,6 @@ return (
                             <tbody>
                                 {produtos.map((produto, indice) => (
                                     <tr key={produto.id_produto}>
-                                        <td>{produto.id_produto}</td>
                                         <td><img src={`data:image/jpeg;base64,${produto.imagem}`} alt="Imagem do Produto" /></td>
                                         <td>{produto.nome}</td>
                                         <td>{produto.quantidade}</td>
@@ -179,13 +182,13 @@ return (
                     </div>
 
                     <div className="gerencia_btns">
-                    <button className="right_btn" onClick={adicionar}>Adicionar</button>
-                    <button className="right_btn">Relatório</button>
+                        <button className="right_btn" onClick={adicionar}>Adicionar</button>
+                        <button className="right_btn">Relatório</button>
                     </div>
                 </div>
             </div>
-        </> 
-);
+        </>
+    );
 }
 
 
