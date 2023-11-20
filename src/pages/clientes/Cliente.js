@@ -211,7 +211,7 @@ function Cliente() {
                     </div>
 
                     <div className="gerencia_btns">
-                        <button className="right_btn" onClick={adicionar}>Adicionar</button>
+                        <button onClick={adicionar}>Adicionar</button>
                         <button className="right_btn">Relatório</button>
                     </div>
                 </div>

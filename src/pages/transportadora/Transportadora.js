@@ -26,6 +26,27 @@ function Transportadora() {
             .catch(error => console.error('Erro ao buscar transportadoras:', error));
     }, []);
 
+    const handleExcluirTransportadora = async (transportadoraId) => {
+        try {
+            const response = await fetch(`http://localhost:8080/transportadoras/delete/${transportadoraId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                const novasTransportadoras = transportadoras.filter(f => f.id !== transportadoraId);
+                setTransportadoras(novasTransportadoras);
+                console.log('Transportadora excluído com sucesso!');
+            } else {
+                console.error('Erro ao excluir transportadora:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Erro ao excluir transportadora:', error);
+        }
+    };
+
     return (
         <><React.Fragment>
             <meta charSet="UTF-8" />
@@ -98,9 +119,9 @@ function Transportadora() {
                                         <td>{transportadora.cidade}</td>
                                         <td>{transportadora.precoKM}</td>
                                         <td>
-                                            <a href={`/transportadoras/edit/${transportadora.id}`} className="btn btn-primary">Atualizar</a>
+                                            <a href={`/transportadoras/edit/${transportadora.id}`} className="btn btn-primary">Editar</a>
                                             <span style={{ margin: '0 5px' }}></span>
-                                            <a href={`/transportadoras/${transportadora.id}`} className="btn btn-danger">Deletar</a>
+                                            <button className="btn btn-danger" onClick={() => handleExcluirTransportadora(transportadora.id)}>Deletar</button>
                                         </td>
                                     </tr>
                                 ))}
@@ -109,7 +130,7 @@ function Transportadora() {
                     </div>
 
                     <div className="gerencia_btns">
-                        <button className="right_btn" onClick={adicionar}>Adicionar</button>
+                        <button onClick={adicionar}>Adicionar</button>
                         <button className="right_btn">Relatório</button>
                     </div>
                 </div>

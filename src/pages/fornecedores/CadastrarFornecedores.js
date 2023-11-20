@@ -33,6 +33,8 @@ function CadastroFornecedor() {
             .then(retorno => retorno.json())
             .then(retornoConvertido => {
 
+                setFornecedores([...fornecedores, retornoConvertido]);
+
             })
         navigate("/fornecedores");
     }
@@ -80,10 +82,10 @@ function CadastroFornecedor() {
                 </div>
             </header>
 
-            <div className="container">
-                <div className="row">
-                    <h1 className="text-center">Cadastrar Novo Fornecedor</h1>
+            <div className="container-fluid d-flex align-items-center justify-content-center vh-100">
+                <div className="card">
                     <div className="card-body">
+                        <h1 className="text-center">Cadastrar Novo Fornecedor</h1>
                         <form>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
@@ -113,8 +115,11 @@ function CadastroFornecedor() {
                             </div>
 
                             <div className="box-footer">
-                                <a href="/fornecedores" className="btn btn-danger">Cancelar</a>
-                                <button type="submit" id="btn-cadastrar" className="btn btn-primary" onClick={cadastrar}>Cadastrar</button>
+                                <div className="gerencia_btns">
+                                    <a href="/fornecedores" className="btn btn-danger">Cancelar</a>
+                                    <span style={{ margin: '0 5px' }}></span>
+                                    <button type="submit" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={cadastrar}>Cadastrar</button>
+                                </div>
                             </div>
                         </form>
                     </div>

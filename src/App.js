@@ -1,6 +1,9 @@
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Produto from './pages/produtos/Produto.js' ;
+
+import Home from './pages/home/Home.js';
+
+import Produto from './pages/produtos/Produto.js';
 import CadastrarProduto from './pages/produtos/CadastrarProduto.js';
 import EditarProduto from './pages/produtos/EditarProduto.js'
 import Funcionario from './pages/funcionarios/Funcionario.js';
@@ -18,7 +21,7 @@ import EditarCliente from './pages/clientes/EditarCliente.js';
 
 function App() {
 
-return (
+    return (
 
 <Router>
     <Routes>
@@ -27,10 +30,8 @@ return (
         <Route path="/cadfunc" element={<CadastrarFuncionario />}/>
         {/* <Route path="/editfunc" element={<EditarFuncionario />}/> */}
 
-        {/* produtos */}
-        <Route path="/produtos" element={<Produto />}/>
-        <Route path="/cadprod" element={<CadastrarProduto />}/>
-        <Route path="/editprod/:codigoProduto" element={<EditarProduto />}/>
+                {/* Home */}
+                <Route path="/home" element={<Home />} />
 
         {/* cliente */}
         <Route path="/clientes" element={<Cliente />}/>
@@ -49,9 +50,20 @@ return (
 
         
 
-    </Routes>
-</Router>
-);
+                {/* transportadora */}
+                <Route path="/transportadoras" element={<Transportadora />} />
+                <Route path="/cadtransp" element={<CadastrarTransportadora />} />
+                {/* <Route path="/edittransp" element={<EditarTransportadora />} /> */}
+
+                {/* cliente */}
+                <Route path="/clientes" element={<Cliente />} />
+                <Route path="/cadcliente" element={<CadastrarCliente />} />
+                <Route path="/clientes/edit/:id" element={<EditarCliente />} />
+
+
+            </Routes>
+        </Router>
+    );
 }
 
 export default App;

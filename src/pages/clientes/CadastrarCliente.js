@@ -35,7 +35,7 @@ function CadastroCliente() {
                 setTimeout(()=> {window.location.reload();},2000);
             })
 
-        navigate("/clientes");
+
     }
 
     const cancelar =() => {
@@ -86,10 +86,10 @@ function CadastroCliente() {
                 </div>
             </header>
 
-            <div className="container">
-                <div className="row">
-                    <h1 className="text-center">Cadastrar Novo Cliente</h1>
+            <div className="container-fluid d-flex align-items-center justify-content-center vh-100">
+                <div className="card">
                     <div className="card-body">
+                        <h1 className="text-center">Cadastrar Novo Cliente</h1>
                         <form>
                             <div className="form-row">
                                 <div className="form-group col-md-6">

@@ -64,7 +64,7 @@ function CadastrarTransportadora() {
             <link rel="stylesheet" href="/css/gerencia.css" />
         </React.Fragment>
 
-        <header className="headerGeneric">
+            <header className="headerGeneric">
                 <div className="logo_name">
                     <p>TemDTudo</p>
                 </div>
@@ -77,10 +77,10 @@ function CadastrarTransportadora() {
                 </div>
             </header>
 
-            <div className="container">
-                <div className="row">
-                    <h1 className="text-center">Cadastrar Transportadora</h1>
+            <div className="container-fluid d-flex align-items-center justify-content-center vh-100">
+                <div className="card">
                     <div className="card-body">
+                        <h1 className="text-center">Cadastrar Nova Transportadora</h1>
                         <form>
                             <div className="form-group">
                                 <label>Nome:</label>
@@ -96,10 +96,12 @@ function CadastrarTransportadora() {
                                 <label>Preço por KM:</label>
                                 <input name="precoKM" type="text" onChange={aoDigitar} className="form-control" placeholder="Preço por KM" />
                             </div>
-
                             <div className="box-footer">
-                                <a href="/transportadoras" className="btn btn-danger">Cancelar</a>
-                                <button type="button" id="btn-cadastrar" className="btn btn-primary" onClick={cadastrar}>Cadastrar</button>
+                                <div className="gerencia_btns">
+                                    <a href="/transportadoras" className="btn btn-danger" style={{ fontSize: '1em', width: '150px' }}>Cancelar</a>
+                                    <span style={{ margin: '0 5px' }}></span>
+                                    <button type="button" id="btn-cadastrar" className="right_btn btn btn-primary" style={{ fontSize: '1em', width: '150px' }} onClick={cadastrar}>Cadastrar</button>
+                                </div>
                             </div>
                         </form>
                     </div>

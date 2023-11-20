@@ -180,13 +180,15 @@ td{
     border-radius: 25px;
     font-family: 'Comfortaa', cursive;
     font-size: 3.5vh;
+    color:black;
 }
 
 .right_btn {
     margin-left: auto;
+    color:black;
+    background-color: yellow;
 }
 
-/* Aumente o tamanho da div .row */
 .row {
     margin-top: 1%;
     padding-top: 1%;
@@ -198,7 +200,7 @@ form {
     justify-self: center;
     display: block;
     height: 100%;
-    padding: 3% 4%; /* Aumente o padding conforme necessário para aumentar o tamanho do formulário */
+    padding: 3% 4%;
     border: 5px solid #4CAF50;
     border-radius: 20px;
     background-color: #EFEFEF;
@@ -210,3 +212,10 @@ form {
     width: 100%;
 }
 
+.card-body{
+    margin-top:20px;
+}
+
+.text-center{
+    margin-bottom:40px;
+}

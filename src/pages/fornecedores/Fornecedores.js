@@ -28,6 +28,28 @@ function Fornecedor() {
             .catch(error => console.error('Erro ao buscar fornecedores:', error));
     }, []);
 
+    const handleExcluirFornecedor = async (fornecedorId) => {
+        try {
+            const response = await fetch(`http://localhost:8080/fornecedores/delete/${fornecedorId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                // Atualize a lista de fornecedores após a exclusão
+                const novosFornecedores = fornecedores.filter(f => f.id !== fornecedorId);
+                setFornecedores(novosFornecedores);
+                console.log('Fornecedor excluído com sucesso!');
+            } else {
+                console.error('Erro ao excluir fornecedor:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Erro ao excluir fornecedor:', error);
+        }
+    };
+
     return (
         <><React.Fragment>
             <meta charSet="UTF-8" />
@@ -104,9 +126,9 @@ function Fornecedor() {
                                         <td>{fornecedor.cep}</td>
                                         <td>{fornecedor.cnpj}</td>
                                         <td>
-                                            <a href={`/fornecedores/edit/${fornecedor.id}`} className="btn btn-primary">Atualizar</a>
+                                            <a href={`/fornecedores/edit/${fornecedor.id}`} className="btn btn-primary">Editar</a>
                                             <span style={{ margin: '0 5px' }}></span>
-                                            <a href={`/fornecedores/${fornecedor.id}`} className="btn btn-danger">Deletar</a>
+                                            <button className="btn btn-danger" onClick={() => handleExcluirFornecedor(fornecedor.id)}>Deletar</button>
                                         </td>
                                     </tr>
                                 ))}
@@ -115,7 +137,7 @@ function Fornecedor() {
                     </div>
 
                     <div className="gerencia_btns">
-                        <button className="right_btn" onClick={adicionar}>Adicionar</button>
+                        <button onClick={adicionar}>Adicionar</button>
                         <button className="right_btn">Relatório</button>
                     </div>
                 </div>
