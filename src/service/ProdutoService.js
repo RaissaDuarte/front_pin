@@ -16,6 +16,6 @@ export class ProdutoService{
     }
 
     excluir(id){
-        return axios.delete('http://localhost:8080/delprod' + id)
+        return axios.delete('http://localhost:8080/delprod' + id);
     }
 }

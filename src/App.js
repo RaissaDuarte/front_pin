@@ -25,27 +25,29 @@ return (
         {/* funcionarios */}
         <Route path="/funcionarios" element={<Funcionario />}/>
         <Route path="/cadfunc" element={<CadastrarFuncionario />}/>
-        <Route path="/editfunc" element={<EditarFuncionario />}/>
+        {/* <Route path="/editfunc" element={<EditarFuncionario />}/> */}
 
         {/* produtos */}
         <Route path="/produtos" element={<Produto />}/>
         <Route path="/cadprod" element={<CadastrarProduto />}/>
         <Route path="/editprod/:codigoProduto" element={<EditarProduto />}/>
 
+        {/* cliente */}
+        <Route path="/clientes" element={<Cliente />}/>
+        <Route path="/cadcliente" element={<CadastrarCliente />}/>
+        <Route path="/editcliente/:codigocliente" element={<EditarCliente />}/>
+
          {/* fornecedores */}
         <Route path="/fornecedores" element={<Fornecedor />}/>
         <Route path="/cadfornec" element={<CadastrarFornecedor />}/>
-        <Route path="/editfornec" element={<EditarFornecedor />}/>
+        {/* //<Route path="/editfornec" element={<EditarFornecedor />}/> */}
 
         {/* transportadora */}
         <Route path="/transportadoras" element={<Transportadora />}/>
         <Route path="/cadtransp" element={<CadastrarTransportadora />}/>
-        <Route path="/edittransp" element={<EditarTransportadora />}/>
+        {/* <Route path="/edittransp" element={<EditarTransportadora />}/> */}
 
-        {/* cliente */}
-        <Route path="/clientes" element={<Cliente />}/>
-        <Route path="/cadcliente" element={<CadastrarCliente />}/>
-        <Route path="/editcliente" element={<EditarCliente />}/>
+        
 
     </Routes>
 </Router>

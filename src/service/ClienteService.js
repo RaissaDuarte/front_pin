@@ -15,6 +15,6 @@ export class ClienteService {
     }
 
     excluir(id) {
-        return axios.delete(`http://localhost:8080/delcliente/${id}`);
+        return axios.delete(`http://localhost:8080/delcliente`+ id);
     }
 }

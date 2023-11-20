@@ -54,17 +54,11 @@ function Produto() {
         })
         .then(retorno => retorno.json())
         .then(retorno_convertido => {
-            // let vetorTemp = [...produtos];
-            // let indice = vetorTemp.findIndex((p)=> {
-            //     return p.id_produto === objProduto.id_produto;
-            // });
-            // vetorTemp.splice(indice, 1);
             const vetorTemp = [...produtos];
             vetorTemp.splice(indice, 1);
             setProdutos(vetorTemp);
         })
         .catch(error => console.error('Erro ao excluir produto:', error));
-        //navigate("/produtos");
     }
 
     const cancelar =() => {
@@ -87,6 +81,32 @@ function Produto() {
         setProdutos(produtosOrdenados);
     setOrdenacao({ campo, tipo: ordenacaoAtual });
     };
+
+
+    //barra pesquisa 
+    const [termoPesquisa, setTermoPesquisa] = useState('');
+
+    const filtrarProdutos = (termo) => {
+        const termoLowerCase = termo.toLowerCase();
+        const produtosFiltrados = produtos.filter((produto) => {
+            return (
+                produto.nome.toLowerCase().includes(termoLowerCase) ||
+                produto.id_produto.toString().includes(termoLowerCase) ||
+                produto.dimensao.toString().includes(termoLowerCase) ||
+                produto.peso.toString().includes(termoLowerCase) ||
+                produto.quantidade.toString().includes(termoLowerCase) ||
+                produto.valor.toString().includes(termoLowerCase)
+            );
+        });
+        return produtosFiltrados;
+    };
+
+    const handlePesquisa = (event) => {
+        const termo = event.target.value;
+        setTermoPesquisa(termo);
+    };
+
+    const produtosFiltrados = filtrarProdutos(termoPesquisa);
 
 
     return (
@@ -129,7 +149,6 @@ function Produto() {
                 <div className="link_pages">
                     <a href="/home">Home</a>
                     <a href="/funcionarios" style={{ textDecoration: 'underline' }}>Gerência</a>
-                    <a href="/buscaFunc">Busca</a>
                     <a href="">Venda</a>
                     <a href="/perfil">Perfil</a>
 
@@ -142,12 +161,22 @@ function Produto() {
                     <a href="/funcionarios">Funcionários</a>
                     <a href="/produtos" className="menu_escolhido">Produtos</a>
                     <a href="/fornecedores">Fornecedores</a>
-                    <a href="/estoques">Estoques</a>
+                    <a href="/estoques">Entrada estoques</a>
                     <a href="/transportadoras">Transportadoras</a>
                     <a href="/clientes">Clientes</a>
                 </div>
-
                 <div className="main">
+
+                {/* barra pesquisa  */}
+                <div className="search-bar">
+                    <input
+                        type="text"
+                        placeholder="Pesquisar produto..."
+                        value={termoPesquisa}
+                        onChange={handlePesquisa}
+                    />
+                </div>
+
                     <div className="table-container">
                         <table className="table table-striped table-bordered">
                             <thead className="table-dark">
@@ -163,8 +192,9 @@ function Produto() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {produtos.map((produto, indice) => (
+                            {produtosFiltrados.map((produto, indice) => (
                                     <tr key={produto.id_produto}>
+                                        <td>{produto.id_produto}</td>
                                         <td><img src={`data:image/jpeg;base64,${produto.imagem}`} alt="Imagem do Produto" /></td>
                                         <td>{produto.nome}</td>
                                         <td>{produto.quantidade}</td>
@@ -173,7 +203,7 @@ function Produto() {
                                         <td>{produto.dimensao}</td>
                                         <td> 
                                             <button className="btn btn-primary"  onClick={() => alterar(indice)} >Editar</button>
-                                            <button className="btn btn-primary"  onClick={() => excluir(indice)} >Deletar</button>
+                                            <button className="btn btn-danger"  onClick={() => excluir(indice)} >Deletar</button>
                                         </td>
                                     </tr>
                                 ))}

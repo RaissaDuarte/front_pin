@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 function CadastroCliente() {
     const cliente = {
-        id: 0,
+        id_cliente: 0,
         nome: '',
         cpf_cnpj: '',
         telefone: '',
@@ -13,17 +13,17 @@ function CadastroCliente() {
     };
 
     const [clientes, setClientes] = useState([]);
-    const [objCliente, setObjCliente] = useState(cliente);
+    const [objcliente, setObjcliente] = useState(cliente);
     const navigate = useNavigate();
 
     const aoDigitar = (e) => {
-        setObjCliente({ ...objCliente, [e.target.name]: e.target.value });
+        setObjcliente({ ...objcliente, [e.target.name]: e.target.value });
     }
 
     const cadastrar = () => {
         fetch('http://localhost:8080/cadcliente', {
             method: 'post',
-            body: JSON.stringify(objCliente),
+            body: JSON.stringify(objcliente),
             headers: {
                 'Content-type': 'application/json',
                 'Accept': 'application/json'
@@ -31,9 +31,14 @@ function CadastroCliente() {
         })
             .then(retorno => retorno.json())
             .then(retorno_convertido => {
-
+            
+                setTimeout(()=> {window.location.reload();},2000);
             })
 
+        navigate("/clientes");
+    }
+
+    const cancelar =() => {
         navigate("/clientes");
     }
 
@@ -112,12 +117,12 @@ function CadastroCliente() {
                                     <input name="cep" type="text" onChange={aoDigitar} className="form-control" placeholder="CEP" />
                                 </div>
                             </div>
-                        </form>
 
                         <div className="box-footer">
-                            <a href="/clientes" className="btn btn-danger">Cancelar</a>
-                            <button type="button" id="btn-cadastrar" className="btn btn-primary" onClick={cadastrar}>Cadastrar</button>
+                        <button type="submit" id="btn-cancelar" className="btn btn-primary" onClick={cancelar}>Cancelar</button>
+                        <button type="button" id="btn-cadastrar" className="btn btn-primary" onClick={cadastrar}>Cadastrar</button>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>

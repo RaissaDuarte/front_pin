@@ -46,7 +46,7 @@ function EditarProduto () {
             vetorTemp[indice] = objProduto;
             setProdutos(vetorTemp);
 
-            setTimeout(()=> {window.location.reload();},3000);         
+            setTimeout(()=> {window.location.reload();},2000);         
         })
         .catch(error => console.error('Erro ao alterar produto:', error));
         navigate("/produtos");
