@@ -27,6 +27,28 @@ function Cliente() {
             .catch(error => console.error('Erro ao buscar clientes:', error));
     }, []);
 
+    const handleExcluirCliente = async (clienteId) => {
+        try {
+            const response = await fetch(`http://localhost:8080/clientes/delete/${clienteId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                // Atualize a lista de clientes após a exclusão
+                const novosClientes = clientes.filter(c => c.id !== clienteId);
+                setClientes(novosClientes);
+                console.log('Cliente excluído com sucesso!');
+            } else {
+                console.error('Erro ao excluir cliente:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Erro ao excluir cliente:', error);
+        }
+    };
+
     return (
         <><React.Fragment>
             <meta charSet="UTF-8" />
@@ -102,9 +124,9 @@ function Cliente() {
                                         <td>{cliente.endereco}</td>
                                         <td>{cliente.cep}</td>
                                         <td>
-                                            <a href={`/clientes/edit/${cliente.id}`} className="btn btn-primary">Atualizar</a>
+                                            <button className="btn btn-primary" onClick={() => navigate(`/clientes/edit/${cliente.id}`)}>Editar</button>
                                             <span style={{ margin: '0 5px' }}></span>
-                                            <a href={`/clientes/${cliente.id}`} className="btn btn-danger">Deletar</a>
+                                            <button className="btn btn-danger" onClick={() => handleExcluirCliente(cliente.id)}>Deletar</button>
                                         </td>
                                     </tr>
                                 ))}
@@ -113,7 +135,7 @@ function Cliente() {
                     </div>
 
                     <div className="gerencia_btns">
-                        <button className="right_btn" onClick={adicionar}>Adicionar</button>
+                        <button onClick={adicionar}>Adicionar</button>
                         <button className="right_btn">Relatório</button>
                     </div>
                 </div>

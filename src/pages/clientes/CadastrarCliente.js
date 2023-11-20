@@ -32,9 +32,11 @@ function CadastroCliente() {
             .then(retorno => retorno.json())
             .then(retorno_convertido => {
 
+                setClientes([...clientes, retorno_convertido]);
+                navigate("/clientes");
             })
 
-        navigate("/clientes");
+
     }
 
     return (
@@ -81,10 +83,10 @@ function CadastroCliente() {
                 </div>
             </header>
 
-            <div className="container">
-                <div className="row">
-                    <h1 className="text-center">Cadastrar Novo Cliente</h1>
+            <div className="container-fluid d-flex align-items-center justify-content-center vh-100">
+                <div className="card">
                     <div className="card-body">
+                        <h1 className="text-center">Cadastrar Novo Cliente</h1>
                         <form>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
@@ -112,12 +114,14 @@ function CadastroCliente() {
                                     <input name="cep" type="text" onChange={aoDigitar} className="form-control" placeholder="CEP" />
                                 </div>
                             </div>
+                            <div className="box-footer">
+                                <div className="gerencia_btns">
+                                    <a href="/clientes" className="btn btn-danger">Cancelar</a>
+                                    <span style={{ margin: '0 5px' }}></span>
+                                    <button type="button" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={cadastrar}>Cadastrar</button>
+                                </div>
+                            </div>
                         </form>
-
-                        <div className="box-footer">
-                            <a href="/clientes" className="btn btn-danger">Cancelar</a>
-                            <button type="button" id="btn-cadastrar" className="btn btn-primary" onClick={cadastrar}>Cadastrar</button>
-                        </div>
                     </div>
                 </div>
             </div>

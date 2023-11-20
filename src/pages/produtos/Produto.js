@@ -9,7 +9,7 @@ import { isIndexSignatureDeclaration } from 'typescript';
 function Produto() {
 
     const produto = {
-        id_produto: 0,
+        id: 0,
         nome: '',
         peso: 0.0,
         dimensao: 0.0,
@@ -36,7 +36,7 @@ function Produto() {
 
     const alterar = (indice) => {
         const produtoAlterar = produtos[indice];
-        navigate('/editprod/'+produtoAlterar.id_produto);
+        navigate('/editprod/' + produtoAlterar.id_produto);
     }
 
 
@@ -45,47 +45,47 @@ function Produto() {
 
         const produtoExcluir = produtos[indice];
 
-        fetch('http://localhost:8080/delprod/'+produtoExcluir.id_produto, {
-            method:'delete',
-            headers:{
+        fetch('http://localhost:8080/delprod/' + produtoExcluir.id_produto, {
+            method: 'delete',
+            headers: {
                 'Content-type': 'application/json',
                 'Accept': 'application/json'
             }
         })
-        .then(retorno => retorno.json())
-        .then(retorno_convertido => {
-            // let vetorTemp = [...produtos];
-            // let indice = vetorTemp.findIndex((p)=> {
-            //     return p.id_produto === objProduto.id_produto;
-            // });
-            // vetorTemp.splice(indice, 1);
-            const vetorTemp = [...produtos];
-            vetorTemp.splice(indice, 1);
-            setProdutos(vetorTemp);
-        })
-        .catch(error => console.error('Erro ao excluir produto:', error));
+            .then(retorno => retorno.json())
+            .then(retorno_convertido => {
+                // let vetorTemp = [...produtos];
+                // let indice = vetorTemp.findIndex((p)=> {
+                //     return p.id_produto === objProduto.id_produto;
+                // });
+                // vetorTemp.splice(indice, 1);
+                const vetorTemp = [...produtos];
+                vetorTemp.splice(indice, 1);
+                setProdutos(vetorTemp);
+            })
+            .catch(error => console.error('Erro ao excluir produto:', error));
         //navigate("/produtos");
     }
 
-    const cancelar =() => {
+    const cancelar = () => {
         navigate("/produtos");
     }
 
     const [ordenacao, setOrdenacao] = useState({
         campo: null,
-        tipo: 'asc' 
+        tipo: 'asc'
     });
     const ordenarProdutos = (campo) => {
         let ordenacaoAtual = ordenacao.tipo === 'asc' ? 'desc' : 'asc';
         const produtosOrdenados = [...produtos].sort((a, b) => {
             if (ordenacaoAtual === 'asc') {
-                    return a[campo] > b[campo] ? 1 : -1;
-                } else {
-                    return a[campo] < b[campo] ? 1 : -1;
-                }
+                return a[campo] > b[campo] ? 1 : -1;
+            } else {
+                return a[campo] < b[campo] ? 1 : -1;
+            }
         });
         setProdutos(produtosOrdenados);
-    setOrdenacao({ campo, tipo: ordenacaoAtual });
+        setOrdenacao({ campo, tipo: ordenacaoAtual });
     };
 
 
@@ -152,7 +152,6 @@ function Produto() {
                         <table className="table table-striped table-bordered">
                             <thead className="table-dark">
                                 <tr>
-                                    <th onClick={() => ordenarProdutos('id_produto')}>Id</th>
                                     <th onClick={() => ordenarProdutos('imagem')}>Imagem</th>
                                     <th onClick={() => ordenarProdutos('nome')}>Nome</th>
                                     <th onClick={() => ordenarProdutos('quantidade')}>Quantidade</th>
@@ -171,9 +170,10 @@ function Produto() {
                                         <td>{produto.valor}</td>
                                         <td>{produto.peso}</td>
                                         <td>{produto.dimensao}</td>
-                                        <td> 
-                                            <button className="btn btn-primary"  onClick={() => alterar(indice)} >Editar</button>
-                                            <button className="btn btn-primary"  onClick={() => excluir(indice)} >Deletar</button>
+                                        <td>
+                                            <button className="btn btn-primary" onClick={() => navigate(`/produtos/edit/${produto.id}`)} >Editar</button>
+                                            <span style={{ margin: '0 5px' }}></span>
+                                            <button className="btn btn-danger" onClick={() => excluir(indice)} >Deletar</button>
                                         </td>
                                     </tr>
                                 ))}
@@ -182,7 +182,7 @@ function Produto() {
                     </div>
 
                     <div className="gerencia_btns">
-                        <button className="right_btn" onClick={adicionar}>Adicionar</button>
+                        <button onClick={adicionar}>Adicionar</button>
                         <button className="right_btn">Relatório</button>
                     </div>
                 </div>

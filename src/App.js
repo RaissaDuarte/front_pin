@@ -1,6 +1,9 @@
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Produto from './pages/produtos/Produto.js' ;
+
+import Home from './pages/home/Home.js';
+
+import Produto from './pages/produtos/Produto.js';
 import CadastrarProduto from './pages/produtos/CadastrarProduto.js';
 import EditarProduto from './pages/produtos/EditarProduto.js'
 import Funcionario from './pages/funcionarios/Funcionario.js';
@@ -18,38 +21,43 @@ import EditarCliente from './pages/clientes/EditarCliente.js';
 
 function App() {
 
-return (
+    return (
 
-<Router>
-    <Routes>
-        {/* funcionarios */}
-        <Route path="/funcionarios" element={<Funcionario />}/>
-        <Route path="/cadfunc" element={<CadastrarFuncionario />}/>
-        <Route path="/editfunc" element={<EditarFuncionario />}/>
+        <Router>
+            <Routes>
 
-        {/* produtos */}
-        <Route path="/produtos" element={<Produto />}/>
-        <Route path="/cadprod" element={<CadastrarProduto />}/>
-        <Route path="/editprod/:codigoProduto" element={<EditarProduto />}/>
+                {/* Home */}
+                <Route path="/home" element={<Home />} />
 
-         {/* fornecedores */}
-        <Route path="/fornecedores" element={<Fornecedor />}/>
-        <Route path="/cadfornec" element={<CadastrarFornecedor />}/>
-        <Route path="/editfornec" element={<EditarFornecedor />}/>
+                {/* funcionarios */}
+                <Route path="/funcionarios" element={<Funcionario />} />
+                <Route path="/cadfunc" element={<CadastrarFuncionario />} />
+                <Route path="/funcionarios/edit/:id" element={<EditarFuncionario />} />
 
-        {/* transportadora */}
-        <Route path="/transportadoras" element={<Transportadora />}/>
-        <Route path="/cadtransp" element={<CadastrarTransportadora />}/>
-        <Route path="/edittransp" element={<EditarTransportadora />}/>
+                {/* produtos */}
+                <Route path="/produtos" element={<Produto />} />
+                <Route path="/cadprod" element={<CadastrarProduto />} />
+                <Route path="/produtos/edit/:id" element={<EditarProduto />} />
 
-        {/* cliente */}
-        <Route path="/clientes" element={<Cliente />}/>
-        <Route path="/cadcliente" element={<CadastrarCliente />}/>
-        <Route path="/editcliente" element={<EditarCliente />}/>
+                {/* fornecedores */}
+                <Route path="/fornecedores" element={<Fornecedor />} />
+                <Route path="/cadfornec" element={<CadastrarFornecedor />} />
+                {/* <Route path="/editfornec" element={<EditarFornecedor />} /> */}
 
-    </Routes>
-</Router>
-);
+                {/* transportadora */}
+                <Route path="/transportadoras" element={<Transportadora />} />
+                <Route path="/cadtransp" element={<CadastrarTransportadora />} />
+                {/* <Route path="/edittransp" element={<EditarTransportadora />} /> */}
+
+                {/* cliente */}
+                <Route path="/clientes" element={<Cliente />} />
+                <Route path="/cadcliente" element={<CadastrarCliente />} />
+                <Route path="/clientes/edit/:id" element={<EditarCliente />} />
+
+
+            </Routes>
+        </Router>
+    );
 }
 
 export default App;

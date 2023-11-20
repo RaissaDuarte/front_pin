@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 function CadastroProduto() {
 
     const produto = {
-        id_produto: 0,
+        id: 0,
         nome: '',
         peso: 0.0,
         dimensao: 0.0,
@@ -45,7 +45,7 @@ function CadastroProduto() {
         navigate("/produtos");
     }
 
-    const cancelar =() => {
+    const cancelar = () => {
         navigate("/produtos");
     }
 
@@ -95,10 +95,10 @@ function CadastroProduto() {
                 </div>
             </header>
 
-            <div className="container">
-                <div className="row">
-                    <h1 className="text-center">Cadastrar Novo Produto</h1>
+            <div className="container-fluid d-flex align-items-center justify-content-center vh-100">
+                <div className="card">
                     <div className="card-body">
+                        <h1 className="text-center">Cadastrar Novo Produto</h1>
                         <form>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
@@ -134,8 +134,11 @@ function CadastroProduto() {
 
 
                             <div className="box-footer">
-                                <a href="/produtos" className="btn btn-danger">Cancelar</a>
-                                <button type="submit" id="btn-cadastrar" className="btn btn-primary" onClick={cadastrar}>Cadastrar</button>
+                                <div className="gerencia_btns">
+                                    <a href="/produtos" className="btn btn-danger">Cancelar</a>
+                                    <span style={{ margin: '0 5px' }}></span>
+                                    <button type="submit" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={cadastrar}>Cadastrar</button>
+                                </div>
                             </div>
                         </form>
                     </div>

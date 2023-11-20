@@ -29,6 +29,27 @@ function Funcionario() {
             .catch(error => console.error('Erro ao buscar funcionarios:', error));
     }, []);
 
+    const handleExcluirFuncionario = async (funcionarioId) => {
+        try {
+            const response = await fetch(`http://localhost:8080/funcionarios/delete/${funcionarioId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                const novosFuncionarios = funcionarios.filter(f => f.id !== funcionarioId);
+                setFuncionarios(novosFuncionarios);
+                console.log('Fornecedor excluído com sucesso!');
+            } else {
+                console.error('Erro ao excluir funcionario:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Erro ao excluir funcionario:', error);
+        }
+    };
+
     return (
         <><React.Fragment>
             <meta charSet="UTF-8" />
@@ -107,9 +128,9 @@ function Funcionario() {
                                         <td>{funcionario.cep}</td>
                                         <td>{funcionario.senha}</td>
                                         <td>
-                                            <a href={`/funcionarios/edit/${funcionario.id}`} className="btn btn-primary">Atualizar</a>
+                                            <a href={`/funcionarios/edit/${funcionario.id}`} className="btn btn-primary">Editar</a>
                                             <span style={{ margin: '0 5px' }}></span>
-                                            <a href={`/funcionarios/${funcionario.id}`} className="btn btn-danger">Deletar</a>
+                                            <button className="btn btn-danger" onClick={() => handleExcluirFuncionario(funcionario.id)}>Deletar</button>
                                         </td>
                                     </tr>
                                 ))}
@@ -118,7 +139,7 @@ function Funcionario() {
                     </div>
 
                     <div className="gerencia_btns">
-                        <button className="right_btn" onClick={adicionar}>Adicionar</button>
+                        <button onClick={adicionar}>Adicionar</button>
                         <button className="right_btn">Relatório</button>
                     </div>
                 </div>
