@@ -19,7 +19,7 @@ function CadastrarTransportadora() {
     };
 
     const cadastrar = () => {
-        fetch('http://localhost:8080/cadtransp', {
+        fetch('http://localhost:8080/cadastroTransportadora', {
             method: 'post',
             body: JSON.stringify(objTransportadora),
             headers: {

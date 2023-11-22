@@ -18,7 +18,7 @@ function Fornecedor() {
     const navigate = useNavigate();
 
     const adicionar = () => {
-        navigate("/cadfornec");
+        navigate("/cadastroFornecedor");
     };
 
     useEffect(() => {

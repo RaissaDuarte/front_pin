@@ -22,7 +22,7 @@ function CadastroFornecedor() {
 
     // Cadastrar
     const cadastrar = () => {
-        fetch('http://localhost:8080/cadfornec', {
+        fetch('http://localhost:8080/cadastroFornecedor', {
             method: 'post',
             body: JSON.stringify(objFornecedor),
             headers: {

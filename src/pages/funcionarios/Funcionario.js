@@ -19,7 +19,7 @@ function Funcionario() {
     const navigate = useNavigate();
 
     const adicionar = () => {
-        navigate("/cadfunc");
+        navigate("/cadastroFuncionario");
     };
 
     useEffect(() => {

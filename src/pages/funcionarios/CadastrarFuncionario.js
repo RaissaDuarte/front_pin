@@ -24,7 +24,7 @@ function CadastroFuncionario() {
 
     //cadastrar
     const cadastrar = () => {
-        fetch('http://localhost:8080/cadfunc', {
+        fetch('http://localhost:8080/cadastroFuncionario', {
             method: 'post',
             body: JSON.stringify(objFuncionario),
             headers: {

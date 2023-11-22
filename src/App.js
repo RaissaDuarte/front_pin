@@ -27,11 +27,11 @@ function App() {
     <Routes>
         {/* funcionarios */}
         <Route path="/funcionarios" element={<Funcionario />}/>
-        <Route path="/cadfunc" element={<CadastrarFuncionario />}/>
-        {/* <Route path="/editfunc" element={<EditarFuncionario />}/> */}
+        <Route path="/cadastroFuncionario" element={<CadastrarFuncionario />}/>
+        <Route path="/funcionarios/edit/:id" element={<EditarFuncionario />}/>
 
-                {/* Home */}
-                <Route path="/home" element={<Home />} />
+        {/* Home */}
+        <Route path="/home" element={<Home />} />
 
         {/* cliente */}
         <Route path="/clientes" element={<Cliente />}/>
@@ -40,20 +40,17 @@ function App() {
 
          {/* fornecedores */}
         <Route path="/fornecedores" element={<Fornecedor />}/>
-        <Route path="/cadfornec" element={<CadastrarFornecedor />}/>
-        {/* //<Route path="/editfornec" element={<EditarFornecedor />}/> */}
+        <Route path="/cadastroFornecedor" element={<CadastrarFornecedor />}/>
+        <Route path="/fornecedores/edit/:id" element={<EditarFornecedor />}/>
 
         {/* transportadora */}
         <Route path="/transportadoras" element={<Transportadora />}/>
-        <Route path="/cadtransp" element={<CadastrarTransportadora />}/>
-        {/* <Route path="/edittransp" element={<EditarTransportadora />}/> */}
+        <Route path="/cadastroTransportadora" element={<CadastrarTransportadora />}/>
+        <Route path="/transportadoras/edit/:id" element={<EditarTransportadora />}/>
 
         
 
-                {/* transportadora */}
-                <Route path="/transportadoras" element={<Transportadora />} />
-                <Route path="/cadtransp" element={<CadastrarTransportadora />} />
-                {/* <Route path="/edittransp" element={<EditarTransportadora />} /> */}
+                
 
                 {/* cliente */}
                 <Route path="/clientes" element={<Cliente />} />

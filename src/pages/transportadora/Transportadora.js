@@ -16,7 +16,7 @@ function Transportadora() {
     const navigate = useNavigate();
 
     const adicionar = () => {
-        navigate("/cadtransp");
+        navigate("/cadastroTransportadora");
     };
 
     useEffect(() => {
