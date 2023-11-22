@@ -38,6 +38,11 @@ function App() {
         <Route path="/cadcliente" element={<CadastrarCliente />}/>
         <Route path="/editcliente/:codigocliente" element={<EditarCliente />}/>
 
+        {/* produtos */}
+        <Route path="/produtos" element={<Produto />}/>
+        <Route path="/cadprod" element={<CadastrarProduto />}/>
+        <Route path="/editprod/:codigoProduto" element={<EditarProduto />}/>
+
          {/* fornecedores */}
         <Route path="/fornecedores" element={<Fornecedor />}/>
         <Route path="/cadastroFornecedor" element={<CadastrarFornecedor />}/>
@@ -47,15 +52,6 @@ function App() {
         <Route path="/transportadoras" element={<Transportadora />}/>
         <Route path="/cadastroTransportadora" element={<CadastrarTransportadora />}/>
         <Route path="/transportadoras/edit/:id" element={<EditarTransportadora />}/>
-
-        
-
-                
-
-                {/* cliente */}
-                <Route path="/clientes" element={<Cliente />} />
-                <Route path="/cadcliente" element={<CadastrarCliente />} />
-                <Route path="/clientes/edit/:id" element={<EditarCliente />} />
 
 
             </Routes>
