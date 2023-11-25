@@ -32,7 +32,7 @@ function App() {
         {/* funcionarios */}
         <Route path="/funcionarios" element={<Funcionario />}/>
         <Route path="/cadastroFuncionario" element={<CadastrarFuncionario />}/>
-        <Route path="/funcionarios/edit/:id" element={<EditarFuncionario />}/>
+        <Route path="/funcionarios/edit/:codigoFuncionario" element={<EditarFuncionario />}/>
 
         {/* Home */}
         <Route path="/home" element={<Home />} />
@@ -49,17 +49,17 @@ function App() {
 
         {/* vendas */}
         <Route path="/vendas" element={<Venda />}/>
-        <Route path="/cadvendas" element={<CadastrarVenda />}/>
+        {/*<Route path="/cadvendas" element={<CadastrarVenda />}/>*/}
 
          {/* fornecedores */}
         <Route path="/fornecedores" element={<Fornecedor />}/>
         <Route path="/cadastroFornecedor" element={<CadastrarFornecedor />}/>
-        <Route path="/fornecedores/edit/:id" element={<EditarFornecedor />}/>
+        <Route path="/fornecedores/edit/:codigoFornecedor" element={<EditarFornecedor />}/>
 
         {/* transportadora */}
         <Route path="/transportadoras" element={<Transportadora />}/>
         <Route path="/cadastroTransportadora" element={<CadastrarTransportadora />}/>
-        <Route path="/transportadoras/edit/:id" element={<EditarTransportadora />}/>
+        <Route path="/transportadoras/edit/:codigoTransportadora" element={<EditarTransportadora />}/>
 
 
             </Routes>

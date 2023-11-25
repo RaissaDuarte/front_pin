@@ -2,60 +2,59 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 function EditarTransportadora() {
-    const { id } = useParams();
+    const { codigoTransportadora } = useParams();
     const navigate = useNavigate();
+    const [transportadoras, setTransportadoras] = useState([]);
 
-    const transportadora = {
-        id: 0,
+    const [objTransportadora, setObjTransportadora] = useState({
+        id: codigoTransportadora,
         nome: '',
         cidade: '',
-        precoKM: 0.0,
-    };
-
-    const [objTransportadora, setObjTransportadora] = useState(transportadora);
-
-    useEffect(() => {
-        fetch(`http://localhost:8080/transportadoras/edit/${id}`)
-            .then((retorno) => retorno.json())
-            .then((convertido) => {
-                console.log('Dados da transportadora:', convertido);
-                setObjTransportadora(convertido);
-            })
-            .catch((error) => {
-                console.error('Erro ao buscar transportadora:', error);
-            });
-    }, [id]);
+        precoKM: '',
+    });
 
     const aoDigitar = (e) => {
         setObjTransportadora({ ...objTransportadora, [e.target.name]: e.target.value });
-    };
-
-    if (objTransportadora.id === 0) {
-        console.log('Dados ainda estão sendo carregados...');
-        return <p>Carregando...</p>;
     }
 
-    const salvarEdicao = () => {
-        // Aqui você faz a requisição para salvar as alterações do cliente
-        fetch(`http://localhost:8080/transportadoras/edit/${id}`, {
+    //alterar 
+    const alterar = () => {
+        fetch('http://localhost:8080/alterarTransportadora', {
             method: 'put',
             body: JSON.stringify(objTransportadora),
             headers: {
                 'Content-type': 'application/json',
-                Accept: 'application/json',
-            },
+                'Accept': 'application/json'
+            }
         })
-            .then((retorno) => retorno.json())
-            .then((retornoConvertido) => {
-                // Atualiza os campos com os dados inseridos após salvar
-                setObjTransportadora(retornoConvertido);
-    
-                // Lógica de atualização da lista de clientes, se necessário
-                console.log('Transportadora editado com sucesso:', retornoConvertido);
-                navigate('/transportadoras'); // Redireciona de volta para a lista de clientes após a edição
+            .then(retorno => retorno.json())
+            .then(retorno_convertido => {
+
+                let vetorTemp = [...transportadoras];
+                let indice = vetorTemp.findIndex((t) => {
+                    return t.id === objTransportadora.id;
+                });
+                vetorTemp[indice] = objTransportadora;
+                setTransportadoras(vetorTemp);
+
+                setTimeout(() => { window.location.reload(); }, 2000);
             })
-            .catch((error) => console.error('Erro ao editar transportadora:', error));
-    };
+            .catch(error => console.error('Erro ao alterar transportadora:', error));
+        navigate("/transportadoras");
+
+    }
+
+    useEffect(() => {
+        fetch(`http://localhost:8080/transportadoras/edit/${codigoTransportadora}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setObjTransportadora(data);
+            })
+            .catch((error) => console.error('Erro ao buscar transportadora:', error));
+    }, [codigoTransportadora]);
 
     return (
         <><React.Fragment>
@@ -94,7 +93,6 @@ function EditarTransportadora() {
                 <div className="link_pages">
                     <a href="/home">Home</a>
                     <a href="/funcionarios" style={{ textDecoration: 'underline' }}>Gerência</a>
-                    <a href="{{url('buscaFunc')}}">Busca</a>
                     <a href="">Venda</a>
                     <a href="{{url('perfil')}}"><img src="/img/user.svg" alt="Icone Perfil Abstrato" /></a>
                 </div>
@@ -108,7 +106,7 @@ function EditarTransportadora() {
                             <div className="form-group">
                                 <label>Nome:</label>
                                 <input name="nome" type="text" onChange={aoDigitar}
-                                value={objTransportadora.nome} className="form-control" placeholder="Nome" />
+                                    value={objTransportadora.nome} className="form-control" placeholder="Nome" />
                             </div>
 
                             <div className="form-group">
@@ -124,7 +122,7 @@ function EditarTransportadora() {
                                 <div className="gerencia_btns">
                                     <a href="/transportadoras" className="btn btn-danger" style={{ fontSize: '1em', width: '150px' }}>Cancelar</a>
                                     <span style={{ margin: '0 5px' }}></span>
-                                    <button type="button" id="btn-cadastrar" className="right_btn btn btn-primary" style={{ fontSize: '1em', width: '150px' }} onClick={salvarEdicao}>Salvar</button>
+                                    <button type="button" id="btn-cadastrar" className="right_btn btn btn-primary" style={{ fontSize: '1em', width: '150px' }} onClick={alterar}>Salvar</button>
                                 </div>
                             </div>
                         </form>

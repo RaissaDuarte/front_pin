@@ -3,60 +3,61 @@ import '../../components/css/gerencia.css';
 import { useParams, useNavigate } from 'react-router-dom';
 
 function EditarFornecedor() {
-    const { id } = useParams();
+    const {codigoFornecedor} = useParams();
     const navigate = useNavigate();
+    const [fornecedores, setFornecedores] = useState([]);
 
-    const fornecedorInicial = {
-        id: 0,
+    const [objFornecedor, setObjFornecedor] = useState({
+        id: codigoFornecedor,
         nome: '',
-        endereco: '',
+        cpf: '',
         telefone: '',
+        endereco: '',
         cep: '',
-        cnpj: '',
-    };
-
-    useEffect(() => {
-        fetch(`http://localhost:8080/fornecedores/edit/${id}`)
-            .then((retorno) => retorno.json())
-            .then((convertido) => {
-                console.log('Dados do fornecedor:', convertido);
-                setObjFornecedor(convertido);
-            })
-            .catch((error) => {
-                console.error('Erro ao buscar fornecedores:', error);
-            });
-    }, [id]);
-
-    const [objFornecedor, setObjFornecedor] = useState(fornecedorInicial);
+        senha: '',
+    });
 
     const aoDigitar = (e) => {
         setObjFornecedor({ ...objFornecedor, [e.target.name]: e.target.value });
     }
 
-    if (objFornecedor.id === 0) {
-        console.log('Dados ainda estão sendo carregados...');
-        return <p>Carregando...</p>;
+    const alterar = () => {
+        fetch('http://localhost:8080/alterarFornecedor', {
+            method:'put',
+            body:JSON.stringify(objFornecedor),
+            headers:{
+                'Content-type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+        .then(retorno => retorno.json())
+        .then(retorno_convertido => {
+
+            let vetorTemp = [...fornecedores];
+            let indice = vetorTemp.findIndex((f)=> {
+                return f.id === objFornecedor.id;
+            });
+            vetorTemp[indice] = objFornecedor;
+            setFornecedores(vetorTemp);
+
+            setTimeout(()=> {window.location.reload();},2000);         
+        })
+        .catch(error => console.error('Erro ao alterar fornecedor:', error));
+        navigate("/fornecedores");
+        
     }
 
-    const salvarEdicao = () => {
-        // Aqui você faz a requisição para salvar as alterações do cliente
-        fetch(`http://localhost:8080/fornecedores/edit/${id}`, {
-            method: 'put',
-            body: JSON.stringify(objFornecedor),
-            headers: {
-                'Content-type': 'application/json',
-                Accept: 'application/json',
-            },
+    useEffect(() => {
+        fetch(`http://localhost:8080/fornecedores/edit/${codigoFornecedor}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
         })
-            .then((retorno) => retorno.json())
-            .then((retornoConvertido) => {
-                setObjFornecedor(retornoConvertido);
-    
-                console.log('Fornecedor editado com sucesso:', retornoConvertido);
-                navigate('/fornecedores');
+            .then((response) => response.json())
+            .then((data) => {
+                setObjFornecedor(data);
             })
-            .catch((error) => console.error('Erro ao editar Fornecedor:', error));
-    };
+            .catch((error) => console.error('Erro ao buscar fornecedor:', error));
+    }, [codigoFornecedor]);
 
     return (
         <><React.Fragment>
@@ -95,7 +96,6 @@ function EditarFornecedor() {
                 <div className="link_pages">
                     <a href="/home">Home</a>
                     <a href="/funcionarios" style={{ textDecoration: 'underline' }}>Gerência</a>
-                    <a href="{{url('buscaFunc')}}">Busca</a>
                     <a href="">Venda</a>
                     <a href="{{url('perfil')}}"><img src="/img/user.svg" alt="Icone Perfil Abstrato" /></a>
                 </div>
@@ -137,7 +137,7 @@ function EditarFornecedor() {
                                 <div className="gerencia_btns">
                                     <a href="/fornecedores" className="btn btn-danger">Cancelar</a>
                                     <span style={{ margin: '0 5px' }}></span>
-                                    <button type="submit" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={salvarEdicao}>Salvar</button>
+                                    <button type="submit" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={alterar}>Salvar</button>
                                 </div>
                             </div>
                         </form>

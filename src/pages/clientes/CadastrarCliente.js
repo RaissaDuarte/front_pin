@@ -31,14 +31,14 @@ function CadastroCliente() {
         })
             .then(retorno => retorno.json())
             .then(retorno_convertido => {
-            
-                setTimeout(()=> {window.location.reload();},2000);
+
+                setTimeout(() => { window.location.reload(); }, 2000);
             })
 
 
     }
 
-    const cancelar =() => {
+    const cancelar = () => {
         navigate("/clientes");
     }
 
@@ -117,10 +117,12 @@ function CadastroCliente() {
                                 </div>
                             </div>
 
-                        <div className="box-footer">
-                        <button type="submit" id="btn-cancelar" className="btn btn-primary" onClick={cancelar}>Cancelar</button>
-                        <button type="button" id="btn-cadastrar" className="btn btn-primary" onClick={cadastrar}>Cadastrar</button>
-                        </div>
+                            <div className="box-footer">
+                                <div className="gerencia_btns">
+                                    <a href="/clientes" className="btn btn-danger">Cancelar</a>
+                                    <button type="button" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={cadastrar}>Cadastrar</button>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>

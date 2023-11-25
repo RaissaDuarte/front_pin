@@ -3,63 +3,62 @@ import '../../components/css/gerencia.css';
 import { useParams, useNavigate } from 'react-router-dom';
 
 function EditarFuncionario() {
-    const { id } = useParams();
+    const {codigoFuncionario} = useParams();
     const navigate = useNavigate();
+    const [funcionarios, setFuncionarios] = useState([]);
 
-    const funcionarioInicial = {
-        id: 0,
+    const [objFuncionario, setObjFuncionario] = useState({
+        id: codigoFuncionario,
         nome: '',
         cpf: '',
         telefone: '',
         endereco: '',
         cep: '',
         senha: '',
-    };
-
-    const [objFuncionario, setObjFuncionario] = useState(funcionarioInicial);
-
-    useEffect(() => {
-        fetch(`http://localhost:8080/funcionarios/edit/${id}`)
-            .then((retorno) => retorno.json())
-            .then((convertido) => {
-                console.log('Dados do funcionario:', convertido);
-                setObjFuncionario(convertido);
-            })
-            .catch((error) => {
-                console.error('Erro ao buscar funcionario:', error);
-            });
-    }, [id]);
+    });    
 
     const aoDigitar = (e) => {
-        setObjFuncionario({ ...objFuncionario, [e.target.name]: e.target.value });
+        setObjFuncionario({...objFuncionario, [e.target.name]: e.target.value});
     }
 
-    if (objFuncionario.id === 0) {
-        console.log('Dados ainda estão sendo carregados...');
-        return <p>Carregando...</p>;
-    }
-
-    const salvarEdicao = () => {
-        // Aqui você faz a requisição para salvar as alterações do cliente
-        fetch(`http://localhost:8080/funcionarios/edit/${id}`, {
-            method: 'put',
-            body: JSON.stringify(objFuncionario),
-            headers: {
+    const alterar = () => {
+        fetch('http://localhost:8080/alterarFuncionario', {
+            method:'put',
+            body:JSON.stringify(objFuncionario),
+            headers:{
                 'Content-type': 'application/json',
-                Accept: 'application/json',
-            },
+                'Accept': 'application/json'
+            }
         })
-            .then((retorno) => retorno.json())
-            .then((retornoConvertido) => {
-                // Atualiza os campos com os dados inseridos após salvar
-                setObjFuncionario(retornoConvertido);
-    
-                // Lógica de atualização da lista de clientes, se necessário
-                console.log('Funcionario editado com sucesso:', retornoConvertido);
-                navigate('/funcionarios'); // Redireciona de volta para a lista de clientes após a edição
+        .then(retorno => retorno.json())
+        .then(retorno_convertido => {
+
+            let vetorTemp = [...funcionarios];
+            let indice = vetorTemp.findIndex((f)=> {
+                return f.id === objFuncionario.id;
+            });
+            vetorTemp[indice] = objFuncionario;
+            setFuncionarios(vetorTemp);
+
+            setTimeout(()=> {window.location.reload();},2000);         
+        })
+        .catch(error => console.error('Erro ao alterar funcionario:', error));
+        navigate("/funcionarios");
+        
+    }
+
+    useEffect(() => {
+        fetch(`http://localhost:8080/funcionarios/edit/${codigoFuncionario}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setObjFuncionario(data);
             })
-            .catch((error) => console.error('Erro ao editar funcionario:', error));
-    };
+            .catch((error) => console.error('Erro ao buscar funcionario:', error));
+    }, [codigoFuncionario]);
+    
 
     return (
 
@@ -68,7 +67,6 @@ function EditarFuncionario() {
             <meta charSet="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
-            <title>Gerência Produtos</title>
 
             <link
                 rel="preconnect"
@@ -99,7 +97,6 @@ function EditarFuncionario() {
                 <div className="link_pages">
                     <a href="/home">Home</a>
                     <a href="/funcionarios" style={{ textDecoration: 'underline' }}>Gerência</a>
-                    <a href="{{url('buscaFunc')}}">Busca</a>
                     <a href="">Venda</a>
                     <a href="{{url('perfil')}}"><img src="/img/user.svg" alt="Icone Perfil Abstrato" /></a>
                 </div>
@@ -115,36 +112,36 @@ function EditarFuncionario() {
                                 <div className="form-group col-md-6">
                                     <label>Nome:</label>
                                     <input name="nome" type="text" onChange={aoDigitar} 
-                                    value={objFuncionario.nome}
+                                    value={objFuncionario.nome || ''}
                                     className="form-control" placeholder="Nome" />
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>CPF:</label>
                                     <input name="cpf" type="text" onChange={aoDigitar} 
-                                    value={objFuncionario.cpf}className="form-control" placeholder="CPF" />
+                                    value={objFuncionario.cpf || ''}className="form-control" placeholder="CPF" />
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Telefone:</label>
                                     <input name="telefone" type="text" onChange={aoDigitar}
-                                    value={objFuncionario.telefone}className="form-control" placeholder="Telefone" />
+                                    value={objFuncionario.telefone || ''}className="form-control" placeholder="Telefone" />
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Endereço:</label>
                                     <input name="endereco" type="text" onChange={aoDigitar}
-                                    value={objFuncionario.endereco}className="form-control" placeholder="Endereço" />
+                                    value={objFuncionario.endereco || ''}className="form-control" placeholder="Endereço" />
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>CEP:</label>
-                                    <input name="cep" type="text" onChange={aoDigitar} value={objFuncionario.cep} className="form-control" placeholder="CEP" />
+                                    <input name="cep" type="text" onChange={aoDigitar} value={objFuncionario.cep || ''} className="form-control" placeholder="CEP" />
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Senha:</label>
-                                    <input name="senha" type="text" onChange={aoDigitar} value={objFuncionario.senha} className="form-control" placeholder="Senha" />
+                                    <input name="senha" type="text" onChange={aoDigitar} value={objFuncionario.senha || ''} className="form-control" placeholder="Senha" />
                                 </div>
                             </div>
 
@@ -152,7 +149,7 @@ function EditarFuncionario() {
                                 <div className="gerencia_btns">
                                     <a href="/funcionarios" className="btn btn-danger">Cancelar</a>
                                     <span style={{ margin: '0 5px' }}></span>
-                                    <button type="submit" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={salvarEdicao}>Salvar</button>
+                                    <button type="submit" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={alterar}>Salvar</button>
                                 </div>
                             </div>
                         </form>

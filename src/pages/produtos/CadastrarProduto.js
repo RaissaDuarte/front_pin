@@ -133,8 +133,10 @@ function CadastroProduto() {
 
 
                             <div className="box-footer">
-                            <button type="submit" id="btn-cancelar" className="btn btn-primary" onClick={cancelar}>Cancelar</button>
-                            <button type="submit" id="btn-cadastrar" className="btn btn-primary" onClick={cadastrar}>Cadastrar</button>
+                                <div className="gerencia_btns">
+                                    <a href="/produtos" className="btn btn-danger">Cancelar</a>
+                                    <button type="submit" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={cadastrar}>Cadastrar</button>
+                                </div>
                             </div>
                         </form>
                     </div>

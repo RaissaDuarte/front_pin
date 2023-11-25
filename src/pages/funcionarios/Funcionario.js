@@ -29,6 +29,11 @@ function Funcionario() {
             .catch(error => console.error('Erro ao buscar funcionarios:', error));
     }, []);
 
+    const alterar = (indice) => {
+        const funcionarioAlterar = funcionarios[indice];
+        navigate('/funcionarios/edit/' + funcionarioAlterar.id);
+    }
+
     const handleExcluirFuncionario = async (funcionarioId) => {
         try {
             const response = await fetch(`http://localhost:8080/funcionarios/delete/${funcionarioId}`, {
@@ -141,7 +146,7 @@ function Funcionario() {
                     <a href="/funcionarios" className="menu_escolhido">Funcionários</a>
                     <a href="/produtos">Produtos</a>
                     <a href="/fornecedores">Fornecedores</a>
-                    <a href="/estoques">Estoques</a>
+                    <a href="/estoques">Entrada estoques</a>
                     <a href="/transportadoras">Transportadoras</a>
                     <a href="/clientes">Clientes</a>
                 </div>
@@ -170,8 +175,8 @@ function Funcionario() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {funcionariosFiltrados.map(funcionario => (
-                                    <tr key={funcionario.id_funcionario}>
+                                {funcionariosFiltrados.map((funcionario, indice) => (
+                                    <tr key={funcionario.id}>
                                         <td>{funcionario.id}</td>
                                         <td>{funcionario.nome}</td>
                                         <td>{funcionario.cpf}</td>
@@ -180,7 +185,7 @@ function Funcionario() {
                                         <td>{funcionario.cep}</td>
                                         <td>{funcionario.senha}</td>
                                         <td>
-                                            <a href={`/funcionarios/edit/${funcionario.id}`} className="btn btn-primary">Editar</a>
+                                        <button className="btn btn-primary"  onClick={() => alterar(indice)} >Editar</button>
                                             <span style={{ margin: '0 5px' }}></span>
                                             <button className="btn btn-danger" onClick={() => handleExcluirFuncionario(funcionario.id)}>Deletar</button>
                                         </td>

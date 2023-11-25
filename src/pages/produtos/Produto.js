@@ -200,6 +200,7 @@ function Produto() {
                                         <td>{produto.dimensao}</td>
                                         <td> 
                                             <button className="btn btn-primary"  onClick={() => alterar(indice)} >Editar</button>
+                                            <span style={{ margin: '0 5px' }}></span>
                                             <button className="btn btn-danger"  onClick={() => excluir(indice)} >Deletar</button>
                                         </td>
                                     </tr>

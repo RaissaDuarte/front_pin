@@ -136,7 +136,7 @@ function Transportadora() {
                     <a href="/funcionarios">Funcionários</a>
                     <a href="/produtos">Produtos</a>
                     <a href="/fornecedores">Fornecedores</a>
-                    <a href="/estoques">Estoques</a>
+                    <a href="/estoques">Entrada estoques</a>
                     <a href="/transportadoras" className="menu_escolhido">Transportadoras</a>
                     <a href="/clientes">Clientes</a>
                 </div>

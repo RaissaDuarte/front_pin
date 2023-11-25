@@ -59,7 +59,6 @@ function Home() {
                 <div className="link_pages">
                     <a href="/home" style={{ textDecoration: 'underline' }}>Home</a>
                     <a href="/funcionarios">Gerência</a>
-                    <a href="/buscaFunc">Busca</a>
                     <a href="">Venda</a>
                     <a href="/perfil">Perfil</a>
 

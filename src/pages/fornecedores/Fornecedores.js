@@ -141,7 +141,7 @@ function Fornecedor() {
                     <a href="/funcionarios">Funcionários</a>
                     <a href="/produtos">Produtos</a>
                     <a href="/fornecedores" className="menu_escolhido">Fornecedores</a>
-                    <a href="/estoques">Estoques</a>
+                    <a href="/estoques">Entrada estoques</a>
                     <a href="/transportadoras">Transportadoras</a>
                     <a href="/clientes">Clientes</a>
                 </div>
@@ -169,7 +169,7 @@ function Fornecedor() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {fornecedoresFiltrados.map(fornecedor => (
+                                {fornecedoresFiltrados.map((fornecedor, indice) => (
                                     <tr key={fornecedor.id}>
                                         <td>{fornecedor.id}</td>
                                         <td>{fornecedor.nome}</td>
