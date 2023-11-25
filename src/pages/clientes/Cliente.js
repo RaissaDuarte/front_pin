@@ -149,7 +149,7 @@ function Cliente() {
                 <div className="link_pages">
                     <a href="/home">Home</a>
                     <a href="/funcionarios" style={{ textDecoration: 'underline' }} >Gerência</a>
-                    <a href="">Venda</a>
+                    <a href="/vendas">Venda</a>
                     <a href="/perfil">Perfil</a>
 
                 </div>

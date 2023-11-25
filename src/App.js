@@ -18,6 +18,10 @@ import EditarFornecedor from './pages/fornecedores/EditarFornecedores.js';
 import Cliente from './pages/clientes/Cliente.js';
 import CadastrarCliente from './pages/clientes/CadastrarCliente.js';
 import EditarCliente from './pages/clientes/EditarCliente.js';
+import Venda from './pages/venda/Venda.js';
+import CadastrarVenda from './pages/venda/CadastrarVenda.js';
+
+
 
 function App() {
 
@@ -42,6 +46,10 @@ function App() {
         <Route path="/produtos" element={<Produto />}/>
         <Route path="/cadprod" element={<CadastrarProduto />}/>
         <Route path="/editprod/:codigoProduto" element={<EditarProduto />}/>
+
+        {/* vendas */}
+        <Route path="/vendas" element={<Venda />}/>
+        <Route path="/cadvendas" element={<CadastrarVenda />}/>
 
          {/* fornecedores */}
         <Route path="/fornecedores" element={<Fornecedor />}/>

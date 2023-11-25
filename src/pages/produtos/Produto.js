@@ -9,7 +9,7 @@ import { isIndexSignatureDeclaration } from 'typescript';
 function Produto() {
 
     const produto = {
-        id: 0,
+        id_produto: 0,
         nome: '',
         peso: 0.0,
         dimensao: 0.0,
@@ -61,9 +61,6 @@ function Produto() {
         .catch(error => console.error('Erro ao excluir produto:', error));
     }
 
-    const cancelar = () => {
-        navigate("/produtos");
-    }
 
     const [ordenacao, setOrdenacao] = useState({
         campo: null,
@@ -149,7 +146,7 @@ function Produto() {
                 <div className="link_pages">
                     <a href="/home">Home</a>
                     <a href="/funcionarios" style={{ textDecoration: 'underline' }}>Gerência</a>
-                    <a href="">Venda</a>
+                    <a href="/vendas">Venda</a>
                     <a href="/perfil">Perfil</a>
 
                 </div>
@@ -181,7 +178,8 @@ function Produto() {
                         <table className="table table-striped table-bordered">
                             <thead className="table-dark">
                                 <tr>
-                                    <th onClick={() => ordenarProdutos('imagem')}>Imagem</th>
+                                    <th onClick={() => ordenarProdutos('id_produto')}>ID</th>
+                                    <th>Imagem</th>
                                     <th onClick={() => ordenarProdutos('nome')}>Nome</th>
                                     <th onClick={() => ordenarProdutos('quantidade')}>Quantidade</th>
                                     <th onClick={() => ordenarProdutos('valor')}>Valor</th>
