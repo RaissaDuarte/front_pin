@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../components/css/home.css';
 import { useNavigate } from 'react-router-dom';
 import Funcionario from '../funcionarios/Funcionario';
+import perfil from  '../../img/perfil.svg';
 
 function Home() {
     const [quadroAvisos, setQuadroAvisos] = useState({
@@ -60,7 +61,7 @@ function Home() {
                     <a href="/home" style={{ textDecoration: 'underline' }}>Home</a>
                     <a href="/funcionarios">Gerência</a>
                     <a href="">Venda</a>
-                    <a href="/perfil">Perfil</a>
+                    <a href="/perfil"><img src={perfil} alt="Icone Perfil"/></a>
 
                 </div>
             </header>

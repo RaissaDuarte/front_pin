@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../components/css/gerencia.css';
 import { useNavigate } from 'react-router-dom';
 import { isIndexSignatureDeclaration } from 'typescript';
+import perfil from  '../../img/perfil.svg';
 
 
 
@@ -110,7 +111,7 @@ function Vendas() {
                     <a href="/home">Home</a>
                     <a href="/funcionarios">Gerência</a>
                     <a href="/vendas" style={{ textDecoration: 'underline' }}>Venda</a>
-                    <a href="/perfil">Perfil</a>
+                    <a href="/perfil"><img src={perfil} alt="Icone Perfil"/></a>
 
                 </div>
             </header>

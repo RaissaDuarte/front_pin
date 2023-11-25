@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../components/css/gerencia.css';
 import { useNavigate } from 'react-router-dom';
+import perfil from  '../../img/perfil.svg';
 
 function Fornecedor() {
 
@@ -131,7 +132,7 @@ function Fornecedor() {
                     <a href="/home">Home</a>
                     <a href="/funcionarios" style={{ textDecoration: 'underline' }}>Gerência</a>
                     <a href="">Venda</a>
-                    <a href="/perfil">Perfil</a>
+                    <a href="/perfil"><img src={perfil} alt="Icone Perfil"/></a>
                 </div>
             </header>
 

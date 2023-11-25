@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../components/css/gerencia.css';
 import { useParams, useNavigate } from 'react-router-dom';
+import perfil from  '../../img/perfil.svg';
 
 function EditarFornecedor() {
     const {codigoFornecedor} = useParams();
@@ -97,7 +98,7 @@ function EditarFornecedor() {
                     <a href="/home">Home</a>
                     <a href="/funcionarios" style={{ textDecoration: 'underline' }}>Gerência</a>
                     <a href="">Venda</a>
-                    <a href="{{url('perfil')}}"><img src="/img/user.svg" alt="Icone Perfil Abstrato" /></a>
+                    <a href="/perfil"><img src={perfil} alt="Icone Perfil"/></a>
                 </div>
             </header>
 
