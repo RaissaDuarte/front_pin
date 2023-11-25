@@ -50,6 +50,49 @@ function Funcionario() {
         }
     };
 
+    const [ordenacao, setOrdenacao] = useState({
+        campo: null,
+        tipo: 'asc'
+    });
+    const ordenarFuncionarios = (campo) => {
+        let ordenacaoAtual = ordenacao.tipo === 'asc' ? 'desc' : 'asc';
+        const funcionariosOrdenados = [...funcionarios].sort((a, b) => {
+            if (ordenacaoAtual === 'asc') {
+                return a[campo] > b[campo] ? 1 : -1;
+            } else {
+                return a[campo] < b[campo] ? 1 : -1;
+            }
+        });
+        setFuncionarios(funcionariosOrdenados);
+        setOrdenacao({ campo, tipo: ordenacaoAtual });
+    };
+
+
+    //barra pesquisa 
+    const [termoPesquisa, setTermoPesquisa] = useState('');
+
+    const filtrarFuncionarios = (termo) => {
+        const termoLowerCase = termo.toLowerCase();
+        const funcionariosFiltrados = funcionarios.filter((funcionario) => {
+            return (
+                funcionario.nome.toLowerCase().includes(termoLowerCase) ||
+                funcionario.id.toString().includes(termoLowerCase) ||
+                funcionario.cpf.toString().includes(termoLowerCase) ||
+                funcionario.telefone.toString().includes(termoLowerCase) ||
+                funcionario.cep.toString().includes(termoLowerCase) ||
+                funcionario.senha.toString().includes(termoLowerCase)
+            );
+        });
+        return funcionariosFiltrados;
+    };
+
+    const handlePesquisa = (event) => {
+        const termo = event.target.value;
+        setTermoPesquisa(termo);
+    };
+
+    const funcionariosFiltrados = filtrarFuncionarios(termoPesquisa);
+
     return (
         <><React.Fragment>
             <meta charSet="UTF-8" />
@@ -87,7 +130,6 @@ function Funcionario() {
                 <div className="link_pages">
                     <a href="/home">Home</a>
                     <a href="/funcionarios" style={{ textDecoration: 'underline' }}>Gerência</a>
-                    <a href="/buscaFunc">Busca</a>
                     <a href="">Venda</a>
                     <a href="/perfil">Perfil</a>
                 </div>
@@ -105,10 +147,19 @@ function Funcionario() {
                 </div>
 
                 <div className="main">
+                    <div className="search-bar">
+                        <input
+                            type="text"
+                            placeholder="Pesquisar funcionário..."
+                            value={termoPesquisa}
+                            onChange={handlePesquisa}
+                        />
+                    </div>
                     <div className="table-container">
                         <table className="table table-striped table-bordered">
                             <thead className="table-dark">
                                 <tr>
+                                    <th>ID</th>
                                     <th>Nome</th>
                                     <th>CPF</th>
                                     <th>Telefone</th>
@@ -119,8 +170,9 @@ function Funcionario() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {funcionarios.map(funcionario => (
+                                {funcionariosFiltrados.map(funcionario => (
                                     <tr key={funcionario.id_funcionario}>
+                                        <td>{funcionario.id}</td>
                                         <td>{funcionario.nome}</td>
                                         <td>{funcionario.cpf}</td>
                                         <td>{funcionario.telefone}</td>

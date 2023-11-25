@@ -47,6 +47,47 @@ function Transportadora() {
         }
     };
 
+    const [ordenacao, setOrdenacao] = useState({
+        campo: null,
+        tipo: 'asc'
+    });
+    const ordenarTransportadoras = (campo) => {
+        let ordenacaoAtual = ordenacao.tipo === 'asc' ? 'desc' : 'asc';
+        const transportadorasOrdenadas = [...transportadoras].sort((a, b) => {
+            if (ordenacaoAtual === 'asc') {
+                return a[campo] > b[campo] ? 1 : -1;
+            } else {
+                return a[campo] < b[campo] ? 1 : -1;
+            }
+        });
+        setTransportadoras(transportadorasOrdenadas);
+        setOrdenacao({ campo, tipo: ordenacaoAtual });
+    };
+
+
+    //barra pesquisa 
+    const [termoPesquisa, setTermoPesquisa] = useState('');
+
+    const filtrarTransportadoras = (termo) => {
+        const termoLowerCase = termo.toLowerCase();
+        const transportadorasFiltradas = transportadoras.filter((transportadora) => {
+            return (
+                transportadora.id.toString().includes(termoLowerCase) ||
+                transportadora.nome.toLowerCase().includes(termoLowerCase) ||
+                transportadora.cidade.toString().includes(termoLowerCase) ||
+                transportadora.precoKM.toString().includes(termoLowerCase)
+            );
+        });
+        return transportadorasFiltradas;
+    };
+
+    const handlePesquisa = (event) => {
+        const termo = event.target.value;
+        setTermoPesquisa(termo);
+    };
+
+    const transportadorasFiltradas = filtrarTransportadoras(termoPesquisa);
+
     return (
         <><React.Fragment>
             <meta charSet="UTF-8" />
@@ -84,7 +125,6 @@ function Transportadora() {
                 <div className="link_pages">
                     <a href="/home">Home</a>
                     <a href="/funcionarios" style={{ textDecoration: 'underline' }}>Gerência</a>
-                    <a href="/buscaFunc">Busca</a>
                     <a href="">Venda</a>
                     <a href="/perfil">Perfil</a>
                 </div>
@@ -102,10 +142,19 @@ function Transportadora() {
                 </div>
 
                 <div className="main">
+                    <div className="search-bar">
+                        <input
+                            type="text"
+                            placeholder="Pesquisar transportadora..."
+                            value={termoPesquisa}
+                            onChange={handlePesquisa}
+                        />
+                    </div>
                     <div className="table-container">
                         <table className="table table-striped table-bordered">
                             <thead className="table-dark">
                                 <tr>
+                                    <th>ID</th>
                                     <th>Nome</th>
                                     <th>Cidade</th>
                                     <th>precoKM</th>
@@ -113,8 +162,9 @@ function Transportadora() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {transportadoras.map(transportadora => (
+                                {transportadorasFiltradas.map(transportadora => (
                                     <tr key={transportadora.id}>
+                                        <td>{transportadora.id}</td>
                                         <td>{transportadora.nome}</td>
                                         <td>{transportadora.cidade}</td>
                                         <td>{transportadora.precoKM}</td>

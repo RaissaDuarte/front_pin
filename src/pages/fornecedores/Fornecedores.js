@@ -50,6 +50,49 @@ function Fornecedor() {
         }
     };
 
+    const [ordenacao, setOrdenacao] = useState({
+        campo: null,
+        tipo: 'asc'
+    });
+    const ordenarFornecedores = (campo) => {
+        let ordenacaoAtual = ordenacao.tipo === 'asc' ? 'desc' : 'asc';
+        const fornecedoresOrdenados = [...fornecedores].sort((a, b) => {
+            if (ordenacaoAtual === 'asc') {
+                return a[campo] > b[campo] ? 1 : -1;
+            } else {
+                return a[campo] < b[campo] ? 1 : -1;
+            }
+        });
+        setFornecedores(fornecedoresOrdenados);
+        setOrdenacao({ campo, tipo: ordenacaoAtual });
+    };
+
+
+    //barra pesquisa 
+    const [termoPesquisa, setTermoPesquisa] = useState('');
+
+    const filtrarFornecedores = (termo) => {
+        const termoLowerCase = termo.toLowerCase();
+        const fornecedoresFiltrados = fornecedores.filter((fornecedor) => {
+            return (
+                fornecedor.id.toString().includes(termoLowerCase) ||
+                fornecedor.nome.toLowerCase().includes(termoLowerCase) ||
+                fornecedor.endereco.toString().includes(termoLowerCase) ||
+                fornecedor.telefone.toString().includes(termoLowerCase) ||
+                fornecedor.cep.toString().includes(termoLowerCase) ||
+                fornecedor.cnpj.toString().includes(termoLowerCase)
+            );
+        });
+        return fornecedoresFiltrados;
+    };
+
+    const handlePesquisa = (event) => {
+        const termo = event.target.value;
+        setTermoPesquisa(termo);
+    };
+
+    const fornecedoresFiltrados = filtrarFornecedores(termoPesquisa);
+
     return (
         <><React.Fragment>
             <meta charSet="UTF-8" />
@@ -80,14 +123,13 @@ function Fornecedor() {
 
         </React.Fragment>
 
-        <header className="headerGeneric">
+            <header className="headerGeneric">
                 <div className="logo_name">
                     <p>TemDTudo</p>
                 </div>
                 <div className="link_pages">
                     <a href="/home">Home</a>
                     <a href="/funcionarios" style={{ textDecoration: 'underline' }}>Gerência</a>
-                    <a href="/buscaFunc">Busca</a>
                     <a href="">Venda</a>
                     <a href="/perfil">Perfil</a>
                 </div>
@@ -95,7 +137,7 @@ function Fornecedor() {
 
             <div className="content">
 
-            <div className="menu">
+                <div className="menu">
                     <a href="/funcionarios">Funcionários</a>
                     <a href="/produtos">Produtos</a>
                     <a href="/fornecedores" className="menu_escolhido">Fornecedores</a>
@@ -105,10 +147,19 @@ function Fornecedor() {
                 </div>
 
                 <div className="main">
+                    <div className="search-bar">
+                        <input
+                            type="text"
+                            placeholder="Pesquisar fornecedor..."
+                            value={termoPesquisa}
+                            onChange={handlePesquisa}
+                        />
+                    </div>
                     <div className="table-container">
                         <table className="table table-striped table-bordered">
                             <thead className="table-dark">
                                 <tr>
+                                    <th>ID</th>
                                     <th>Nome</th>
                                     <th>Endereço</th>
                                     <th>Telefone</th>
@@ -118,8 +169,9 @@ function Fornecedor() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {fornecedores.map(fornecedor => (
+                                {fornecedoresFiltrados.map(fornecedor => (
                                     <tr key={fornecedor.id}>
+                                        <td>{fornecedor.id}</td>
                                         <td>{fornecedor.nome}</td>
                                         <td>{fornecedor.endereco}</td>
                                         <td>{fornecedor.telefone}</td>

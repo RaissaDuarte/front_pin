@@ -71,7 +71,6 @@ function CadastrarTransportadora() {
                 <div className="link_pages">
                     <a href="/home">Home</a>
                     <a href="/funcionarios" style={{ textDecoration: 'underline' }}>Gerência</a>
-                    <a href="{{url('buscaFunc')}}">Busca</a>
                     <a href="">Venda</a>
                     <a href="{{url('perfil')}}"><img src="/img/user.svg" alt="Icone Perfil Abstrato" /></a>
                 </div>
