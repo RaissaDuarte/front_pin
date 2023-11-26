@@ -14,7 +14,7 @@ function CadastroFuncionario() {
         senha: '',
     };
 
-    const [funcionarios, setFuncionarios] = useState([]);
+    const [cpf, setCpf] = useState('');
     const [objFuncionario, setObjFuncionario] = useState(funcionarioInicial);
     const navigate = useNavigate();
 

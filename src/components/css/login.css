@@ -1,0 +1,108 @@
+body, h1, h2, h3, h4, p, div {
+    margin: 0;
+    padding: 0;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.teste{
+    border: 5px solid #4caf4f00;
+    background-color: #efefef00;
+}
+
+.headerGeneric {
+    display: flex;
+    height: 9vh;
+    width: 100%;
+    background-color: #4CAF50;
+}
+
+.logo_name {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: #4CAF50;
+    align-items: center;
+    justify-content: center;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.logo_name p {
+    font-family: 'Concert One', cursive;
+    font-size: 3em;
+    color: rgb(239, 239, 239);
+    margin-top: 12px;
+}
+
+.container{
+    border-radius: 15px;
+    width: 80%;
+    margin:3.1em 0;
+    height: 35em;
+    background-color: rgb(62, 146, 64);
+}
+
+.titulo {
+    display: flex;
+    width: 100%;
+    height: 13%;
+    align-items: center;
+    justify-content: center;
+}
+
+.titulo p {
+    font-family: 'Concert One', cursive;
+    font-size: 3em;
+    color: rgb(239, 239, 239);
+    padding-top: 10px;
+}
+
+.campos{
+    display:block;
+    height: 20em;
+    padding-top: 1em;
+}
+
+.campos input{
+    font-family: 'Comfortaa';
+    width: 85%;
+    border-radius:20px;
+    margin: 0 0 3em 2.5em;
+    padding: 0.5em 1em;
+    font-size: 2em;
+}
+
+.gerencia_btns_login {
+    margin-top: 1%;
+    display: flex;
+    height: 8%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.gerencia_btns_login button {
+    height: 100%;
+    width: 25%;
+    align-items: center;
+    justify-content: center;
+    background-color: #6fd672;
+    border: 6px solid #6fd672;
+    border-radius: 25px;
+    font-family: 'Comfortaa';
+    font-size: 2.5em;
+    color:black;
+}
+
+img {
+    cursor: pointer;
+}

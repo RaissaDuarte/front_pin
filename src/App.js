@@ -20,6 +20,7 @@ import CadastrarCliente from './pages/clientes/CadastrarCliente.js';
 import EditarCliente from './pages/clientes/EditarCliente.js';
 import Venda from './pages/venda/Venda.js';
 import CadastrarVenda from './pages/venda/CadastrarVenda.js';
+import Login from './pages/login/Login.js';
 
 
 
@@ -29,6 +30,8 @@ function App() {
 
 <Router>
     <Routes>
+        <Route path="" element={<Login />}/>
+
         {/* funcionarios */}
         <Route path="/funcionarios" element={<Funcionario />}/>
         <Route path="/cadastroFuncionario" element={<CadastrarFuncionario />}/>
