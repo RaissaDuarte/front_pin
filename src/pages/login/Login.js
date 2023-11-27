@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../../components/css/login.css';
+import { useNavigate } from 'react-router-dom';
 import eyeOpen from '../../img/eyeOpen.svg';
 import eyeClose from '../../img/eyeClose.svg';
 
@@ -8,6 +9,7 @@ function Login() {
     const [cpf, setCpf] = useState('');
     const [senha, setSenha] = useState('');
     const [mostrarSenha, setMostrarSenha] = useState(false);
+    const navigate = useNavigate();
 
     const formatarCPF = (input) => {
         // Remova caracteres não numéricos
@@ -47,6 +49,10 @@ function Login() {
         console.log(cpf)
     }
 
+    const entrar = () => {
+        navigate("/home");
+    };
+
     return (
 
 
@@ -79,8 +85,8 @@ function Login() {
             <link rel="stylesheet" href="/css/login.css" />
         </React.Fragment>
 
-            <header className="headerGeneric">
-                <div className="logo_name">
+            <header className="headerGeneric_login">
+                <div className="logo_name_login">
                     <p>TemDTudo</p>
                 </div>
             </header>
@@ -112,7 +118,7 @@ function Login() {
                     </div>
                     <div className='botao'>
                         <div className="gerencia_btns_login">
-                            <button type='submit' >Entrar</button>
+                            <button type='submit' onClick={entrar}>Entrar</button>
                         </div>
                     </div>
                 </form>

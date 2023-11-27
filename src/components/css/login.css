@@ -18,14 +18,14 @@ input[type="number"] {
     background-color: #efefef00;
 }
 
-.headerGeneric {
+.headerGeneric_login {
     display: flex;
     height: 9vh;
     width: 100%;
     background-color: #4CAF50;
 }
 
-.logo_name {
+.logo_name_login {
     display: flex;
     width: 100%;
     height: 100%;
@@ -36,7 +36,7 @@ input[type="number"] {
     border-bottom-right-radius: 15px;
 }
 
-.logo_name p {
+.logo_name_login p {
     font-family: 'Concert One', cursive;
     font-size: 3em;
     color: rgb(239, 239, 239);
@@ -101,6 +101,7 @@ input[type="number"] {
     font-family: 'Comfortaa';
     font-size: 2.5em;
     color:black;
+    cursor: pointer;
 }
 
 img {

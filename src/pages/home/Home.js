@@ -2,26 +2,48 @@ import React, { useState, useEffect } from 'react';
 import '../../components/css/home.css';
 import { useNavigate } from 'react-router-dom';
 import Funcionario from '../funcionarios/Funcionario';
-import perfil from  '../../img/perfil.svg';
+import perfil from '../../img/perfil.svg';
 
 function Home() {
+
     const [quadroAvisos, setQuadroAvisos] = useState({
-        funcionario: { nome: '' }, // ajuste conforme a estrutura real do objeto
+        funcionario: { nome: '' },
+        mensagem: '',
+    });
+
+    const [quadroPlantao, setQuadroPlantao] = useState({
+        funcionario: { nome: '' },
         mensagem: '',
     });
 
     const navigate = useNavigate();
 
-    const editarQuadroAvisos = () => {
-        navigate("/editQuadroAvisos");
+    useEffect(() => {
+        const fetchQuadroAvisos = async (url, setStateFunction) => {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Erro ao obter dados da URL: ${url}`);
+                }
+
+                const quadroData = await response.json();
+                setStateFunction(quadroData);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchQuadroAvisos('http://localhost:8080/quadroAvisos', setQuadroAvisos);
+        fetchQuadroAvisos('http://localhost:8080/quadroPlantao', setQuadroPlantao);
+    }, []);
+
+    const atualizarQuadroPlantao = () => {
+        navigate(`/atualizarQuadroPlantao`);
     }
 
-    useEffect(() => {
-        fetch('http://localhost:8080/home')
-            .then(retorno => retorno.json())
-            .then(convertido => setQuadroAvisos(convertido))
-            .catch(error => console.error('Erro ao buscar home:', error));
-    }, []);
+    const atualizarQuadroAvisos = () => {
+        navigate(`/atualizarQuadroAvisos`);
+    }
 
     return (
         <><React.Fragment>
@@ -61,29 +83,24 @@ function Home() {
                     <a href="/home" style={{ textDecoration: 'underline' }}>Home</a>
                     <a href="/funcionarios">Gerência</a>
                     <a href="">Venda</a>
-                    <a href="/perfil"><img src={perfil} alt="Icone Perfil"/></a>
+                    <a href="/perfil"><img src={perfil} alt="Icone Perfil" /></a>
 
                 </div>
             </header>
 
             <div className="box-quadro-avisos">
-                <div className="d-flex justify-content-between align-items-end">
-                    <div className="box-mensagem-avisos">
-                        <p>Editado por:
-                        <span className="funcionario-nome">{quadroAvisos.funcionario.nome}</span>
-
-                        </p>
-
-                        <textarea
-                            name="quadroAvisos"
-                            id="quadroAvisos"
-                            value={quadroAvisos.mensagem}
-                            placeholder="Deixe aqui um Aviso"
-                            readOnly
-                        ></textarea>
-                    </div>
-                    <a onClick={editarQuadroAvisos}>Atualizar</a>
+                <div className='label-qa'>
+                    <p>Editado por: {quadroAvisos.funcionario.nome}</p>
+                    <button onClick={atualizarQuadroAvisos}>Atualizar</button>
                 </div>
+                <textarea className='ta-qa' value={quadroAvisos.mensagem} readOnly></textarea>
+            </div>
+            <div className="box-quadro-plantao">
+                <div className='label-qp'>
+                    <p>Editado por: {quadroPlantao.funcionario.nome}</p>
+                    <button onClick={atualizarQuadroPlantao}>Atualizar</button>
+                </div>
+                <textarea className='ta-qp' value={quadroPlantao.mensagem} readOnly></textarea>
             </div>
         </>
     );

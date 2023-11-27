@@ -2,7 +2,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Home from './pages/home/Home.js';
-
 import Produto from './pages/produtos/Produto.js';
 import CadastrarProduto from './pages/produtos/CadastrarProduto.js';
 import EditarProduto from './pages/produtos/EditarProduto.js'
@@ -21,8 +20,9 @@ import EditarCliente from './pages/clientes/EditarCliente.js';
 import Venda from './pages/venda/Venda.js';
 import CadastrarVenda from './pages/venda/CadastrarVenda.js';
 import Login from './pages/login/Login.js';
-
-
+import EditarQuadroAvisos from './pages/home/EditarQuadroAvisos.js';
+import EditarQuadroPlantao from './pages/home/EditarQuadroPlantao.js';
+import Perfil from './pages/perfil/Perfil.js';
 
 function App() {
 
@@ -39,6 +39,11 @@ function App() {
 
         {/* Home */}
         <Route path="/home" element={<Home />} />
+        <Route path="/atualizarQuadroAvisos" element={<EditarQuadroAvisos />} />
+        <Route path="/atualizarQuadroPlantao" element={<EditarQuadroPlantao />} />
+
+        {/* Perfil */}
+        <Route path="/perfil" element={<Perfil />} />
 
         {/* cliente */}
         <Route path="/clientes" element={<Cliente />}/>
