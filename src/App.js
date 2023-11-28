@@ -1,10 +1,12 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from '../src/context/AuthContext';
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
+// Importe seus componentes
 import Home from './pages/home/Home.js';
 import Produto from './pages/produtos/Produto.js';
 import CadastrarProduto from './pages/produtos/CadastrarProduto.js';
-import EditarProduto from './pages/produtos/EditarProduto.js'
+import EditarProduto from './pages/produtos/EditarProduto.js';
 import Funcionario from './pages/funcionarios/Funcionario.js';
 import CadastrarFuncionario from './pages/funcionarios/CadastrarFuncionario.js';
 import EditarFuncionario from './pages/funcionarios/EditarFuncionario.js';
@@ -28,50 +30,53 @@ function App() {
 
     return (
 
-<Router>
-    <Routes>
-        <Route path="" element={<Login />}/>
+        <AuthProvider>
+            <Router>
+                <Routes>
+                    <Route path="" element={<Login />} />
 
-        {/* funcionarios */}
-        <Route path="/funcionarios" element={<Funcionario />}/>
-        <Route path="/cadastroFuncionario" element={<CadastrarFuncionario />}/>
-        <Route path="/funcionarios/edit/:codigoFuncionario" element={<EditarFuncionario />}/>
+                    {/* funcionarios */}
+                    {/* <Route path="/funcionarios" element={<Navigate to="/login" replace />} /> */}
+                    <Route path="/funcionarios" element={<Funcionario />} />
+                    <Route path="/cadastroFuncionario" element={<CadastrarFuncionario />} />
+                    <Route path="/funcionarios/edit/:codigoFuncionario" element={<EditarFuncionario />} />
 
-        {/* Home */}
-        <Route path="/home" element={<Home />} />
-        <Route path="/atualizarQuadroAvisos" element={<EditarQuadroAvisos />} />
-        <Route path="/atualizarQuadroPlantao" element={<EditarQuadroPlantao />} />
+                    {/* Home */}
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/atualizarQuadroAvisos" element={<EditarQuadroAvisos />} />
+                    <Route path="/atualizarQuadroPlantao" element={<EditarQuadroPlantao />} />
 
-        {/* Perfil */}
-        <Route path="/perfil" element={<Perfil />} />
+                    {/* Perfil */}
+                    <Route path="/perfil" element={<Perfil />} />
 
-        {/* cliente */}
-        <Route path="/clientes" element={<Cliente />}/>
-        <Route path="/cadcliente" element={<CadastrarCliente />}/>
-        <Route path="/editcliente/:codigocliente" element={<EditarCliente />}/>
+                    {/* cliente */}
+                    <Route path="/clientes" element={<Cliente />} />
+                    <Route path="/cadcliente" element={<CadastrarCliente />} />
+                    <Route path="/editcliente/:codigocliente" element={<EditarCliente />} />
 
-        {/* produtos */}
-        <Route path="/produtos" element={<Produto />}/>
-        <Route path="/cadprod" element={<CadastrarProduto />}/>
-        <Route path="/editprod/:codigoProduto" element={<EditarProduto />}/>
+                    {/* produtos */}
+                    <Route path="/produtos" element={<Produto />} />
+                    <Route path="/cadprod" element={<CadastrarProduto />} />
+                    <Route path="/editprod/:codigoProduto" element={<EditarProduto />} />
 
-        {/* vendas */}
-        <Route path="/vendas" element={<Venda />}/>
-        {/*<Route path="/cadvendas" element={<CadastrarVenda />}/>*/}
+                    {/* vendas */}
+                    <Route path="/vendas" element={<Venda />} />
+                    {/*<Route path="/cadvendas" element={<CadastrarVenda />}/>*/}
 
-         {/* fornecedores */}
-        <Route path="/fornecedores" element={<Fornecedor />}/>
-        <Route path="/cadastroFornecedor" element={<CadastrarFornecedor />}/>
-        <Route path="/fornecedores/edit/:codigoFornecedor" element={<EditarFornecedor />}/>
+                    {/* fornecedores */}
+                    <Route path="/fornecedores" element={<Fornecedor />} />
+                    <Route path="/cadastroFornecedor" element={<CadastrarFornecedor />} />
+                    <Route path="/fornecedores/edit/:codigoFornecedor" element={<EditarFornecedor />} />
 
-        {/* transportadora */}
-        <Route path="/transportadoras" element={<Transportadora />}/>
-        <Route path="/cadastroTransportadora" element={<CadastrarTransportadora />}/>
-        <Route path="/transportadoras/edit/:codigoTransportadora" element={<EditarTransportadora />}/>
+                    {/* transportadora */}
+                    <Route path="/transportadoras" element={<Transportadora />} />
+                    <Route path="/cadastroTransportadora" element={<CadastrarTransportadora />} />
+                    <Route path="/transportadoras/edit/:codigoTransportadora" element={<EditarTransportadora />} />
 
 
-            </Routes>
-        </Router>
+                </Routes>
+            </Router>
+        </AuthProvider >
     );
 }
 

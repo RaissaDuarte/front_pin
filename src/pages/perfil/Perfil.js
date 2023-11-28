@@ -1,15 +1,80 @@
 import React, { useState, useEffect } from 'react';
 import '../../components/css/perfil.css';
-import { useNavigate } from 'react-router-dom';
-import perfil from  '../../img/perfil.svg';
+import { useParams, useNavigate } from 'react-router-dom';
+import perfil from '../../img/perfil.svg';
+import { useAuth } from '../../context/AuthContext';
 
 function Perfil() {
+    const { codigoFuncionario } = useParams();
+    const navigate = useNavigate();
+    const { funcionarioLogado } = useAuth();
 
-    const sair = () => {
-        navigate(``);
+    const [objFuncionario, setObjFuncionario] = useState({
+        id: codigoFuncionario,
+        nome: '',
+        cpf: '',
+        telefone: '',
+        endereco: '',
+        cep: '',
+        senha: '',
+    });
+
+    const aoDigitar = (e) => {
+        setObjFuncionario({ ...objFuncionario, [e.target.name]: e.target.value });
+    };
+
+
+    const alterar = () => {
+        fetch('http://localhost:8080/alterarFuncionario', {
+            method: 'put',
+            body: JSON.stringify(objFuncionario),
+            headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+            .then(retorno => retorno.json())
+            .then(retorno_convertido => {
+
+                let vetorTemp = [...objFuncionario];
+                let indice = vetorTemp.findIndex((f) => {
+                    return f.id === objFuncionario.id;
+                });
+
+                setTimeout(() => { window.location.reload(); }, 2000);
+            })
+            .catch(error => console.error('Erro ao alterar funcionario:', error));
+        navigate("/funcionarios");
+
     }
 
-    const navigate = useNavigate();
+    useEffect(() => {
+        // Verifica se há informações do funcionário logado no contexto de autenticação
+        if (funcionarioLogado) {
+            setObjFuncionario((prevFuncionario) => ({
+                ...prevFuncionario,
+                nome: funcionarioLogado.nome || '',
+                cpf: funcionarioLogado.cpf || '',
+                telefone: funcionarioLogado.telefone || '',
+                endereco: funcionarioLogado.endereco || '',
+                cep: funcionarioLogado.cep || '',
+                senha: funcionarioLogado.senha || '',
+            }));
+        } else {
+            // Se não há informações do funcionário logado, você pode buscar do servidor aqui
+            // Certifique-se de ajustar o código conforme necessário para buscar as informações do servidor
+            fetch(`http://localhost:8080/funcionarios/edit/${codigoFuncionario}`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    setObjFuncionario(data);
+                })
+                .catch((error) => console.error('Erro ao buscar funcionario:', error));
+        }
+    }, [codigoFuncionario, funcionarioLogado]);
+
 
     return (
         <><React.Fragment>
@@ -48,7 +113,7 @@ function Perfil() {
                     <a href="/home">Home</a>
                     <a href="/funcionarios">Gerência</a>
                     <a href="">Venda</a>
-                    <a href="/perfil" style={{ textDecoration: 'underline' }}><img src={perfil} alt="Icone Perfil"/></a>
+                    <a href="/perfil" style={{ textDecoration: 'underline' }}><img src={perfil} alt="Icone Perfil" /></a>
                 </div>
             </header>
 
@@ -60,28 +125,57 @@ function Perfil() {
                     <a href="/" className='sair'>Sair</a>
                 </div>
 
-                <div className="main">
-                    <div className="table-container">
-                        <table className="table table-striped table-bordered">
-                            <thead className="table-dark">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nome</th>
-                                    <th>CPF</th>
-                                    <th>Telefone</th>
-                                    <th>Endereço</th>
-                                    <th>CEP</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
+                <div className="container-fluid d-flex align-items-center justify-content-center vh-100">
+                    <div className="card">
+                        <div className="card-body">
+                            <h1 className="text-center">Editar Funcionário</h1>
+                            <form>
+                                <div className="form-row">
+                                    <div className="form-group col-md-6">
+                                        <label>Nome:</label>
+                                        <input name="nome" type="text" onChange={aoDigitar}
+                                            value={objFuncionario.nome || ''}
+                                            className="form-control" placeholder="Nome" />
+                                    </div>
 
-                    <div className="gerencia_btns">
-                        <button>Adicionar</button>
-                        <button className="right_btn">Relatório</button>
+                                    <div className="form-group col-md-6">
+                                        <label>CPF:</label>
+                                        <input name="cpf" type="text" onChange={aoDigitar}
+                                            value={objFuncionario.cpf || ''} className="form-control" placeholder="CPF" disabled />
+                                    </div>
+
+                                    <div className="form-group col-md-6">
+                                        <label>Telefone:</label>
+                                        <input name="telefone" type="text" onChange={aoDigitar}
+                                            value={objFuncionario.telefone || ''} className="form-control" placeholder="Telefone" />
+                                    </div>
+
+                                    <div className="form-group col-md-6">
+                                        <label>Endereço:</label>
+                                        <input name="endereco" type="text" onChange={aoDigitar}
+                                            value={objFuncionario.endereco || ''} className="form-control" placeholder="Endereço" />
+                                    </div>
+
+                                    <div className="form-group col-md-6">
+                                        <label>CEP:</label>
+                                        <input name="cep" type="text" onChange={aoDigitar} value={objFuncionario.cep || ''} className="form-control" placeholder="CEP" />
+                                    </div>
+
+                                    <div className="form-group col-md-6">
+                                        <label>Senha:</label>
+                                        <input name="senha" type="password" onChange={aoDigitar} value={objFuncionario.senha || ''} className="form-control" placeholder="Senha" disabled />
+                                    </div>
+                                </div>
+
+                                <div className="box-footer">
+                                    <div className="gerencia_btns">
+                                        <a href="/funcionarios" className="btn btn-danger">Cancelar</a>
+                                        <span style={{ margin: '0 5px' }}></span>
+                                        <button type="submit" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={alterar}>Salvar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

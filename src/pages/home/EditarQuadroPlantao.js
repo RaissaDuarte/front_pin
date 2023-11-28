@@ -1,65 +1,80 @@
 import React, { useState, useEffect } from 'react';
 import '../../components/css/home.css';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import perfil from '../../img/perfil.svg';
 
-function EditarQuadroPlantao() {
+function EditarQuadroPlantao({ location }) {
+  const navigate = useNavigate();
+  const { editor } = location?.state || {};
+  const { funcionario } = useAuth();
 
-    const [mensagem, setMensagem] = useState('');
-    const navigate = useNavigate();
+  const [objFuncionario, setObjFuncionario] = useState({
+    id: '',
+    nome: '',
+    cpf: '',
+    telefone: '',
+    endereco: '',
+    cep: '',
+    senha: '',
+  });
 
-    useEffect(() => {
-        const fetchQuadroPlantao = async () => {
-            try {
-                const response = await fetch('http://localhost:8080/quadroPlantao');
-                if (!response.ok) {
-                    throw new Error('Erro ao obter quadro de plantão');
-                }
+  const [mensagem, setMensagem] = useState('');
 
-                const quadroPlantaoData = await response.json();
-                setMensagem(quadroPlantaoData.mensagem);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchQuadroPlantao();
-    }, []);
-
-    const salvarQuadroPlantao = () => {
-        const quadroPlantaoAtualizado = {
-            id: 1,  // Fornecer o ID correto, neste caso, é 1
-            funcionario: {
-                id: 0 // Fornecer o ID do funcionário que editou a mensagem,
-            },
-            mensagem: mensagem
-        };
-    
-        fetch('http://localhost:8080/atualizarQuadroPlantao', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(quadroPlantaoAtualizado),
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Erro ao atualizar quadro de plantão: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Lógica adicional após salvar, se necessário
-                console.log('Quadro de plantão atualizado com sucesso', data);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    
-        // Navegar de volta para a página inicial após salvar
-        navigate('/home');
+  useEffect(() => {
+    const fetchQuadroPlantao = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/quadroPlantao');
+        if (!response.ok) {
+          throw new Error('Erro ao obter quadro de plantão');
+        }
+  
+        const quadroPlantaoData = await response.json();
+        // Configurar o estado com base no funcionário logado
+        setObjFuncionario(funcionario);  // Usei o estado do funcionário diretamente
+        setMensagem(quadroPlantaoData.mensagem);
+      } catch (error) {
+        console.error(error);
+      }
     };
-    
+  
+    fetchQuadroPlantao();
+  }, [funcionario]);  // Adicionei o funcionário como dependência ao useEffect
+  
+
+  const salvarQuadroPlantao = () => {
+    const quadroPlantaoAtualizado = {
+      id: 1,
+      funcionario: objFuncionario,
+      mensagem: mensagem,
+      editor: editor,
+    };
+
+    console.log(quadroPlantaoAtualizado);
+
+    fetch('http://localhost:8080/atualizarQuadroPlantao', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(quadroPlantaoAtualizado),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Erro ao atualizar quadro de plantão: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Quadro de plantão atualizado com sucesso', data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+    navigate('/home');
+  };
+
 
     return (
         <><React.Fragment>

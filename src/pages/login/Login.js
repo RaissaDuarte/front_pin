@@ -1,15 +1,46 @@
 import React, { useState } from 'react';
-import '../../components/css/login.css';
 import { useNavigate } from 'react-router-dom';
+import '../../components/css/login.css';
 import eyeOpen from '../../img/eyeOpen.svg';
 import eyeClose from '../../img/eyeClose.svg';
+import { useAuth } from '../../context/AuthContext';
+
 
 function Login() {
-
     const [cpf, setCpf] = useState('');
     const [senha, setSenha] = useState('');
     const [mostrarSenha, setMostrarSenha] = useState(false);
+
+    const { login, funcionario } = useAuth(); // Obtém a função de login e informações do funcionário do contexto
     const navigate = useNavigate();
+
+    const handleLogin = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ cpf, senha }),
+            });
+
+            if (response.ok) {
+                const funcionarioAutenticado = await response.json();
+
+                if (funcionarioAutenticado) {
+                    login(funcionarioAutenticado); // Define o funcionário no contexto
+                    navigate('/home');
+                } else {
+                    console.error('Resposta de login inválida:', response);
+                    alert('Erro ao fazer login. Tente novamente.');
+                }
+            } else {
+                alert('CPF e/ou Senha incorretos. Tente novamente.');
+            }
+        } catch (error) {
+            console.error('Erro ao fazer login:', error);
+        }
+    };
 
     const formatarCPF = (input) => {
         // Remova caracteres não numéricos
@@ -46,11 +77,8 @@ function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(cpf)
-    }
-
-    const entrar = () => {
-        navigate("/home");
+        console.log(cpf);
+        console.log(senha);
     };
 
     return (
@@ -116,11 +144,25 @@ function Login() {
                             onClick={handleToggleVisibility}
                         />
                     </div>
-                    <div className='botao'>
+                    <div className="botao">
                         <div className="gerencia_btns_login">
-                            <button type='submit' onClick={entrar}>Entrar</button>
+                            <button type="submit" onClick={handleLogin}>
+                                Entrar
+                            </button>
                         </div>
                     </div>
+                    {funcionario && (
+                        <div>
+                            <p>Funcionário autenticado:</p>
+                            <p>ID: {funcionario.id}</p>
+                            <p>Nome: {funcionario.nome}</p>
+                            <p>CPF: {funcionario.cpf}</p>
+                            <p>Telefone: {funcionario.telefone}</p>
+                            <p>Endereco: {funcionario.endereco}</p>
+                            <p>CEP: {funcionario.cep}</p>
+                            <p>Senha: {funcionario.senha}</p>
+                        </div>
+                    )}
                 </form>
             </div>
         </>

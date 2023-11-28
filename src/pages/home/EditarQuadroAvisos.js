@@ -1,10 +1,78 @@
 import React, { useState, useEffect } from 'react';
 import '../../components/css/home.css';
 import { useNavigate } from 'react-router-dom';
-import Funcionario from '../funcionarios/Funcionario';
+import { useAuth } from '../../context/AuthContext';
 import perfil from '../../img/perfil.svg';
 
-function EditarQuadroAvisos() {
+function EditarQuadroAvisos({ location }) {
+    const navigate = useNavigate();
+    const { editor } = location?.state || {};
+    const { funcionario } = useAuth();
+
+    const [objFuncionario, setObjFuncionario] = useState({
+        id: '',
+        nome: '',
+        cpf: '',
+        telefone: '',
+        endereco: '',
+        cep: '',
+        senha: '',
+    });
+
+    const [mensagem, setMensagem] = useState('');
+
+    useEffect(() => {
+        const fetchQuadroAvisos = async () => {
+          try {
+            const response = await fetch('http://localhost:8080/quadroAvisos');
+            if (!response.ok) {
+              throw new Error('Erro ao obter quadro de avisos');
+            }
+      
+            const quadroAvisosData = await response.json();
+            // Configurar o estado com base no funcionário logado
+            setObjFuncionario(funcionario);  // Usei o estado do funcionário diretamente
+            setMensagem(quadroAvisosData.mensagem);
+          } catch (error) {
+            console.error(error);
+          }
+        };
+      
+        fetchQuadroAvisos();
+      }, [funcionario]);  // Adicionei o funcionário como dependência ao useEffect
+
+    const salvarQuadroAvisos = () => {
+        const quadroAvisosAtualizado = {
+            id: 1,
+            funcionario: objFuncionario,
+            mensagem: mensagem,
+            editor: editor,
+          };
+      
+          console.log(quadroAvisosAtualizado);
+      
+          fetch('http://localhost:8080/atualizarQuadroAvisos', {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(quadroAvisosAtualizado),
+          })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(`Erro ao atualizar quadro de avisos: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then(data => {
+              console.log('Quadro de avisos atualizado com sucesso', data);
+            })
+            .catch(error => {
+              console.error(error);
+            });
+      
+          navigate('/home');
+        };
 
     return (
         <><React.Fragment>
@@ -54,13 +122,17 @@ function EditarQuadroAvisos() {
                         <h1 className="text-center">Atualizar Quadro Avisos </h1>
                         <form>
                             <div className="edit-quadro-avisos">
-                                <textarea className='edit-ta-qa'></textarea>
+                                <textarea
+                                    className='edit-ta-qa'
+                                    value={mensagem}
+                                    onChange={(e) => setMensagem(e.target.value)}
+                                ></textarea>
                             </div>
                             <div className="box-footer">
                                 <div className="gerencia_btns">
                                     <a href="/home" className="btn btn-danger" style={{ fontSize: '1em', width: '150px' }}>Cancelar</a>
                                     <span style={{ margin: '0 5px' }}></span>
-                                    <button type="button" id="btn-cadastrar" className="right_btn btn btn-primary" style={{ fontSize: '1em', width: '150px' }}>Salvar</button>
+                                    <button type="button" id="btn-cadastrar" className="right_btn btn btn-primary" style={{ fontSize: '1em', width: '150px' }} onClick={salvarQuadroAvisos}>Salvar</button>
                                 </div>
                             </div>
                         </form>
