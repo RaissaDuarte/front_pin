@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../components/css/login.css';
 import eyeOpen from '../../img/eyeOpen.svg';
@@ -23,13 +23,12 @@ function Login() {
                 },
                 body: JSON.stringify({ cpf, senha }),
             });
-
+    
             if (response.ok) {
                 const funcionarioAutenticado = await response.json();
-
+    
                 if (funcionarioAutenticado) {
-                    login(funcionarioAutenticado); // Define o funcionário no contexto
-                    navigate('/home');
+                    login(funcionarioAutenticado); // Update the funcionario state
                 } else {
                     console.error('Resposta de login inválida:', response);
                     alert('Erro ao fazer login. Tente novamente.');
@@ -63,6 +62,12 @@ function Login() {
         setCpf(maskedValue);
     };
 
+    useEffect(() => {
+        if (funcionario && funcionario.id) {
+            navigate(`/home/${funcionario.id}`);
+        }
+    }, [funcionario, navigate]);
+
     const handleInputChange = (e) => {
         if (e.target.name === 'senha') {
             setSenha(e.target.value);
@@ -77,8 +82,6 @@ function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(cpf);
-        console.log(senha);
     };
 
     return (
@@ -151,18 +154,18 @@ function Login() {
                             </button>
                         </div>
                     </div>
-                    {funcionario && (
-                        <div>
-                            <p>Funcionário autenticado:</p>
-                            <p>ID: {funcionario.id}</p>
-                            <p>Nome: {funcionario.nome}</p>
-                            <p>CPF: {funcionario.cpf}</p>
-                            <p>Telefone: {funcionario.telefone}</p>
-                            <p>Endereco: {funcionario.endereco}</p>
-                            <p>CEP: {funcionario.cep}</p>
-                            <p>Senha: {funcionario.senha}</p>
-                        </div>
-                    )}
+                    {/* {funcionario && (
+    <div>
+      <p>Funcionário autenticado:</p>
+      <p>ID: {funcionario.id}</p>
+      <p>Nome: {funcionario.nome}</p>
+      <p>CPF: {funcionario.cpf}</p>
+      <p>Telefone: {funcionario.telefone}</p>
+      <p>Endereco: {funcionario.endereco}</p>
+      <p>CEP: {funcionario.cep}</p>
+      <p>Senha: {funcionario.senha}</p>
+    </div>
+  )} */}
                 </form>
             </div>
         </>

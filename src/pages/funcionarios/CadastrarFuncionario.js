@@ -16,12 +16,31 @@ function CadastroFuncionario() {
 
     const [cpf, setCpf] = useState('');
     const [objFuncionario, setObjFuncionario] = useState(funcionarioInicial);
+    const [funcionarios, setFuncionarios] = useState([]); // State to store the list of funcionarios
     const navigate = useNavigate();
 
     const aoDigitar = (e) => {
         console.log(e.target);
         setObjFuncionario({ ...objFuncionario, [e.target.name]: e.target.value });
     }
+
+    const listarTodosFuncionarios = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/funcionarios');
+            if (!response.ok) {
+                throw new Error('Error fetching funcionarios');
+            }
+            const data = await response.json();
+            setFuncionarios(data);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    useEffect(() => {
+        // Fetch data when the component mounts
+        listarTodosFuncionarios();
+    }, []); // The empty dependency array ensures that this effect runs only once, similar to componentDidMount
 
     //cadastrar
     const cadastrar = () => {

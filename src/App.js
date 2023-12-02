@@ -42,9 +42,9 @@ function App() {
                     <Route path="/funcionarios/edit/:codigoFuncionario" element={<EditarFuncionario />} />
 
                     {/* Home */}
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/atualizarQuadroAvisos" element={<EditarQuadroAvisos />} />
-                    <Route path="/atualizarQuadroPlantao" element={<EditarQuadroPlantao />} />
+                    <Route path="/home/:idFuncionario" element={<Home />} />
+                    <Route path="/atualizarQuadroAvisos/:idFuncionario" element={<EditarQuadroAvisos />} />
+                    <Route path="/atualizarQuadroPlantao/:idFuncionario" element={<EditarQuadroPlantao />} />
 
                     {/* Perfil */}
                     <Route path="/perfil" element={<Perfil />} />

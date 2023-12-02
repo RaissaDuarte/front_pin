@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import '../../components/css/home.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import perfil from '../../img/perfil.svg';
 
 const Home = () => {
+    const { idFuncionario } = useParams();
     const navigate = useNavigate();
     const { funcionario } = useAuth();
 
@@ -39,9 +40,9 @@ const Home = () => {
 
     const handleUpdate = (type) => {
         if (type === 'avisos') {
-            navigate('/atualizarQuadroAvisos');
+            navigate(`/atualizarQuadroAvisos/${idFuncionario}`);
         } else if (type === 'plantao') {
-            navigate('/atualizarQuadroPlantao', { state: { editor: funcionario } });
+            navigate(`/atualizarQuadroPlantao/${idFuncionario}`);
         }
     };
 
@@ -81,11 +82,10 @@ const Home = () => {
                     <p>TemDTudo</p>
                 </div>
                 <div className="link_pages">
-                    <a href="/home" style={{ textDecoration: 'underline' }}>Home</a>
-                    <a href="/funcionarios">Gerência</a>
-                    <a href="">Venda</a>
-                    <a href="/perfil"><img src={perfil} alt="Icone Perfil" /></a>
-
+                    <Link to={`/home/${idFuncionario}`} style={{ textDecoration: 'underline' }}>Home</Link>
+                    <Link to={`/funcionarios`}>Gerência</Link>
+                    <Link to="">Venda</Link>
+                    <Link to={`/perfil`}><img src={perfil} alt="Icone Perfil" /></Link>
                 </div>
             </header>
 

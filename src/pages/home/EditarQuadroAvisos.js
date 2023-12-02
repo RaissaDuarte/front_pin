@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import '../../components/css/home.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import perfil from '../../img/perfil.svg';
 
 function EditarQuadroAvisos({ location }) {
+  const { idFuncionario } = useParams();
     const navigate = useNavigate();
     const { editor } = location?.state || {};
     const { funcionario } = useAuth();
@@ -24,7 +25,7 @@ function EditarQuadroAvisos({ location }) {
     useEffect(() => {
         const fetchQuadroAvisos = async () => {
           try {
-            const response = await fetch('http://localhost:8080/quadroAvisos');
+            const response = await fetch(`http://localhost:8080/quadroAvisos`);
             if (!response.ok) {
               throw new Error('Erro ao obter quadro de avisos');
             }
@@ -51,7 +52,7 @@ function EditarQuadroAvisos({ location }) {
       
           console.log(quadroAvisosAtualizado);
       
-          fetch('http://localhost:8080/atualizarQuadroAvisos', {
+          fetch(`http://localhost:8080/atualizarQuadroAvisos/${idFuncionario}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -71,7 +72,7 @@ function EditarQuadroAvisos({ location }) {
               console.error(error);
             });
       
-          navigate('/home');
+            navigate(`/home/${funcionario.id}`);
         };
 
     return (

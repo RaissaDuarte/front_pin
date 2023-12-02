@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import '../../components/css/home.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import perfil from '../../img/perfil.svg';
 
-function EditarQuadroPlantao({ location }) {
+function EditarQuadroPlantao({ location }) {  
+  const { idFuncionario } = useParams();
   const navigate = useNavigate();
   const { editor } = location?.state || {};
   const { funcionario } = useAuth();
@@ -52,7 +53,7 @@ function EditarQuadroPlantao({ location }) {
 
     console.log(quadroPlantaoAtualizado);
 
-    fetch('http://localhost:8080/atualizarQuadroPlantao', {
+    fetch(`http://localhost:8080/atualizarQuadroPlantao/${idFuncionario}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -72,7 +73,7 @@ function EditarQuadroPlantao({ location }) {
         console.error(error);
       });
 
-    navigate('/home');
+      navigate(`/home/${funcionario.id}`);
   };
 
 

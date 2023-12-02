@@ -23,6 +23,25 @@ function Perfil() {
         setObjFuncionario({ ...objFuncionario, [e.target.name]: e.target.value });
     };
 
+    const carregarDetalhesFuncionario = (id) => {
+        fetch(`http://localhost:8080/obterFuncionarioPorId/${codigoFuncionario}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setObjFuncionario({
+                    id: data.id,
+                    nome: data.nome || '',
+                    cpf: data.cpf || '',
+                    telefone: data.telefone || '',
+                    endereco: data.endereco || '',
+                    cep: data.cep || '',
+                    senha: data.senha || '',
+                });
+            })
+            .catch((error) => console.error('Erro ao buscar funcionario:', error));
+    };
 
     const alterar = () => {
         fetch('http://localhost:8080/alterarFuncionario', {
@@ -35,21 +54,14 @@ function Perfil() {
         })
             .then(retorno => retorno.json())
             .then(retorno_convertido => {
-
-                let vetorTemp = [...objFuncionario];
-                let indice = vetorTemp.findIndex((f) => {
-                    return f.id === objFuncionario.id;
-                });
-
+                setObjFuncionario(retorno_convertido);
                 setTimeout(() => { window.location.reload(); }, 2000);
             })
-            .catch(error => console.error('Erro ao alterar funcionario:', error));
+            .catch(error => console.error('Erro ao alterar funcionário:', error));
         navigate("/funcionarios");
-
-    }
+    };
 
     useEffect(() => {
-        // Verifica se há informações do funcionário logado no contexto de autenticação
         if (funcionarioLogado) {
             setObjFuncionario((prevFuncionario) => ({
                 ...prevFuncionario,
@@ -61,19 +73,11 @@ function Perfil() {
                 senha: funcionarioLogado.senha || '',
             }));
         } else {
-            // Se não há informações do funcionário logado, você pode buscar do servidor aqui
-            // Certifique-se de ajustar o código conforme necessário para buscar as informações do servidor
-            fetch(`http://localhost:8080/funcionarios/edit/${codigoFuncionario}`, {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    setObjFuncionario(data);
-                })
-                .catch((error) => console.error('Erro ao buscar funcionario:', error));
+            // Assuming `codigoFuncionario` is available in the component
+            carregarDetalhesFuncionario(codigoFuncionario);
         }
     }, [codigoFuncionario, funcionarioLogado]);
+    
 
 
     return (
@@ -133,27 +137,32 @@ function Perfil() {
                                 <div className="form-row">
                                     <div className="form-group col-md-6">
                                         <label>Nome:</label>
-                                        <input name="nome" type="text" onChange={aoDigitar}
+                                        <input
+                                            name="nome"
+                                            type="text"
+                                            onChange={aoDigitar}
                                             value={objFuncionario.nome || ''}
-                                            className="form-control" placeholder="Nome" />
+                                            className="form-control"
+                                            placeholder="Nome"
+                                        />
                                     </div>
 
                                     <div className="form-group col-md-6">
                                         <label>CPF:</label>
                                         <input name="cpf" type="text" onChange={aoDigitar}
-                                            value={objFuncionario.cpf || ''} className="form-control" placeholder="CPF" disabled />
+                                            value={objFuncionario.cpf || ''} className="form-control" placeholder="CPF" />
                                     </div>
 
                                     <div className="form-group col-md-6">
                                         <label>Telefone:</label>
                                         <input name="telefone" type="text" onChange={aoDigitar}
-                                            value={objFuncionario.telefone || ''} className="form-control" placeholder="Telefone" />
+                                            value={objFuncionario.telefone} className="form-control" placeholder="Telefone" />
                                     </div>
 
                                     <div className="form-group col-md-6">
                                         <label>Endereço:</label>
                                         <input name="endereco" type="text" onChange={aoDigitar}
-                                            value={objFuncionario.endereco || ''} className="form-control" placeholder="Endereço" />
+                                            value={objFuncionario.endereco} className="form-control" placeholder="Endereço" />
                                     </div>
 
                                     <div className="form-group col-md-6">
@@ -163,7 +172,7 @@ function Perfil() {
 
                                     <div className="form-group col-md-6">
                                         <label>Senha:</label>
-                                        <input name="senha" type="password" onChange={aoDigitar} value={objFuncionario.senha || ''} className="form-control" placeholder="Senha" disabled />
+                                        <input name="senha" type="password" onChange={aoDigitar} value={objFuncionario.senha || ''} className="form-control" placeholder="Senha" />
                                     </div>
                                 </div>
 
