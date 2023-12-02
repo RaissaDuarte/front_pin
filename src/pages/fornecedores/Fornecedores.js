@@ -191,7 +191,7 @@ function Fornecedor() {
 
                     <div className="gerencia_btns">
                         <button onClick={adicionar}>Adicionar</button>
-                        <button className="right_btn">Relatório</button>
+                        <button className="right_btn" onClick = {(e)=> fornecedorPdf(fornecedores)}>Relatório</button>
                     </div>
                 </div>
             </div>

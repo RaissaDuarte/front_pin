@@ -3,6 +3,7 @@ import '../../components/css/gerencia.css';
 import { useNavigate } from 'react-router-dom';
 import { isIndexSignatureDeclaration } from 'typescript';
 import perfil from  '../../img/perfil.svg';
+import clientePdf from '../../relatorio/PdfCliente';
 
 function Cliente() {
 
@@ -213,7 +214,7 @@ function Cliente() {
 
                     <div className="gerencia_btns">
                         <button onClick={adicionar}>Adicionar</button>
-                        <button className="right_btn">Relatório</button>
+                        <button className="right_btn" onClick = {(e) => clientePdf(clientes)} >Relatório</button>
                     </div>
                 </div>
             </div>
