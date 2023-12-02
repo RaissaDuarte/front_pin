@@ -1,27 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import '../../components/css/home.css';
-import { useNavigate } from 'react-router-dom';
-import Funcionario from '../funcionarios/Funcionario';
-import perfil from  '../../img/perfil.svg';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import perfil from '../../img/perfil.svg';
 
-function Home() {
+const Home = () => {
+    const { idFuncionario } = useParams();
+    const navigate = useNavigate();
+    const { funcionario } = useAuth();
+
     const [quadroAvisos, setQuadroAvisos] = useState({
-        funcionario: { nome: '' }, // ajuste conforme a estrutura real do objeto
+        funcionario: { nome: '' },
         mensagem: '',
     });
 
-    const navigate = useNavigate();
-
-    const editarQuadroAvisos = () => {
-        navigate("/editQuadroAvisos");
-    }
+    const [quadroPlantao, setQuadroPlantao] = useState({
+        funcionario: { nome: '' },
+        mensagem: '',
+    });
 
     useEffect(() => {
-        fetch('http://localhost:8080/home')
-            .then(retorno => retorno.json())
-            .then(convertido => setQuadroAvisos(convertido))
-            .catch(error => console.error('Erro ao buscar home:', error));
+        const fetchQuadro = async (url, setStateFunction) => {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Erro ao obter dados da URL: ${url}`);
+                }
+
+                const quadroData = await response.json();
+                setStateFunction(quadroData);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchQuadro('http://localhost:8080/quadroAvisos', setQuadroAvisos);
+        fetchQuadro('http://localhost:8080/quadroPlantao', setQuadroPlantao);
     }, []);
+
+    const handleUpdate = (type) => {
+        if (type === 'avisos') {
+            navigate(`/atualizarQuadroAvisos/${idFuncionario}`);
+        } else if (type === 'plantao') {
+            navigate(`/atualizarQuadroPlantao/${idFuncionario}`);
+        }
+    };
+
 
     return (
         <><React.Fragment>
@@ -58,32 +82,26 @@ function Home() {
                     <p>TemDTudo</p>
                 </div>
                 <div className="link_pages">
-                    <a href="/home" style={{ textDecoration: 'underline' }}>Home</a>
-                    <a href="/funcionarios">Gerência</a>
-                    <a href="">Venda</a>
-                    <a href="/perfil"><img src={perfil} alt="Icone Perfil"/></a>
-
+                    <Link to={`/home/${idFuncionario}`} style={{ textDecoration: 'underline' }}>Home</Link>
+                    <Link to={`/funcionarios`}>Gerência</Link>
+                    <Link to="">Venda</Link>
+                    <Link to={`/perfil`}><img src={perfil} alt="Icone Perfil" /></Link>
                 </div>
             </header>
 
             <div className="box-quadro-avisos">
-                <div className="d-flex justify-content-between align-items-end">
-                    <div className="box-mensagem-avisos">
-                        <p>Editado por:
-                        <span className="funcionario-nome">{quadroAvisos.funcionario.nome}</span>
-
-                        </p>
-
-                        <textarea
-                            name="quadroAvisos"
-                            id="quadroAvisos"
-                            value={quadroAvisos.mensagem}
-                            placeholder="Deixe aqui um Aviso"
-                            readOnly
-                        ></textarea>
-                    </div>
-                    <a onClick={editarQuadroAvisos}>Atualizar</a>
+                <div className='label-qa'>
+                    <p>Editado por: {quadroAvisos.funcionario.nome}</p>
+                    <button onClick={() => handleUpdate('avisos')}>Atualizar</button>
                 </div>
+                <textarea className='ta-qa' value={quadroAvisos.mensagem} readOnly></textarea>
+            </div>
+            <div className="box-quadro-plantao">
+                <div className='label-qp'>
+                    <p>Editado por: {quadroPlantao.funcionario.nome}</p>
+                    <button onClick={() => handleUpdate('plantao')}>Atualizar</button>
+                </div>
+                <textarea className='ta-qp' value={quadroPlantao.mensagem} readOnly></textarea>
             </div>
         </>
     );

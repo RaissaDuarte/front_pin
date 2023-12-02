@@ -1,11 +1,12 @@
 //import React from 'react';
 import React, { useState, useEffect } from 'react';
 import '../../components/css/gerencia.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link, useParams  } from 'react-router-dom';
 import { isIndexSignatureDeclaration } from 'typescript';
 import perfil from  '../../img/perfil.svg';
 
 function Cliente() {
+    const { idFuncionario } = useParams();
 
     const cliente = {
         id_cliente: 0,
@@ -143,16 +144,15 @@ function Cliente() {
 
         </React.Fragment>
 
-            <header className="headerGeneric">
+        <header className="headerGeneric">
                 <div className="logo_name">
                     <p>TemDTudo</p>
                 </div>
                 <div className="link_pages">
-                    <a href="/home">Home</a>
-                    <a href="/funcionarios" style={{ textDecoration: 'underline' }} >Gerência</a>
-                    <a href="/vendas">Venda</a>
-                    <a href="/perfil"><img src={perfil} alt="Icone Perfil"/></a>
-
+                    <Link to={`/home/${idFuncionario}`}>Home</Link>
+                    <Link to={`/funcionarios`} style={{ textDecoration: 'underline' }}>Gerência</Link>
+                    <Link to="">Venda</Link>
+                    <Link to={`/perfil`}><img src={perfil} alt="Icone Perfil" /></Link>
                 </div>
             </header>
 

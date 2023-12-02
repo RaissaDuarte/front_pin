@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import '../../components/css/gerencia.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link  } from 'react-router-dom';
 import perfil from  '../../img/perfil.svg';
 
 
 function Editarcliente() {
+    const { idFuncionario } = useParams();
     const { codigocliente } = useParams();
     const navigate = useNavigate();
     const [clientes, setclientes] = useState([]);
@@ -87,15 +88,15 @@ function Editarcliente() {
         </React.Fragment>
 
 
-            <header className="headerGeneric">
+        <header className="headerGeneric">
                 <div className="logo_name">
                     <p>TemDTudo</p>
                 </div>
                 <div className="link_pages">
-                    <a href="/home">Home</a>
-                    <a href="/funcionarios" style={{ textDecoration: 'underline' }}>Gerência</a>
-                    <a href="">Venda</a>
-                    <a href="/perfil"><img src={perfil} alt="Icone Perfil"/></a>
+                    <Link to={`/home/${idFuncionario}`}>Home</Link>
+                    <Link to={`/funcionarios`} style={{ textDecoration: 'underline' }}>Gerência</Link>
+                    <Link to="">Venda</Link>
+                    <Link to={`/perfil`}><img src={perfil} alt="Icone Perfil" /></Link>
                 </div>
             </header>
 

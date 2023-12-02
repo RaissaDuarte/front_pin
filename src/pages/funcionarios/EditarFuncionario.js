@@ -107,7 +107,7 @@ function EditarFuncionario() {
             <div className="container-fluid d-flex align-items-center justify-content-center vh-100">
                 <div className="card">
                     <div className="card-body">
-                        <h1 className="text-center">Editar Funcionário</h1>
+                        <h1 className="text-center">Editar Perfil</h1>
                         <form>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
@@ -120,7 +120,7 @@ function EditarFuncionario() {
                                 <div className="form-group col-md-6">
                                     <label>CPF:</label>
                                     <input name="cpf" type="text" onChange={aoDigitar} 
-                                    value={objFuncionario.cpf || ''}className="form-control" placeholder="CPF" />
+                                    value={objFuncionario.cpf || ''}className="form-control" placeholder="CPF"/>
                                 </div>
 
                                 <div className="form-group col-md-6">
@@ -142,7 +142,7 @@ function EditarFuncionario() {
 
                                 <div className="form-group col-md-6">
                                     <label>Senha:</label>
-                                    <input name="senha" type="text" onChange={aoDigitar} value={objFuncionario.senha || ''} className="form-control" placeholder="Senha" />
+                                    <input name="senha" type="password" onChange={aoDigitar} value={objFuncionario.senha || ''} className="form-control" placeholder="Senha" />
                                 </div>
                             </div>
 

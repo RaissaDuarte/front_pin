@@ -85,8 +85,7 @@ function Funcionario() {
                 funcionario.id.toString().includes(termoLowerCase) ||
                 funcionario.cpf.toString().includes(termoLowerCase) ||
                 funcionario.telefone.toString().includes(termoLowerCase) ||
-                funcionario.cep.toString().includes(termoLowerCase) ||
-                funcionario.senha.toString().includes(termoLowerCase)
+                funcionario.cep.toString().includes(termoLowerCase)
             );
         });
         return funcionariosFiltrados;
@@ -171,7 +170,6 @@ function Funcionario() {
                                     <th>Telefone</th>
                                     <th>Endereço</th>
                                     <th>CEP</th>
-                                    <th>Senha</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -184,7 +182,6 @@ function Funcionario() {
                                         <td>{funcionario.telefone}</td>
                                         <td>{funcionario.endereco}</td>
                                         <td>{funcionario.cep}</td>
-                                        <td>{funcionario.senha}</td>
                                         <td>
                                         <button className="btn btn-primary"  onClick={() => alterar(indice)} >Editar</button>
                                             <span style={{ margin: '0 5px' }}></span>

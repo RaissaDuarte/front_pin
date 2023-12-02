@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../components/css/gerencia.css';
 import { useNavigate } from 'react-router-dom';
-import perfil from  '../../img/perfil.svg';
+import perfil from '../../img/perfil.svg';
 
 function CadastroFuncionario() {
     const funcionarioInicial = {
@@ -14,14 +14,33 @@ function CadastroFuncionario() {
         senha: '',
     };
 
-    const [funcionarios, setFuncionarios] = useState([]);
+    const [cpf, setCpf] = useState('');
     const [objFuncionario, setObjFuncionario] = useState(funcionarioInicial);
+    const [funcionarios, setFuncionarios] = useState([]); // State to store the list of funcionarios
     const navigate = useNavigate();
 
     const aoDigitar = (e) => {
         console.log(e.target);
         setObjFuncionario({ ...objFuncionario, [e.target.name]: e.target.value });
     }
+
+    const listarTodosFuncionarios = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/funcionarios');
+            if (!response.ok) {
+                throw new Error('Error fetching funcionarios');
+            }
+            const data = await response.json();
+            setFuncionarios(data);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    useEffect(() => {
+        // Fetch data when the component mounts
+        listarTodosFuncionarios();
+    }, []); // The empty dependency array ensures that this effect runs only once, similar to componentDidMount
 
     //cadastrar
     const cadastrar = () => {
@@ -79,7 +98,7 @@ function CadastroFuncionario() {
                     <a href="/home">Home</a>
                     <a href="/funcionarios" style={{ textDecoration: 'underline' }}>Gerência</a>
                     <a href="">Venda</a>
-                    <a href="/perfil"><img src={perfil} alt="Icone Perfil"/></a>
+                    <a href="/perfil"><img src={perfil} alt="Icone Perfil" /></a>
                 </div>
             </header>
 
@@ -117,9 +136,10 @@ function CadastroFuncionario() {
 
                                 <div className="form-group col-md-6">
                                     <label>Senha:</label>
-                                    <input name="senha" type="text" onChange={aoDigitar} className="form-control" placeholder="Senha" />
+                                    <input name="senha" type="password" onChange={aoDigitar} className="form-control" placeholder="Senha" />
                                 </div>
                             </div>
+
 
                             <div className="box-footer">
                                 <div className="gerencia_btns">

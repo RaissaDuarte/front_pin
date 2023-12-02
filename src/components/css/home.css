@@ -1,113 +1,125 @@
-body{
-    background-color: #D9D9D9;
-}
-
-.content {
-    display: flex;
-}
-
-.headerGeneric {
-    display: flex;
-    height: 9vh;
-    width: 100%;
-    background-color: #4CAF50;
-}
-
-.logo_name {
-    display: flex;
-    width: 20%;
-    height: 100%;
-    background-color: rgb(62, 146, 64);
+.box-quadro-avisos{
+    display:inline;
     align-items: center;
     justify-content: center;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
 }
 
-.logo_name p {
-    font-family: 'Concert One', cursive;
-    font-size: 3em;
-    color: rgb(239, 239, 239);
-    margin-top: 12px;
-}
-
-.link_pages {
-    display: flex;
-    width: 80%;
-    height: 100%;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 5em;
-
-}
-
-.link_pages a {
-    font-family: 'Comfortaa', cursive;
-    font-size: 1.8em;
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-}
-
-.link_pages img {
-    font-size: 1.8em;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-#quadroAvisos{
-    display: flex;
-    margin: 2% 1% 0 2%;
-    padding: 1%;
-    height: 30vh;
-    width: 90%;
+.ta-qa{
+    display: inline;
     justify-content: center;
     align-items: center;
-    resize: none;
-    /*Talvez botar border-radius, mas dai tem que ajeitar o scrollbar*/
-}
-
-#btn_up-quadroAvisos{
-    margin-right: 1%;
-}
-
-textarea:focus {
-    outline: none;
-}
-
-.row {
-    margin-top: 1%;
-    padding-top: 1%;
-    display: grid;
-}
-
-form {
-    display: block;
-    width: 100%;
-    padding: 3% 4%; /* Aumente o padding conforme necessário para aumentar o tamanho do formulário */
+    display:inline;
+    width:95%;
+    height: 7em;
+    margin-left: 2.5em;
+    padding:1%;
     border: 5px solid #4CAF50;
-    border-radius: 20px;
+    border-radius: 10px;
     background-color: #EFEFEF;
-}
-
-.form-row{
-    display: block;
-}
-
-.form-group{
-    width: 100%;
-}
-
-.form-group textarea{
-    height: 35vh;
-}
-
-#ta_edit{
-    display: flex;
-    width: 100%;
     resize: none;
 }
 
-.box-footer{
+.label-qa{
+    display:flex;
+    width: 100%;
+    height: 3em;
+    padding: 1em 1em 2.5em 1em;
+    font-family: 'Comfortaa', cursive;
+}
+
+.label-qa button {
     display: flex;
+    margin-left: auto;
+    width: fit-content;
+    height: fit-content;
+    background-color: #EFEFEF;
+    border: 6px solid #4CAF50;
+    border-radius: 25px;
+    font-family: 'Comfortaa', cursive;
+    font-size: 2vh;
+    color:black;
+}
+
+.box-quadro-plantao{
+    width: 25%;
+    margin-left: auto;
+    height:100%;
+}
+
+.label-qp{
+    display:inline;
+    width: 100%;
+    height: 3em;
+    font-family: 'Comfortaa', cursive;
+    background-color: blue;
+}
+
+.label-qp button {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    background-color: #EFEFEF;
+    border: 6px solid #4CAF50;
+    border-radius: 25px;
+    font-family: 'Comfortaa', cursive;
+    font-size: 2vh;
+    color:black;
+}
+
+.ta-qp{
+    display: inline;
+    justify-content: center;
+    align-items: center;
+    display:inline;
+    width:90%;
+    height: 24.8em;
+    margin:0.5em 1em 0 0;
+    border: 5px solid #4CAF50;
+    border-radius: 10px;
+    background-color: #EFEFEF;
+    resize: none;
+}
+
+.edit-quadro-avisos{
+    display:inline;
+    align-items: center;
+    justify-content: center;
+}
+
+.editQA-card-body{
+    padding:0;
+    margin-top: 2em;
+    width:94em;
+}
+
+.edit-ta-qa {
+    width: 100%;
+    height: 7em;
+    padding: 0.5em;
+    border: 5px solid #4CAF50;
+    border-radius: 10px;
+    background-color: #EFEFEF;
+    resize: none;
+}
+
+.edit-quadro-plantao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.editQP-card-body {
+    padding: 0;
+    margin-top: 2em;
+}
+
+.edit-ta-qp {
+    width: 85%;
+    height: 25em;
+    padding: 0.5em;
+    border: 5px solid #4CAF50;
+    border-radius: 10px;
+    background-color: #EFEFEF;
+    resize: none;
 }
