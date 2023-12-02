@@ -6,7 +6,7 @@ import perfil from  '../../img/perfil.svg';
 function CadastroProduto() {
 
     const produto = {
-        id: 0,
+        id_produto: 0,
         nome: '',
         peso: 0.0,
         dimensao: 0.0,
@@ -23,7 +23,6 @@ function CadastroProduto() {
     const aoDigitar = (e) => {
         console.log(e.target);
         setObjProduto({ ...objProduto, [e.target.name]: e.target.value });
-
     }
 
     //cadastrar 
@@ -38,7 +37,7 @@ function CadastroProduto() {
         })
             .then(retorno => retorno.json())
             .then(retorno_convertido => {
-
+            setTimeout(() => { window.location.reload(); }, 2000);
             })
         navigate("/produtos");
     }
@@ -47,7 +46,18 @@ function CadastroProduto() {
         navigate("/produtos");
     }
 
-
+    const aoSelecionarImagem = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+    
+        reader.onloadend = () => {
+            const byteArray = new Uint8Array(reader.result);
+            setObjProduto({ ...objProduto, imagem: byteArray });        };
+    
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    };
 
     return (
 
@@ -87,7 +97,7 @@ function CadastroProduto() {
                 <div className="link_pages">
                     <a href="/home">Home</a>
                     <a href="/funcionarios" style={{ textDecoration: 'underline' }}>Gerência</a>
-                    <a href="">Venda</a>
+                    <a href="/vendas">Venda</a>
                     <a href="/perfil"><img src={perfil} alt="Icone Perfil"/></a>
                 </div>
             </header>
@@ -125,7 +135,7 @@ function CadastroProduto() {
 
                                 <div className="form-group col-md-6">
                                     <label>Imagem:</label>
-                                    <input name="imagem" type="text" onChange={aoDigitar} className="form-control" placeholder="Imagem" />
+                                    <input name="imagem" type="file" onChange={aoDigitar} className="form-control" />
                                 </div>
                             </div>
 

@@ -41,8 +41,10 @@ function Cliente() {
     //excluir 
     const excluir = (indice) => {
 
-        const clienteExcluir = clientes[indice];
+        const clienteExcluir = clientes[indice]; 
 
+        const confirmacao = window.confirm('Tem certeza que deseja excluir este cliente?');
+        if (confirmacao){
         fetch('http://localhost:8080/delcliente/'+clienteExcluir.id_cliente, {
             method:'delete',
             headers:{
@@ -57,7 +59,7 @@ function Cliente() {
             setclientes(vetorTemp);
         })
         .catch(error => console.error('Erro ao excluir cliente:', error));
-    }
+    }}
 
     const cancelar =() => {
         navigate("/clientes");

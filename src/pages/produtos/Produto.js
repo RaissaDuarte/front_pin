@@ -4,7 +4,7 @@ import '../../components/css/gerencia.css';
 import { useNavigate } from 'react-router-dom';
 import perfil from  '../../img/perfil.svg';
 import { isIndexSignatureDeclaration } from 'typescript';
-
+import produtoPdf from '../../relatorio/PdfProduto';
 
 
 function Produto() {
@@ -46,6 +46,8 @@ function Produto() {
 
         const produtoExcluir = produtos[indice];
 
+        const confirmacao = window.confirm('Tem certeza que deseja excluir este produto?');
+        if (confirmacao){
         fetch('http://localhost:8080/delprod/' + produtoExcluir.id_produto, {
             method: 'delete',
             headers: {
@@ -61,7 +63,7 @@ function Produto() {
         })
         .catch(error => console.error('Erro ao excluir produto:', error));
     }
-
+    }
 
     const [ordenacao, setOrdenacao] = useState({
         campo: null,
@@ -212,7 +214,7 @@ function Produto() {
 
                     <div className="gerencia_btns">
                         <button onClick={adicionar}>Adicionar</button>
-                        <button className="right_btn">Relatório</button>
+                        <button className="right_btn" onClick = {(e) => produtoPdf(produtos)} >Relatório</button>
                     </div>
                 </div>
             </div>

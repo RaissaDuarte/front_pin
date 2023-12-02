@@ -49,7 +49,7 @@ function App() {
 
         {/* vendas */}
         <Route path="/vendas" element={<Venda />}/>
-        {/*<Route path="/cadvendas" element={<CadastrarVenda />}/>*/}
+        <Route path="/cadvenda" element={<CadastrarVenda />}/>
 
          {/* fornecedores */}
         <Route path="/fornecedores" element={<Fornecedor />}/>

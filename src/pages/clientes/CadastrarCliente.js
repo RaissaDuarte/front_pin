@@ -35,7 +35,7 @@ function CadastroCliente() {
 
                 setTimeout(() => { window.location.reload(); }, 2000);
             })
-
+            navigate("/clientes");
 
     }
 
