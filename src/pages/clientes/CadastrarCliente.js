@@ -1,11 +1,10 @@
+
 import React, { useState } from 'react';
 import '../../components/css/gerencia.css';
-import { useNavigate, Link, useParams  } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import perfil from  '../../img/perfil.svg';
 
 function CadastroCliente() {
-    
-    const { idFuncionario } = useParams();
     const cliente = {
         id_cliente: 0,
         nome: '',
@@ -76,15 +75,15 @@ function CadastroCliente() {
             <link rel="stylesheet" href="/css/gerencia.css" />
         </React.Fragment>
 
-        <header className="headerGeneric">
+            <header className="headerGeneric">
                 <div className="logo_name">
                     <p>TemDTudo</p>
                 </div>
                 <div className="link_pages">
-                    <Link to={`/home/${idFuncionario}`}>Home</Link>
-                    <Link to={`/funcionarios`} style={{ textDecoration: 'underline' }}>Gerência</Link>
-                    <Link to="">Venda</Link>
-                    <Link to={`/perfil`}><img src={perfil} alt="Icone Perfil" /></Link>
+                    <a href="/home">Home</a>
+                    <a href="/funcionarios" style={{ textDecoration: 'underline' }}>Gerência</a>
+                    <a href="">Venda</a>
+                    <a href="/perfil"><img src={perfil} alt="Icone Perfil"/></a>
                 </div>
             </header>
 

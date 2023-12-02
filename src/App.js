@@ -49,25 +49,19 @@ function App() {
                     {/* Perfil */}
                     <Route path="/perfil" element={<Perfil />} />
 
-<<<<<<< HEAD
-        {/* vendas */}
-        <Route path="/vendas" element={<Venda />}/>
-        <Route path="/cadvenda" element={<CadastrarVenda />}/>
-=======
+                    {/* vendas */}
+                    <Route path="/vendas" element={<Venda />}/>
+                    <Route path="/cadvenda" element={<CadastrarVenda />}/>
+
                     {/* cliente */}
                     <Route path="/clientes" element={<Cliente />} />
                     <Route path="/cadcliente" element={<CadastrarCliente />} />
                     <Route path="/editcliente/:codigocliente" element={<EditarCliente />} />
->>>>>>> ef2b3eeaa838429102f29a4643d9d39d48647d5d
 
                     {/* produtos */}
                     <Route path="/produtos" element={<Produto />} />
                     <Route path="/cadprod" element={<CadastrarProduto />} />
                     <Route path="/editprod/:codigoProduto" element={<EditarProduto />} />
-
-                    {/* vendas */}
-                    <Route path="/vendas" element={<Venda />} />
-                    {/*<Route path="/cadvendas" element={<CadastrarVenda />}/>*/}
 
                     {/* fornecedores */}
                     <Route path="/fornecedores" element={<Fornecedor />} />
