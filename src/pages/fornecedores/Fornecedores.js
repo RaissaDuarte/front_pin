@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../components/css/gerencia.css';
 import { useNavigate } from 'react-router-dom';
 import perfil from  '../../img/perfil.svg';
+import fornecedorPdf from '../../relatorio/PdfFornecedores';
 
 function Fornecedor() {
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../components/css/gerencia.css';
 import { useNavigate } from 'react-router-dom';
 import perfil from  '../../img/perfil.svg';
+import transportadoraPdf from '../../relatorio/PdfTransportadoras';
 
 function Transportadora() {
 
@@ -182,7 +183,7 @@ function Transportadora() {
 
                     <div className="gerencia_btns">
                         <button onClick={adicionar}>Adicionar</button>
-                        <button className="right_btn">Relatório</button>
+                        <button className="right_btn" onClick={(e)=> transportadoraPdf(transportadoras)}>Relatório</button>
                     </div>
                 </div>
             </div>

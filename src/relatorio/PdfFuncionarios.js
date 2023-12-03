@@ -1,11 +1,11 @@
 import pdfMake from 'pdfmake/build/pdfmake'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 
-function fornecedorPdf(fornecedores){
+function funcionarioPdf(funcionarios){
 
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-    fornecedores.sort((a, b) => {
+    funcionarios.sort((a, b) => {
         if (a.nome < b.nome) return -1;
         if (a.nome > b.nome) return 1;
         return 0;
@@ -13,19 +13,19 @@ function fornecedorPdf(fornecedores){
     
     const reportTitle = [
         {
-            text: 'Relatório fornecedores',
+            text: 'Relatório Funcionarios',
             fontSize: 15,
             bold: true,
             margin: [15,20,0,45]
         }
     ];
 
-    const dados = fornecedores.map((fornecedores)=> {
+    const dados = funcionarios.map((funcionarios)=> {
         return [
-            {text: fornecedores.id, fontSize: 9, margin: [0,2,0,2]},
-            {text: fornecedores.nome, fontSize: 9, margin: [0,2,0,2]},
-            {text: fornecedores.cnpj, fontSize: 9, margin: [0,2,0,2]},
-            {text: fornecedores.telefone, fontSize: 9, margin: [0,2,0,2]},
+            {text: funcionarios.id, fontSize: 9, margin: [0,2,0,2]},
+            {text: funcionarios.nome, fontSize: 9, margin: [0,2,0,2]},
+            {text: funcionarios.cpf, fontSize: 9, margin: [0,2,0,2]},
+            {text: funcionarios.telefone, fontSize: 9, margin: [0,2,0,2]},
         ]
     });
 
@@ -38,7 +38,7 @@ function fornecedorPdf(fornecedores){
                     [
                         {text: 'Código', style: 'tableHeader', fontSize: 10},
                         {text: 'Nome', style: 'tableHeader', fontSize: 10},
-                        {text: 'CNPJ', style: 'tableHeader', fontSize: 10},
+                        {text: 'CPF', style: 'tableHeader', fontSize: 10},
                         {text: 'Telefone', style: 'tableHeader', fontSize: 10},
                     ],
                     ...dados
@@ -72,13 +72,14 @@ function fornecedorPdf(fornecedores){
     const docDefinicoes = {
         pageSize: 'A4',
         pageMargins: [15,50,15,40],
+
         header: [reportTitle],
         content: [details],
         footer: Rodape
     }
 
-    pdfMake.createPdf(docDefinicoes).download('fornecedores');
+    pdfMake.createPdf(docDefinicoes).download('funcionarios');
 
 
 }
-export default fornecedorPdf;
+export default funcionarioPdf;

@@ -38,8 +38,8 @@ function clientePdf(clientes){
                     [
                         {text: 'Código', style: 'tableHeader', fontSize: 10},
                         {text: 'Nome', style: 'tableHeader', fontSize: 10},
-                        {text: 'Quantidade', style: 'tableHeader', fontSize: 10},
-                        {text: 'Valor', style: 'tableHeader', fontSize: 10},
+                        {text: 'CPF', style: 'tableHeader', fontSize: 10},
+                        {text: 'Telefone', style: 'tableHeader', fontSize: 10},
                     ],
                     ...dados
                 ]
