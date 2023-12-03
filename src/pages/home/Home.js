@@ -96,6 +96,9 @@ const Home = () => {
                 </div>
                 <textarea className='ta-qa' value={quadroAvisos.mensagem} readOnly></textarea>
             </div>
+            <div className="box-grade-horaria">
+                <p>Grade Horária</p>
+            </div>
             <div className="box-quadro-plantao">
                 <div className='label-qp'>
                     <p>Editado por: {quadroPlantao.funcionario.nome}</p>

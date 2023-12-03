@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import '../../components/css/gerencia.css';
 import { useParams, useNavigate } from 'react-router-dom';
-import perfil from  '../../img/perfil.svg';
+import perfil from '../../img/perfil.svg';
 
 function EditarFuncionario() {
-    const {codigoFuncionario} = useParams();
+    const { codigoFuncionario } = useParams();
     const navigate = useNavigate();
     const [funcionarios, setFuncionarios] = useState([]);
 
@@ -16,37 +16,37 @@ function EditarFuncionario() {
         endereco: '',
         cep: '',
         senha: '',
-    });    
+    });
 
     const aoDigitar = (e) => {
-        setObjFuncionario({...objFuncionario, [e.target.name]: e.target.value});
+        setObjFuncionario({ ...objFuncionario, [e.target.name]: e.target.value });
     }
 
     const alterar = () => {
+        // Check if any field is empty
+        const isAnyFieldEmpty = Object.values(objFuncionario).some(value => value === '');
+    
+        if (isAnyFieldEmpty) {
+            return;
+        }
+    
         fetch('http://localhost:8080/alterarFuncionario', {
-            method:'put',
-            body:JSON.stringify(objFuncionario),
-            headers:{
+            method: 'put',
+            body: JSON.stringify(objFuncionario),
+            headers: {
                 'Content-type': 'application/json',
                 'Accept': 'application/json'
             }
         })
-        .then(retorno => retorno.json())
-        .then(retorno_convertido => {
-
-            let vetorTemp = [...funcionarios];
-            let indice = vetorTemp.findIndex((f)=> {
-                return f.id === objFuncionario.id;
-            });
-            vetorTemp[indice] = objFuncionario;
-            setFuncionarios(vetorTemp);
-
-            setTimeout(()=> {window.location.reload();},2000);         
-        })
-        .catch(error => console.error('Erro ao alterar funcionario:', error));
+            .then(retorno => retorno.json())
+            .then(retorno_convertido => {
+                // Atualizar o estado local com os dados do funcionário editado
+                setFuncionarios(funcionarios.map(f => (f.id === objFuncionario.id ? objFuncionario : f)));
+            })
+            .catch(error => console.error('Erro ao alterar funcionário:', error));
+    
         navigate("/funcionarios");
-        
-    }
+    };
 
     useEffect(() => {
         fetch(`http://localhost:8080/funcionarios/edit/${codigoFuncionario}`, {
@@ -59,7 +59,7 @@ function EditarFuncionario() {
             })
             .catch((error) => console.error('Erro ao buscar funcionario:', error));
     }, [codigoFuncionario]);
-    
+
 
     return (
 
@@ -99,7 +99,7 @@ function EditarFuncionario() {
                     <a href="/home">Home</a>
                     <a href="/funcionarios" style={{ textDecoration: 'underline' }}>Gerência</a>
                     <a href="">Venda</a>
-                    <a href="/perfil"><img src={perfil} alt="Icone Perfil"/></a>
+                    <a href="/perfil"><img src={perfil} alt="Icone Perfil" /></a>
                 </div>
             </header>
 
@@ -112,37 +112,37 @@ function EditarFuncionario() {
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Nome:</label>
-                                    <input name="nome" type="text" onChange={aoDigitar} 
-                                    value={objFuncionario.nome || ''}
-                                    className="form-control" placeholder="Nome" />
+                                    <input name="nome" type="text" onChange={aoDigitar}
+                                        value={objFuncionario.nome || ''}
+                                        className="form-control" placeholder="Nome" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>CPF:</label>
-                                    <input name="cpf" type="text" onChange={aoDigitar} 
-                                    value={objFuncionario.cpf || ''}className="form-control" placeholder="CPF"/>
+                                    <input name="cpf" type="text" onChange={aoDigitar}
+                                        value={objFuncionario.cpf || ''} className="form-control" placeholder="CPF" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Telefone:</label>
                                     <input name="telefone" type="text" onChange={aoDigitar}
-                                    value={objFuncionario.telefone || ''}className="form-control" placeholder="Telefone" />
+                                        value={objFuncionario.telefone || ''} className="form-control" placeholder="Telefone" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Endereço:</label>
                                     <input name="endereco" type="text" onChange={aoDigitar}
-                                    value={objFuncionario.endereco || ''}className="form-control" placeholder="Endereço" />
+                                        value={objFuncionario.endereco || ''} className="form-control" placeholder="Endereço" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>CEP:</label>
-                                    <input name="cep" type="text" onChange={aoDigitar} value={objFuncionario.cep || ''} className="form-control" placeholder="CEP" />
+                                    <input name="cep" type="text" onChange={aoDigitar} value={objFuncionario.cep || ''} className="form-control" placeholder="CEP" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Senha:</label>
-                                    <input name="senha" type="password" onChange={aoDigitar} value={objFuncionario.senha || ''} className="form-control" placeholder="Senha" />
+                                    <input name="senha" type="password" onChange={aoDigitar} value={objFuncionario.senha || ''} className="form-control" placeholder="Senha" required/>
                                 </div>
                             </div>
 
@@ -150,7 +150,7 @@ function EditarFuncionario() {
                                 <div className="gerencia_btns">
                                     <a href="/funcionarios" className="btn btn-danger">Cancelar</a>
                                     <span style={{ margin: '0 5px' }}></span>
-                                    <button type="submit" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={alterar}>Salvar</button>
+                                    <button type="submit" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={alterar} required>Salvar</button>
                                 </div>
                             </div>
                         </form>

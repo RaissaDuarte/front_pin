@@ -154,18 +154,6 @@ function Login() {
                             </button>
                         </div>
                     </div>
-                    {/* {funcionario && (
-    <div>
-      <p>Funcionário autenticado:</p>
-      <p>ID: {funcionario.id}</p>
-      <p>Nome: {funcionario.nome}</p>
-      <p>CPF: {funcionario.cpf}</p>
-      <p>Telefone: {funcionario.telefone}</p>
-      <p>Endereco: {funcionario.endereco}</p>
-      <p>CEP: {funcionario.cep}</p>
-      <p>Senha: {funcionario.senha}</p>
-    </div>
-  )} */}
                 </form>
             </div>
         </>

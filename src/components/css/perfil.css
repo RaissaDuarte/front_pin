@@ -10,3 +10,24 @@
     font-size: 2.5em;
     color:black;
 }
+
+.box-grade-horaria-perfil {
+    position: fixed;
+    width: 70%;
+    height: 64%;
+    margin: 7% 2% 2% 27%;
+    border: 5px solid #4CAF50;
+    border-radius: 10px;
+    background-color: #EFEFEF;
+    font-family: 'Comfortaa', cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box-grade-horaria-perfil p {
+    font-weight: bold;
+    font-size: 4em;
+    text-transform: uppercase;
+    margin: 0;
+}

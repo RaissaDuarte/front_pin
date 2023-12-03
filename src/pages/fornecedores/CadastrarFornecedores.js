@@ -21,8 +21,14 @@ function CadastroFornecedor() {
         setObjFornecedor({ ...objFornecedor, [e.target.name]: e.target.value });
     }
 
-    // Cadastrar
     const cadastrar = () => {
+        // Check if any field is empty
+        const isAnyFieldEmpty = Object.values(objFornecedor).some(value => value === '');
+    
+        if (isAnyFieldEmpty) {
+            return;
+        }
+    
         fetch('http://localhost:8080/cadastroFornecedor', {
             method: 'post',
             body: JSON.stringify(objFornecedor),
@@ -31,14 +37,14 @@ function CadastroFornecedor() {
                 'Accept': 'application/json'
             }
         })
-            .then(retorno => retorno.json())
-            .then(retornoConvertido => {
-
-                setFornecedores([...fornecedores, retornoConvertido]);
-
-            })
+        .then(retorno => retorno.json())
+        .then(retornoConvertido => {
+            setFornecedores([...fornecedores, retornoConvertido]);
+        })
+        .catch(error => console.error('Erro ao cadastrar fornecedor:', error));
+    
         navigate("/fornecedores");
-    }
+    };
 
     return (
         <><React.Fragment>
@@ -90,27 +96,27 @@ function CadastroFornecedor() {
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Nome:</label>
-                                    <input name="nome" type="text" onChange={aoDigitar} className="form-control" placeholder="Nome" />
+                                    <input name="nome" type="text" onChange={aoDigitar} className="form-control" placeholder="Nome" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Endereço:</label>
-                                    <input name="endereco" type="text" onChange={aoDigitar} className="form-control" placeholder="Endereço" />
+                                    <input name="endereco" type="text" onChange={aoDigitar} className="form-control" placeholder="Endereço" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Telefone:</label>
-                                    <input name="telefone" type="text" onChange={aoDigitar} className="form-control" placeholder="Telefone" />
+                                    <input name="telefone" type="text" onChange={aoDigitar} className="form-control" placeholder="Telefone" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>CEP:</label>
-                                    <input name="cep" type="text" onChange={aoDigitar} className="form-control" placeholder="CEP" />
+                                    <input name="cep" type="text" onChange={aoDigitar} className="form-control" placeholder="CEP" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>CNPJ:</label>
-                                    <input name="cnpj" type="text" onChange={aoDigitar} className="form-control" placeholder="CNPJ" />
+                                    <input name="cnpj" type="text" onChange={aoDigitar} className="form-control" placeholder="CNPJ" required/>
                                 </div>
                             </div>
 
@@ -118,7 +124,7 @@ function CadastroFornecedor() {
                                 <div className="gerencia_btns">
                                     <a href="/fornecedores" className="btn btn-danger">Cancelar</a>
                                     <span style={{ margin: '0 5px' }}></span>
-                                    <button type="submit" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={cadastrar}>Cadastrar</button>
+                                    <button type="submit" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={cadastrar} required>Cadastrar</button>
                                 </div>
                             </div>
                         </form>

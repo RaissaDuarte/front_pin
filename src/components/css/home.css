@@ -123,3 +123,24 @@
     background-color: #EFEFEF;
     resize: none;
 }
+
+.box-grade-horaria {
+    position: fixed;
+    width: 70%;
+    height: 64%;
+    margin: 0.5% 2.5%;
+    border: 5px solid #4CAF50;
+    border-radius: 10px;
+    background-color: #EFEFEF;
+    font-family: 'Comfortaa', cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box-grade-horaria p {
+    font-weight: bold;
+    font-size: 4em;
+    text-transform: uppercase;
+    margin: 0;
+}

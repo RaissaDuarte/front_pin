@@ -25,8 +25,12 @@ function CadastroProduto() {
         setObjProduto({ ...objProduto, [e.target.name]: e.target.value });
     }
 
-    //cadastrar 
     const cadastrar = () => {
+        // Check if any required field (except imagem) is empty
+        if (!objProduto.nome || !objProduto.peso || !objProduto.dimensao || !objProduto.quantidade || !objProduto.valor) {
+            return;
+        }
+    
         fetch('http://localhost:8080/cadprod', {
             method: 'post',
             body: JSON.stringify(objProduto),
@@ -37,10 +41,12 @@ function CadastroProduto() {
         })
             .then(retorno => retorno.json())
             .then(retorno_convertido => {
-            setTimeout(() => { window.location.reload(); }, 2000);
+                setTimeout(() => { window.location.reload(); }, 2000);
             })
+            .catch(error => console.error('Erro ao cadastrar produto:', error));
+    
         navigate("/produtos");
-    }
+    };
 
     const cancelar = () => {
         navigate("/produtos");
@@ -110,27 +116,27 @@ function CadastroProduto() {
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Nome:</label>
-                                    <input name="nome" type="text" onChange={aoDigitar} className="form-control" placeholder="Nome" />
+                                    <input name="nome" type="text" onChange={aoDigitar} className="form-control" placeholder="Nome" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Peso:</label>
-                                    <input name="peso" type="text" onChange={aoDigitar} className="form-control" placeholder="Peso(kgs)" />
+                                    <input name="peso" type="text" onChange={aoDigitar} className="form-control" placeholder="Peso(kgs)" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Dimensão:</label>
-                                    <input name="dimensao" type="text" onChange={aoDigitar} className="form-control" placeholder="Dimensão(mt3)" />
+                                    <input name="dimensao" type="text" onChange={aoDigitar} className="form-control" placeholder="Dimensão(mt3)" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Quantidade:</label>
-                                    <input name="quantidade" type="text" onChange={aoDigitar} className="form-control" placeholder="Quantidade" />
+                                    <input name="quantidade" type="text" onChange={aoDigitar} className="form-control" placeholder="Quantidade" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Valor:</label>
-                                    <input name="valor" type="text" onChange={aoDigitar} className="form-control" placeholder="Valor" />
+                                    <input name="valor" type="text" onChange={aoDigitar} className="form-control" placeholder="Valor" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
@@ -143,7 +149,7 @@ function CadastroProduto() {
                             <div className="box-footer">
                                 <div className="gerencia_btns">
                                     <a href="/produtos" className="btn btn-danger">Cancelar</a>
-                                    <button type="submit" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={cadastrar}>Cadastrar</button>
+                                    <button type="submit" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={cadastrar} required>Cadastrar</button>
                                 </div>
                             </div>
                         </form>

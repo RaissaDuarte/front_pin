@@ -18,8 +18,12 @@ function EditarTransportadora() {
         setObjTransportadora({ ...objTransportadora, [e.target.name]: e.target.value });
     }
 
-    //alterar 
     const alterar = () => {
+        if (!objTransportadora.nome || !objTransportadora.cidade || !objTransportadora.precoKM) {
+            alert('Por favor, preencha todos os campos antes de salvar as alterações.');
+            return;
+        }
+    
         fetch('http://localhost:8080/alterarTransportadora', {
             method: 'put',
             body: JSON.stringify(objTransportadora),
@@ -30,20 +34,19 @@ function EditarTransportadora() {
         })
             .then(retorno => retorno.json())
             .then(retorno_convertido => {
-
                 let vetorTemp = [...transportadoras];
                 let indice = vetorTemp.findIndex((t) => {
                     return t.id === objTransportadora.id;
                 });
                 vetorTemp[indice] = objTransportadora;
                 setTransportadoras(vetorTemp);
-
+    
                 setTimeout(() => { window.location.reload(); }, 2000);
             })
             .catch(error => console.error('Erro ao alterar transportadora:', error));
+    
         navigate("/transportadoras");
-
-    }
+    };
 
     useEffect(() => {
         fetch(`http://localhost:8080/transportadoras/edit/${codigoTransportadora}`, {
@@ -107,23 +110,23 @@ function EditarTransportadora() {
                             <div className="form-group">
                                 <label>Nome:</label>
                                 <input name="nome" type="text" onChange={aoDigitar}
-                                    value={objTransportadora.nome} className="form-control" placeholder="Nome" />
+                                    value={objTransportadora.nome} className="form-control" placeholder="Nome" required/>
                             </div>
 
                             <div className="form-group">
                                 <label>Cidade:</label>
-                                <input name="cidade" type="text" onChange={aoDigitar} value={objTransportadora.cidade} className="form-control" placeholder="Cidade" />
+                                <input name="cidade" type="text" onChange={aoDigitar} value={objTransportadora.cidade} className="form-control" placeholder="Cidade" required/>
                             </div>
 
                             <div className="form-group">
                                 <label>Preço por KM:</label>
-                                <input name="precoKM" type="text" onChange={aoDigitar} value={objTransportadora.precoKM} className="form-control" placeholder="Preço por KM" />
+                                <input name="precoKM" type="text" onChange={aoDigitar} value={objTransportadora.precoKM} className="form-control" placeholder="Preço por KM" required/>
                             </div>
                             <div className="box-footer">
                                 <div className="gerencia_btns">
                                     <a href="/transportadoras" className="btn btn-danger" style={{ fontSize: '1em', width: '150px' }}>Cancelar</a>
                                     <span style={{ margin: '0 5px' }}></span>
-                                    <button type="button" id="btn-cadastrar" className="right_btn btn btn-primary" style={{ fontSize: '1em', width: '150px' }} onClick={alterar}>Salvar</button>
+                                    <button type="button" id="btn-cadastrar" className="right_btn btn btn-primary" style={{ fontSize: '1em', width: '150px' }} onClick={alterar} required>Salvar</button>
                                 </div>
                             </div>
                         </form>

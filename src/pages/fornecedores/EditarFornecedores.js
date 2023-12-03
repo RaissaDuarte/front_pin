@@ -23,30 +23,36 @@ function EditarFornecedor() {
     }
 
     const alterar = () => {
+        // Check if any field is empty
+        const isAnyFieldEmpty = Object.values(objFornecedor).some(value => value === '');
+    
+        if (isAnyFieldEmpty) {
+            return;
+        }
+    
         fetch('http://localhost:8080/alterarFornecedor', {
-            method:'put',
-            body:JSON.stringify(objFornecedor),
-            headers:{
+            method: 'put',
+            body: JSON.stringify(objFornecedor),
+            headers: {
                 'Content-type': 'application/json',
                 'Accept': 'application/json'
             }
         })
         .then(retorno => retorno.json())
         .then(retorno_convertido => {
-
             let vetorTemp = [...fornecedores];
-            let indice = vetorTemp.findIndex((f)=> {
+            let indice = vetorTemp.findIndex((f) => {
                 return f.id === objFornecedor.id;
             });
             vetorTemp[indice] = objFornecedor;
             setFornecedores(vetorTemp);
-
-            setTimeout(()=> {window.location.reload();},2000);         
+    
+            setTimeout(() => { window.location.reload(); }, 2000);
         })
         .catch(error => console.error('Erro ao alterar fornecedor:', error));
+    
         navigate("/fornecedores");
-        
-    }
+    };
 
     useEffect(() => {
         fetch(`http://localhost:8080/fornecedores/edit/${codigoFornecedor}`, {
@@ -110,27 +116,27 @@ function EditarFornecedor() {
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Nome:</label>
-                                    <input name="nome" type="text" onChange={aoDigitar} value={objFornecedor.nome} className="form-control" placeholder="Nome" />
+                                    <input name="nome" type="text" onChange={aoDigitar} value={objFornecedor.nome} className="form-control" placeholder="Nome" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Endereço:</label>
-                                    <input name="endereco" type="text" onChange={aoDigitar} value={objFornecedor.endereco} className="form-control" placeholder="Endereço" />
+                                    <input name="endereco" type="text" onChange={aoDigitar} value={objFornecedor.endereco} className="form-control" placeholder="Endereço" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Telefone:</label>
-                                    <input name="telefone" type="text" onChange={aoDigitar} value={objFornecedor.telefone}  className="form-control" placeholder="Telefone" />
+                                    <input name="telefone" type="text" onChange={aoDigitar} value={objFornecedor.telefone}  className="form-control" placeholder="Telefone" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>CEP:</label>
-                                    <input name="cep" type="text" onChange={aoDigitar} value={objFornecedor.cep}  className="form-control" placeholder="CEP" />
+                                    <input name="cep" type="text" onChange={aoDigitar} value={objFornecedor.cep}  className="form-control" placeholder="CEP" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>CNPJ:</label>
-                                    <input name="cnpj" type="text" onChange={aoDigitar} value={objFornecedor.cnpj}  className="form-control" placeholder="CNPJ" />
+                                    <input name="cnpj" type="text" onChange={aoDigitar} value={objFornecedor.cnpj}  className="form-control" placeholder="CNPJ" required/>
                                 </div>
                             </div>
 
@@ -138,7 +144,7 @@ function EditarFornecedor() {
                                 <div className="gerencia_btns">
                                     <a href="/fornecedores" className="btn btn-danger">Cancelar</a>
                                     <span style={{ margin: '0 5px' }}></span>
-                                    <button type="submit" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={alterar}>Salvar</button>
+                                    <button type="submit" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={alterar} required>Salvar</button>
                                 </div>
                             </div>
                         </form>

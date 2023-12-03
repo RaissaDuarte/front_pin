@@ -77,7 +77,7 @@ function Perfil() {
             carregarDetalhesFuncionario(codigoFuncionario);
         }
     }, [codigoFuncionario, funcionarioLogado]);
-    
+
 
 
     return (
@@ -124,69 +124,15 @@ function Perfil() {
             <div className="content">
 
                 <div className="menu">
-                    <a className="menu_escolhido">Perfil</a>
-                    <a href="/home">Grade Horária</a>
+                    <a href='/funcionarios'>Perfil</a>
+                    <a className="menu_escolhido">Grade Horária</a>
                     <a href="/" className='sair'>Sair</a>
                 </div>
 
-                <div className="container-fluid d-flex align-items-center justify-content-center vh-100">
-                    <div className="card">
-                        <div className="card-body">
-                            <h1 className="text-center">Editar Funcionário</h1>
-                            <form>
-                                <div className="form-row">
-                                    <div className="form-group col-md-6">
-                                        <label>Nome:</label>
-                                        <input
-                                            name="nome"
-                                            type="text"
-                                            onChange={aoDigitar}
-                                            value={objFuncionario.nome || ''}
-                                            className="form-control"
-                                            placeholder="Nome"
-                                        />
-                                    </div>
-
-                                    <div className="form-group col-md-6">
-                                        <label>CPF:</label>
-                                        <input name="cpf" type="text" onChange={aoDigitar}
-                                            value={objFuncionario.cpf || ''} className="form-control" placeholder="CPF" />
-                                    </div>
-
-                                    <div className="form-group col-md-6">
-                                        <label>Telefone:</label>
-                                        <input name="telefone" type="text" onChange={aoDigitar}
-                                            value={objFuncionario.telefone} className="form-control" placeholder="Telefone" />
-                                    </div>
-
-                                    <div className="form-group col-md-6">
-                                        <label>Endereço:</label>
-                                        <input name="endereco" type="text" onChange={aoDigitar}
-                                            value={objFuncionario.endereco} className="form-control" placeholder="Endereço" />
-                                    </div>
-
-                                    <div className="form-group col-md-6">
-                                        <label>CEP:</label>
-                                        <input name="cep" type="text" onChange={aoDigitar} value={objFuncionario.cep || ''} className="form-control" placeholder="CEP" />
-                                    </div>
-
-                                    <div className="form-group col-md-6">
-                                        <label>Senha:</label>
-                                        <input name="senha" type="password" onChange={aoDigitar} value={objFuncionario.senha || ''} className="form-control" placeholder="Senha" />
-                                    </div>
-                                </div>
-
-                                <div className="box-footer">
-                                    <div className="gerencia_btns">
-                                        <a href="/funcionarios" className="btn btn-danger">Cancelar</a>
-                                        <span style={{ margin: '0 5px' }}></span>
-                                        <button type="submit" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={alterar}>Salvar</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                <div className="box-grade-horaria-perfil">
+                    <p>Grade Horária</p>
                 </div>
+
             </div>
         </>
     );

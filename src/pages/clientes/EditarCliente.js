@@ -28,8 +28,11 @@ function Editarcliente() {
         navigate('/clientes');
     }
 
-    //alterar 
     const alterar = () => {
+        if (!objcliente.nome || !objcliente.cpf_cnpj || !objcliente.telefone || !objcliente.endereco || !objcliente.cep) {
+            return;
+        }
+    
         fetch('http://localhost:8080/alterarcliente', {
             method: 'put',
             body: JSON.stringify(objcliente),
@@ -40,20 +43,19 @@ function Editarcliente() {
         })
             .then(retorno => retorno.json())
             .then(retorno_convertido => {
-
                 let vetorTemp = [...clientes];
                 let indice = vetorTemp.findIndex((p) => {
                     return p.id_cliente === objcliente.id_cliente;
                 });
                 vetorTemp[indice] = objcliente;
                 setclientes(vetorTemp);
-
+    
                 setTimeout(() => { window.location.reload(); }, 2000);
             })
             .catch(error => console.error('Erro ao alterar cliente:', error));
+    
         navigate("/clientes");
-
-    }
+    };
 
     useEffect(() => {
         fetch('http://localhost:8080/clientes/' + codigocliente, {
@@ -108,34 +110,34 @@ function Editarcliente() {
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Nome:</label>
-                                    <input name="nome" type="text" onChange={aoDigitar} value={objcliente.nome || ''} className="form-control" placeholder="Nome" />
+                                    <input name="nome" type="text" onChange={aoDigitar} value={objcliente.nome || ''} className="form-control" placeholder="Nome" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>CPF/CNPJ:</label>
-                                    <input name="cpf_cnpj" type="text" onChange={aoDigitar} value={objcliente.cpf_cnpj || ''} className="form-control" placeholder="CPF/CNPJ" />
+                                    <input name="cpf_cnpj" type="text" onChange={aoDigitar} value={objcliente.cpf_cnpj || ''} className="form-control" placeholder="CPF/CNPJ" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Telefone:</label>
-                                    <input name="telefone" type="text" onChange={aoDigitar} value={objcliente.telefone || ''} className="form-control" placeholder="Telefone" />
+                                    <input name="telefone" type="text" onChange={aoDigitar} value={objcliente.telefone || ''} className="form-control" placeholder="Telefone" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Endereço:</label>
-                                    <input name="endereco" type="text" onChange={aoDigitar} value={objcliente.endereco || ''} className="form-control" placeholder="Endereço" />
+                                    <input name="endereco" type="text" onChange={aoDigitar} value={objcliente.endereco || ''} className="form-control" placeholder="Endereço" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>CEP:</label>
-                                    <input name="cep" type="text" onChange={aoDigitar} value={objcliente.cep || ''} className="form-control" placeholder="CEP" />
+                                    <input name="cep" type="text" onChange={aoDigitar} value={objcliente.cep || ''} className="form-control" placeholder="CEP" required/>
                                 </div>
                             </div>
 
                             <div className="box-footer">
                                 <div className="gerencia_btns">
                                     <button type="submit" id="btn-cancelar" className="btn btn-danger" onClick={cancelar}>Cancelar</button>
-                                    <button type="submit" id="btn-alterar" className="right_btn btn btn-primary" onClick={alterar}>Atualizar</button>
+                                    <button type="submit" id="btn-alterar" className="right_btn btn btn-primary" onClick={alterar} required>Atualizar</button>
                                 </div>
                             </div>
                         </form>

@@ -23,6 +23,12 @@ function CadastroCliente() {
     }
 
     const cadastrar = () => {
+        // Check if any required field is empty
+        if (!objcliente.nome || !objcliente.cpf_cnpj || !objcliente.telefone || !objcliente.endereco || !objcliente.cep) {
+            alert('Por favor, preencha todos os campos antes de cadastrar o cliente.');
+            return;
+        }
+    
         fetch('http://localhost:8080/cadcliente', {
             method: 'post',
             body: JSON.stringify(objcliente),
@@ -33,16 +39,12 @@ function CadastroCliente() {
         })
             .then(retorno => retorno.json())
             .then(retorno_convertido => {
-
                 setTimeout(() => { window.location.reload(); }, 2000);
             })
-            navigate("/clientes");
-
-    }
-
-    const cancelar = () => {
+            .catch(error => console.error('Erro ao cadastrar cliente:', error));
+    
         navigate("/clientes");
-    }
+    };
 
     return (
 
@@ -95,34 +97,34 @@ function CadastroCliente() {
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Nome:</label>
-                                    <input name="nome" type="text" onChange={aoDigitar} className="form-control" placeholder="Nome" />
+                                    <input name="nome" type="text" onChange={aoDigitar} className="form-control" placeholder="Nome" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>CPF/CNPJ:</label>
-                                    <input name="cpf_cnpj" type="text" onChange={aoDigitar} className="form-control" placeholder="CPF/CNPJ" />
+                                    <input name="cpf_cnpj" type="text" onChange={aoDigitar} className="form-control" placeholder="CPF/CNPJ" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Telefone:</label>
-                                    <input name="telefone" type="text" onChange={aoDigitar} className="form-control" placeholder="Telefone" />
+                                    <input name="telefone" type="text" onChange={aoDigitar} className="form-control" placeholder="Telefone" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Endereço:</label>
-                                    <input name="endereco" type="text" onChange={aoDigitar} className="form-control" placeholder="Endereço" />
+                                    <input name="endereco" type="text" onChange={aoDigitar} className="form-control" placeholder="Endereço" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>CEP:</label>
-                                    <input name="cep" type="text" onChange={aoDigitar} className="form-control" placeholder="CEP" />
+                                    <input name="cep" type="text" onChange={aoDigitar} className="form-control" placeholder="CEP" required/>
                                 </div>
                             </div>
 
                             <div className="box-footer">
                                 <div className="gerencia_btns">
                                     <a href="/clientes" className="btn btn-danger">Cancelar</a>
-                                    <button type="button" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={cadastrar}>Cadastrar</button>
+                                    <button type="button" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={cadastrar} required>Cadastrar</button>
                                 </div>
                             </div>
                         </form>

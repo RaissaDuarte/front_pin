@@ -14,15 +14,34 @@ function CadastroFuncionario() {
         senha: '',
     };
 
-    const [cpf, setCpf] = useState('');
     const [objFuncionario, setObjFuncionario] = useState(funcionarioInicial);
-    const [funcionarios, setFuncionarios] = useState([]); // State to store the list of funcionarios
+    const [funcionarios, setFuncionarios] = useState([]);
     const navigate = useNavigate();
 
     const aoDigitar = (e) => {
-        console.log(e.target);
-        setObjFuncionario({ ...objFuncionario, [e.target.name]: e.target.value });
+        if (e.target.name === 'cpf') {
+            formatarCPF(e.target.value);
+        } else {
+            setObjFuncionario({ ...objFuncionario, [e.target.name]: e.target.value });
+        }
     }
+
+    const formatarCPF = (input) => {
+        const numericValue = input.replace(/\D/g, '');
+        const truncatedValue = numericValue.slice(0, 11);
+        const maskedValue = truncatedValue.replace(
+            /^(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/,
+            (_, g1, g2, g3, g4) => {
+                let result = '';
+                if (g1) result += g1 + (g2 ? '.' : '');
+                if (g2) result += g2 + (g3 ? '.' : '');
+                if (g3) result += g3;
+                if (g4) result += '-' + g4;
+                return result;
+            }
+        );
+        setObjFuncionario({ ...objFuncionario, cpf: maskedValue });
+    };
 
     const listarTodosFuncionarios = async () => {
         try {
@@ -42,7 +61,6 @@ function CadastroFuncionario() {
         listarTodosFuncionarios();
     }, []); // The empty dependency array ensures that this effect runs only once, similar to componentDidMount
 
-    //cadastrar
     const cadastrar = () => {
         fetch('http://localhost:8080/cadastroFuncionario', {
             method: 'post',
@@ -52,11 +70,18 @@ function CadastroFuncionario() {
                 'Accept': 'application/json'
             }
         })
-            .then(retorno => retorno.json())
-            .then(retorno_convertido => {
-
+            .then(async retorno => {
+                if (retorno.ok) {
+                    const retornoConvertido = await retorno.json();
+                    // Atualizar o estado local com o novo funcionário
+                    setFuncionarios([...funcionarios, retornoConvertido]);
+                    navigate("/funcionarios");
+                } else {
+                    const mensagemErro = await retorno.text();
+                    alert(mensagemErro);
+                }
             })
-        navigate("/funcionarios");
+            .catch(error => console.error('Erro ao cadastrar funcionário:', error));
     }
 
     return (
@@ -107,45 +132,44 @@ function CadastroFuncionario() {
                 <div className="card">
                     <div className="card-body">
                         <h1 className="text-center">Cadastrar Novo Funcionário</h1>
-                        <form>
+                        <form onSubmit={(e) => { e.preventDefault(); cadastrar(); }}>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Nome:</label>
-                                    <input name="nome" type="text" onChange={aoDigitar} className="form-control" placeholder="Nome" />
+                                    <input name="nome" type="text" onChange={aoDigitar} className="form-control" placeholder="Nome" required />
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>CPF:</label>
-                                    <input name="cpf" type="text" onChange={aoDigitar} className="form-control" placeholder="CPF" />
+                                    <input name="cpf" type="text" onChange={aoDigitar} value={objFuncionario.cpf} className="form-control" placeholder="CPF" required />
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Telefone:</label>
-                                    <input name="telefone" type="text" onChange={aoDigitar} className="form-control" placeholder="Telefone" />
+                                    <input name="telefone" type="text" onChange={aoDigitar} className="form-control" placeholder="Telefone" required />
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Endereço:</label>
-                                    <input name="endereco" type="text" onChange={aoDigitar} className="form-control" placeholder="Endereço" />
+                                    <input name="endereco" type="text" onChange={aoDigitar} className="form-control" placeholder="Endereço" required />
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>CEP:</label>
-                                    <input name="cep" type="text" onChange={aoDigitar} className="form-control" placeholder="CEP" />
+                                    <input name="cep" type="text" onChange={aoDigitar} className="form-control" placeholder="CEP" required />
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Senha:</label>
-                                    <input name="senha" type="password" onChange={aoDigitar} className="form-control" placeholder="Senha" />
+                                    <input name="senha" type="password" onChange={aoDigitar} className="form-control" placeholder="Senha" required />
                                 </div>
                             </div>
-
 
                             <div className="box-footer">
                                 <div className="gerencia_btns">
                                     <a href="/funcionarios" className="btn btn-danger">Cancelar</a>
                                     <span style={{ margin: '0 5px' }}></span>
-                                    <button type="submit" id="btn-cadastrar" className="right_btn btn btn-primary" onClick={cadastrar}>Cadastrar</button>
+                                    <button type="submit" id="btn-cadastrar" className="right_btn btn btn-primary">Cadastrar</button>
                                 </div>
                             </div>
                         </form>

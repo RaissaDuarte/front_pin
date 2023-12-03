@@ -20,6 +20,12 @@ function CadastrarTransportadora() {
     };
 
     const cadastrar = () => {
+        // Check if any required field is empty
+        if (!objTransportadora.nome || !objTransportadora.cidade || !objTransportadora.precoKM) {
+            alert('Por favor, preencha todos os campos antes de cadastrar a transportadora.');
+            return;
+        }
+    
         fetch('http://localhost:8080/cadastroTransportadora', {
             method: 'post',
             body: JSON.stringify(objTransportadora),
@@ -30,9 +36,9 @@ function CadastrarTransportadora() {
         })
             .then(retorno => retorno.json())
             .then(retornoConvertido => {
-
+                // Handle the response if needed
             })
-        navigate("/transportadoras")
+        navigate("/transportadoras");
     };
 
     return (
@@ -84,23 +90,23 @@ function CadastrarTransportadora() {
                         <form>
                             <div className="form-group">
                                 <label>Nome:</label>
-                                <input name="nome" type="text" onChange={aoDigitar} className="form-control" placeholder="Nome" />
+                                <input name="nome" type="text" onChange={aoDigitar} className="form-control" placeholder="Nome" required/>
                             </div>
 
                             <div className="form-group">
                                 <label>Cidade:</label>
-                                <input name="cidade" type="text" onChange={aoDigitar} className="form-control" placeholder="Cidade" />
+                                <input name="cidade" type="text" onChange={aoDigitar} className="form-control" placeholder="Cidade" required/>
                             </div>
 
                             <div className="form-group">
                                 <label>Preço por KM:</label>
-                                <input name="precoKM" type="text" onChange={aoDigitar} className="form-control" placeholder="Preço por KM" />
+                                <input name="precoKM" type="text" onChange={aoDigitar} className="form-control" placeholder="Preço por KM" required/>
                             </div>
                             <div className="box-footer">
                                 <div className="gerencia_btns">
                                     <a href="/transportadoras" className="btn btn-danger" style={{ fontSize: '1em', width: '150px' }}>Cancelar</a>
                                     <span style={{ margin: '0 5px' }}></span>
-                                    <button type="button" id="btn-cadastrar" className="right_btn btn btn-primary" style={{ fontSize: '1em', width: '150px' }} onClick={cadastrar}>Cadastrar</button>
+                                    <button type="button" id="btn-cadastrar" className="right_btn btn btn-primary" style={{ fontSize: '1em', width: '150px' }} onClick={cadastrar} required >Cadastrar</button>
                                 </div>
                             </div>
                         </form>

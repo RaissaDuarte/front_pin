@@ -27,8 +27,11 @@ function EditarProduto() {
         navigate('/produtos');
     }
 
-    //alterar 
     const alterar = () => {
+        if (!objProduto.nome || !objProduto.peso || !objProduto.dimensao || !objProduto.quantidade || !objProduto.valor) {
+            return;
+        }
+    
         fetch('http://localhost:8080/alterarprod', {
             method: 'put',
             body: JSON.stringify(objProduto),
@@ -39,20 +42,19 @@ function EditarProduto() {
         })
             .then(retorno => retorno.json())
             .then(retorno_convertido => {
-
+    
                 let vetorTemp = [...produtos];
                 let indice = vetorTemp.findIndex((p) => {
                     return p.id_produto === objProduto.id_produto;
                 });
                 vetorTemp[indice] = objProduto;
                 setProdutos(vetorTemp);
-
+    
                 setTimeout(() => { window.location.reload(); }, 2000);
             })
             .catch(error => console.error('Erro ao alterar produto:', error));
         navigate("/produtos");
-
-    }
+    };
 
     useEffect(() => {
         fetch('http://localhost:8080/produtos/' + codigoProduto, {
@@ -107,27 +109,27 @@ function EditarProduto() {
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Nome:</label>
-                                    <input name="nome" type="text" onChange={aoDigitar} value={objProduto.nome || ''} className="form-control" />
+                                    <input name="nome" type="text" onChange={aoDigitar} value={objProduto.nome || ''} className="form-control" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Peso:</label>
-                                    <input name="peso" type="text" onChange={aoDigitar} value={objProduto.peso || ''} className="form-control" placeholder="Peso(kgs)" />
+                                    <input name="peso" type="text" onChange={aoDigitar} value={objProduto.peso || ''} className="form-control" placeholder="Peso(kgs)" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Dimensão:</label>
-                                    <input name="dimensao" type="text" onChange={aoDigitar} value={objProduto.dimensao || ''} className="form-control" placeholder="Dimensão(mt3)" />
+                                    <input name="dimensao" type="text" onChange={aoDigitar} value={objProduto.dimensao || ''} className="form-control" placeholder="Dimensão(mt3)" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Quantidade:</label>
-                                    <input name="quantidade" type="text" onChange={aoDigitar} value={objProduto.quantidade || ''} className="form-control" placeholder="Quantidade" />
+                                    <input name="quantidade" type="text" onChange={aoDigitar} value={objProduto.quantidade || ''} className="form-control" placeholder="Quantidade" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
                                     <label>Valor:</label>
-                                    <input name="valor" type="text" onChange={aoDigitar} value={objProduto.valor || ''} className="form-control" placeholder="Valor" />
+                                    <input name="valor" type="text" onChange={aoDigitar} value={objProduto.valor || ''} className="form-control" placeholder="Valor" required/>
                                 </div>
 
                                 <div className="form-group col-md-6">
@@ -139,7 +141,7 @@ function EditarProduto() {
                             <div className="box-footer">
                                 <div className="gerencia_btns">
                                     <button type="submit" id="btn-cancelar" className="btn btn-danger" onClick={cancelar}>Cancelar</button>
-                                    <button type="submit" id="btn-alterar" className="right_btn btn btn-primary" onClick={alterar}>Atualizar</button>
+                                    <button type="submit" id="btn-alterar" className="right_btn btn btn-primary" onClick={alterar} required>Atualizar</button>
                                 </div>
                             </div>
                         </form>
