@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import '../../components/css/gerencia.css';
 import { useNavigate } from 'react-router-dom';
-import perfil from  '../../img/perfil.svg';
+import perfil from '../../img/perfil.svg';
 import funcionarioPdf from '../../relatorio/PdfFuncionarios';
 
 function Funcionario() {
-
     const funcionario = {
         id: 0,
         nome: '',
@@ -34,48 +33,52 @@ function Funcionario() {
     const alterar = (indice) => {
         const funcionarioAlterar = funcionarios[indice];
         navigate('/funcionarios/edit/' + funcionarioAlterar.id);
-    }
+    };
 
     const handleExcluirFuncionario = async (funcionarioId) => {
-        try {
-            const response = await fetch(`http://localhost:8080/funcionarios/delete/${funcionarioId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+        const confirmacao = window.confirm('Tem certeza que deseja excluir este funcionário?');
 
-            if (response.ok) {
-                const novosFuncionarios = funcionarios.filter(f => f.id !== funcionarioId);
-                setFuncionarios(novosFuncionarios);
-                console.log('Fornecedor excluído com sucesso!');
-            } else {
-                console.error('Erro ao excluir funcionario:', response.statusText);
+        if (confirmacao) {
+            try {
+                const response = await fetch(`http://localhost:8080/funcionarios/delete/${funcionarioId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (response.ok) {
+                    const novosFuncionarios = funcionarios.filter(f => f.id !== funcionarioId);
+                    setFuncionarios(novosFuncionarios);
+                    console.log('Fornecedor excluído com sucesso!');
+                } else {
+                    console.error('Erro ao excluir funcionario:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Erro ao excluir funcionario:', error);
             }
-        } catch (error) {
-            console.error('Erro ao excluir funcionario:', error);
         }
     };
 
     const [ordenacao, setOrdenacao] = useState({
         campo: null,
-        tipo: 'asc'
+        tipo: 'asc',
     });
+
     const ordenarFuncionarios = (campo) => {
         let ordenacaoAtual = ordenacao.tipo === 'asc' ? 'desc' : 'asc';
         const funcionariosOrdenados = [...funcionarios].sort((a, b) => {
-            if (ordenacaoAtual === 'asc') {
-                return a[campo] > b[campo] ? 1 : -1;
-            } else {
-                return a[campo] < b[campo] ? 1 : -1;
-            }
+          if (campo === 'id') {
+            return ordenacaoAtual === 'asc' ? a[campo] - b[campo] : b[campo] - a[campo];
+          } else {
+            return ordenacaoAtual === 'asc' ? a[campo] > b[campo] ? 1 : -1 : a[campo] < b[campo] ? 1 : -1;
+          }
         });
         setFuncionarios(funcionariosOrdenados);
         setOrdenacao({ campo, tipo: ordenacaoAtual });
-    };
+      };
 
-
-    //barra pesquisa 
+    // barra pesquisa
     const [termoPesquisa, setTermoPesquisa] = useState('');
 
     const filtrarFuncionarios = (termo) => {
@@ -137,7 +140,7 @@ function Funcionario() {
                     <a href="/home">Home</a>
                     <a href="/funcionarios" style={{ textDecoration: 'underline' }}>Gerência</a>
                     <a href="">Venda</a>
-                    <a href="/perfil"><img src={perfil} alt="Icone Perfil"/></a>
+                    <a href="/perfil"><img src={perfil} alt="Icone Perfil" /></a>
                 </div>
             </header>
 
@@ -165,12 +168,12 @@ function Funcionario() {
                         <table className="table table-striped table-bordered">
                             <thead className="table-dark">
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Nome</th>
-                                    <th>CPF</th>
-                                    <th>Telefone</th>
-                                    <th>Endereço</th>
-                                    <th>CEP</th>
+                                    <th onClick={() => ordenarFuncionarios('id')}>ID</th>
+                                    <th onClick={() => ordenarFuncionarios('nome')}>Nome</th>
+                                    <th onClick={() => ordenarFuncionarios('cpf')}>CPF</th>
+                                    <th onClick={() => ordenarFuncionarios('telefone')}>Telefone</th>
+                                    <th onClick={() => ordenarFuncionarios('endereco')}>Endereço</th>
+                                    <th onClick={() => ordenarFuncionarios('cep')}>CEP</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -184,7 +187,7 @@ function Funcionario() {
                                         <td>{funcionario.endereco}</td>
                                         <td>{funcionario.cep}</td>
                                         <td>
-                                        <button className="btn btn-primary"  onClick={() => alterar(indice)} >Editar</button>
+                                            <button className="btn btn-primary" onClick={() => alterar(indice)}>Editar</button>
                                             <span style={{ margin: '0 5px' }}></span>
                                             <button className="btn btn-danger" onClick={() => handleExcluirFuncionario(funcionario.id)}>Deletar</button>
                                         </td>
@@ -196,7 +199,7 @@ function Funcionario() {
 
                     <div className="gerencia_btns">
                         <button onClick={adicionar}>Adicionar</button>
-                        <button className="right_btn" onClick = {(e)=> funcionarioPdf(funcionarios)}>Relatório</button>
+                        <button className="right_btn" onClick={(e) => funcionarioPdf(funcionarios)}>Relatório</button>
                     </div>
                 </div>
             </div>

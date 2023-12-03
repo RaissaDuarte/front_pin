@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import '../../components/css/gerencia.css';
 import { useNavigate } from 'react-router-dom';
-import perfil from  '../../img/perfil.svg';
+import perfil from '../../img/perfil.svg';
 import fornecedorPdf from '../../relatorio/PdfFornecedores';
 
 function Fornecedor() {
 
-    const fornecedor = { 
+    const fornecedor = {
         id: 0,
         nome: '',
         endereco: '',
@@ -23,6 +23,20 @@ function Fornecedor() {
         navigate("/cadastroFornecedor");
     };
 
+    const ordenarFornecedores = (campo) => {
+        let ordenacaoAtual = ordenacao.tipo === 'asc' ? 'desc' : 'asc';
+        const fornecedoresOrdenados = [...fornecedores].sort((a, b) => {
+            if (campo === 'id') {
+                // Ordenar por ID como número, não como string
+                return ordenacaoAtual === 'asc' ? a[campo] - b[campo] : b[campo] - a[campo];
+            } else {
+                return ordenacaoAtual === 'asc' ? a[campo] > b[campo] ? 1 : -1 : a[campo] < b[campo] ? 1 : -1;
+            }
+        });
+        setFornecedores(fornecedoresOrdenados);
+        setOrdenacao({ campo, tipo: ordenacaoAtual });
+    };
+
     useEffect(() => {
         fetch('http://localhost:8080/fornecedores')
             .then(retorno => retorno.json())
@@ -31,24 +45,28 @@ function Fornecedor() {
     }, []);
 
     const handleExcluirFornecedor = async (fornecedorId) => {
-        try {
-            const response = await fetch(`http://localhost:8080/fornecedores/delete/${fornecedorId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+        const confirmacao = window.confirm('Tem certeza que deseja excluir este fornecedor?');
 
-            if (response.ok) {
-                // Atualize a lista de fornecedores após a exclusão
-                const novosFornecedores = fornecedores.filter(f => f.id !== fornecedorId);
-                setFornecedores(novosFornecedores);
-                console.log('Fornecedor excluído com sucesso!');
-            } else {
-                console.error('Erro ao excluir fornecedor:', response.statusText);
+        if (confirmacao) {
+            try {
+                const response = await fetch(`http://localhost:8080/fornecedores/delete/${fornecedorId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (response.ok) {
+                    // Atualize a lista de fornecedores após a exclusão
+                    const novosFornecedores = fornecedores.filter(f => f.id !== fornecedorId);
+                    setFornecedores(novosFornecedores);
+                    console.log('Fornecedor excluído com sucesso!');
+                } else {
+                    console.error('Erro ao excluir fornecedor:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Erro ao excluir fornecedor:', error);
             }
-        } catch (error) {
-            console.error('Erro ao excluir fornecedor:', error);
         }
     };
 
@@ -56,19 +74,6 @@ function Fornecedor() {
         campo: null,
         tipo: 'asc'
     });
-    const ordenarFornecedores = (campo) => {
-        let ordenacaoAtual = ordenacao.tipo === 'asc' ? 'desc' : 'asc';
-        const fornecedoresOrdenados = [...fornecedores].sort((a, b) => {
-            if (ordenacaoAtual === 'asc') {
-                return a[campo] > b[campo] ? 1 : -1;
-            } else {
-                return a[campo] < b[campo] ? 1 : -1;
-            }
-        });
-        setFornecedores(fornecedoresOrdenados);
-        setOrdenacao({ campo, tipo: ordenacaoAtual });
-    };
-
 
     //barra pesquisa 
     const [termoPesquisa, setTermoPesquisa] = useState('');
@@ -133,7 +138,7 @@ function Fornecedor() {
                     <a href="/home">Home</a>
                     <a href="/funcionarios" style={{ textDecoration: 'underline' }}>Gerência</a>
                     <a href="">Venda</a>
-                    <a href="/perfil"><img src={perfil} alt="Icone Perfil"/></a>
+                    <a href="/perfil"><img src={perfil} alt="Icone Perfil" /></a>
                 </div>
             </header>
 
@@ -161,12 +166,12 @@ function Fornecedor() {
                         <table className="table table-striped table-bordered">
                             <thead className="table-dark">
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Nome</th>
-                                    <th>Endereço</th>
-                                    <th>Telefone</th>
-                                    <th>CEP</th>
-                                    <th>CNPJ</th>
+                                    <th onClick={() => ordenarFornecedores('id')}>ID</th>
+                                    <th onClick={() => ordenarFornecedores('nome')}>Nome</th>
+                                    <th onClick={() => ordenarFornecedores('endereco')}>Endereço</th>
+                                    <th onClick={() => ordenarFornecedores('telefone')}>Telefone</th>
+                                    <th onClick={() => ordenarFornecedores('cep')}>CEP</th>
+                                    <th onClick={() => ordenarFornecedores('cnpj')}>CNPJ</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -192,7 +197,7 @@ function Fornecedor() {
 
                     <div className="gerencia_btns">
                         <button onClick={adicionar}>Adicionar</button>
-                        <button className="right_btn" onClick = {(e)=> fornecedorPdf(fornecedores)}>Relatório</button>
+                        <button className="right_btn" onClick={(e) => fornecedorPdf(fornecedores)}>Relatório</button>
                     </div>
                 </div>
             </div>

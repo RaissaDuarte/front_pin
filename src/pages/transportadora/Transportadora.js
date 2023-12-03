@@ -29,6 +29,9 @@ function Transportadora() {
     }, []);
 
     const handleExcluirTransportadora = async (transportadoraId) => {
+        const confirmacao = window.confirm('Tem certeza que deseja excluir esta transportadora?');
+
+        if (confirmacao) {
         try {
             const response = await fetch(`http://localhost:8080/transportadoras/delete/${transportadoraId}`, {
                 method: 'DELETE',
@@ -47,6 +50,7 @@ function Transportadora() {
         } catch (error) {
             console.error('Erro ao excluir transportadora:', error);
         }
+    }
     };
 
     const [ordenacao, setOrdenacao] = useState({
@@ -56,16 +60,15 @@ function Transportadora() {
     const ordenarTransportadoras = (campo) => {
         let ordenacaoAtual = ordenacao.tipo === 'asc' ? 'desc' : 'asc';
         const transportadorasOrdenadas = [...transportadoras].sort((a, b) => {
-            if (ordenacaoAtual === 'asc') {
-                return a[campo] > b[campo] ? 1 : -1;
-            } else {
-                return a[campo] < b[campo] ? 1 : -1;
-            }
+          if (campo === 'id') {
+            return ordenacaoAtual === 'asc' ? a[campo] - b[campo] : b[campo] - a[campo];
+          } else {
+            return ordenacaoAtual === 'asc' ? a[campo] > b[campo] ? 1 : -1 : a[campo] < b[campo] ? 1 : -1;
+          }
         });
         setTransportadoras(transportadorasOrdenadas);
         setOrdenacao({ campo, tipo: ordenacaoAtual });
     };
-
 
     //barra pesquisa 
     const [termoPesquisa, setTermoPesquisa] = useState('');
@@ -154,15 +157,15 @@ function Transportadora() {
                     </div>
                     <div className="table-container">
                         <table className="table table-striped table-bordered">
-                            <thead className="table-dark">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nome</th>
-                                    <th>Cidade</th>
-                                    <th>precoKM</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
+                        <thead className="table-dark">
+  <tr>
+    <th onClick={() => ordenarTransportadoras('id')}>ID</th>
+    <th onClick={() => ordenarTransportadoras('nome')}>Nome</th>
+    <th onClick={() => ordenarTransportadoras('cidade')}>Cidade</th>
+    <th onClick={() => ordenarTransportadoras('precoKM')}>Preço por KM</th>
+    <th>Ações</th>
+  </tr>
+</thead>
                             <tbody>
                                 {transportadorasFiltradas.map(transportadora => (
                                     <tr key={transportadora.id}>
