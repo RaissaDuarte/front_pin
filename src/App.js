@@ -25,6 +25,7 @@ import Login from './pages/login/Login.js';
 import EditarQuadroAvisos from './pages/home/EditarQuadroAvisos.js';
 import EditarQuadroPlantao from './pages/home/EditarQuadroPlantao.js';
 import Perfil from './pages/perfil/Perfil.js';
+import Entrada from './pages/entrada estoque/Entrada';
 
 function App() {
 
@@ -62,6 +63,9 @@ function App() {
                     <Route path="/produtos" element={<Produto />} />
                     <Route path="/cadprod" element={<CadastrarProduto />} />
                     <Route path="/editprod/:codigoProduto" element={<EditarProduto />} />
+
+                    {/* entrada */}
+                    <Route path="/estoques" element={<Entrada />} />
 
                     {/* fornecedores */}
                     <Route path="/fornecedores" element={<Fornecedor />} />
