@@ -5,7 +5,8 @@ Trabalho(https://docs.google.com/document/d/1ZAKqanPCrHwztSUINk_aclFTPTNWCAGoonm
 Para iniciar a aplicação primeiramente no arquivo do Back-end: \Connect_v3, mude o diretório para TotalConnect_v2 através do comando no terminal: cd ./TotalConnect_v2. Seu path deve estar da seguinte forma:
 \Connect_v3\TotalConnect_v2.
 
-Uma vez que o seu path esteja configurado vá até \Connect_v3\TotalConnect_v2\src\main\resources\application.properties, e informe o seu username e password do seu Postgres, um exemplo seria assim:
+Uma vez que o seu path esteja configurado você precisa realizar duas coisas:
+Criar o banco de dados 'db_TotalConnect-PIN2' no seu Postgres. E em \Connect_v3\TotalConnect_v2\src\main\resources\application.properties, e informe o seu username e password do seu Postgres, um exemplo seria assim:
 
 -----------------------------------------------------------------------------------
 spring.datasource.url = jdbc:postgresql://localhost:5432/db_TotalConnect-PIN2
